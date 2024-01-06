@@ -1,7 +1,5 @@
 // page.tsx
 
-import { connectClient } from "@/../lib/mongodb";
-import SpeciesModel, { Species } from '@/../models/species';
 import {getServerSide} from "@/app/server";
 import Dashboard from "@/app/dashboard";
 

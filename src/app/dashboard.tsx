@@ -1,6 +1,5 @@
 // dashboard.tsx
 import { NextPage } from "next";
-import { Species } from "../../models/species";
 import Link from "next/link";
 import {paraSpecies} from "@/app/page";
 
