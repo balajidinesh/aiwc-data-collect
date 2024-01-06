@@ -1,0 +1,105 @@
+{
+  "body": {
+    "title": "Blackbuck",
+    "mainImageUrls": [
+      "dgdf",
+      "ghhg"
+    ],
+    "scientificName": "Antilope cervicapra",
+    "localName": "வெளிமான்",
+    "conservationStatus": "Nan",
+    "tags": [
+      "Traded",
+      "Endangered"
+    ]
+  },
+  "technicals": {
+    "speciesClass": {
+      "similaritiesWith": [
+        "deer",
+        "Bovidae"
+      ]
+    },
+    "parts": [
+      {
+        "typeName": "Horn",
+        "isVaries": true,
+        "variedBy": "SexMale",
+        "imageUrls": [
+          "dgdf",
+          "dgdf"
+        ],
+        "typeDetails": [
+          {
+            "characterName": "height",
+            "scale": "cm",
+            "value": "35-75"
+          }
+        ],
+        "identifications": {
+          "visualMarks": "HornShape",
+          "description": " The long, ringed horns, that resemble corkscrews, are generally present only on males.",
+          "keywords": [
+            "long",
+            "ringged horns"
+          ]
+        }
+      }
+    ],
+    "harvestedArticles": [
+      {
+        "articleName": "skin",
+        "imageUrls": [
+          "ghhg",
+          "ghhg"
+        ],
+        "isHarvested": true,
+        "alternateName": "skin",
+        "isVaries": true,
+        "variedBy": "SexMale",
+        "typeDetails": {
+          "characterName": "color",
+          "scale": "color",
+          "value": "red",
+          "identifications": {
+            "visualMarks": "marks",
+            "describe": "dark brown to black on the dorsal surface and the underside is white",
+            "keywords": [
+              "dark brown",
+              "dorsal surface"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "geoInformation": {
+    "foundAt": {
+      "places": [
+        "dgdf",
+        "dgdf"
+      ]
+    },
+    "habitats": [
+      {
+        "name": "habitat class 1",
+        "class": ["terrestrial"],
+        "typesList": [
+          {
+            "type": "Forests",
+            "subtypes": [
+              "Temperate",
+              "Tropical"]
+          }]
+      }]
+  },
+
+
+  "descriptionOrExplanation": "Adult males are dark brown to black on the dorsal surface and the underside is white, female,sub-adults and fawn are reddish yellow on the dorsal side,white on the ventral side. adult males are long and spiraled horns . females are hornless eyes,nose are surrounded by white rings. buttocks and legs are cover white colour.  ",
+  "miscellaneous": {
+    "isPoisonous": false,
+    "isVenomous": false,
+    "isTradedAlive": false,
+    "population": 6000
+  }
+}
