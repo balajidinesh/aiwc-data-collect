@@ -14,15 +14,22 @@ export interface TypeDetailsFormProps {
 
 const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ onEdit , defValues, onAdd }) => {
 
-    const [characterName, setCharacterName] = useState('');
-    const [scale, setScale] = useState('');
-    const [value, setValue] = useState('');
+    const [characterName, setCharacterName] = useState(defValues.characterName);
+    const [scale, setScale] = useState(defValues.scale);
+    const [value, setValue] = useState(defValues.value);
 
     useEffect(() => {
         // Update form fields when defValues change
-        setCharacterName(defValues.characterName);
-        setScale(defValues.scale);
-        setValue(defValues.value);
+        if (onEdit) {
+            setCharacterName(defValues.characterName);
+            setScale(defValues.scale);
+            setValue(defValues.value);
+
+            console.log("im")
+            console.log(defValues);
+        }else {
+            resetForm();
+        }
 
     }, [onEdit, defValues]);
 
@@ -37,7 +44,7 @@ const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ onEdit , defValues, o
             onAdd({ characterName, scale, value });
         }
 
-        // resetForm();
+        resetForm();
     };
 
     return (

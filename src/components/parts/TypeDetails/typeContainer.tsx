@@ -81,7 +81,7 @@ const TypeContainer: React.FC<TypeContainerProps> = ({ defValues, onListChange }
             </div>
             <TypeDetailsForm onEdit={editingIndex !== null} defValues={
                 editingIndex !== null
-                    ? typeDetailsList[editingIndex] : DefaultEmptyValues } onAdd={handleAddTypeDetails} />
+                    ? typeDetailsList[editingIndex] : DefaultEmptyValues } onAdd={handleAddTypeDetails} ></TypeDetailsForm>
         </div>
     );
 };
