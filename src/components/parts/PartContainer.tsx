@@ -80,18 +80,7 @@ const PartContainer: React.FC<PartContainerProps> = ({ onListChange }) => {
             </div>
             <PartDetailsForm inState={editingIndex !== null} defValues={
                 editingIndex !== null
-                    ?partDetailsList[editingIndex] : {
-                        typeName: "" , // Name of the part or mark
-                        isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
-                        variedBy: "" , // Attribute by which it varies (e.g., SexMale)
-                        imageUrls: [], // Images of the part
-                        typeDetails: [],
-                        identifications: {
-                            visualMarks: "", // Pattern, scales, color
-                            description: "", // Descriptive text of the pattern
-                            keywords: [], // Keywords from the description
-                        },
-                    }  } onAdd={handleAddPartDetails} />
+                    ?partDetailsList[editingIndex] : DefaultEmptyValues} onAdd={handleAddPartDetails} />
             {/*partDetailsList[editingIndex] :*/}
         </div>
     );

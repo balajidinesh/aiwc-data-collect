@@ -43,6 +43,31 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState, defValues, o
     const [keywords, setKeywords] = useState(inState ? defValues.identifications.keywords : []);
 
 
+    useEffect(() => {
+        // Update form fields when defValues change
+        if (inState) {
+            setTypeName(defValues.typeName);
+            setIsVaries(defValues.isVaries);
+            setVariedBy(defValues.variedBy);
+            setImageUrls(defValues.imageUrls);
+            setTypeDetails(defValues.typeDetails);
+            setVisualMarks(defValues.identifications.visualMarks);
+            setDescription(defValues.identifications.description);
+            setKeywords(defValues.identifications.keywords);
+            console.log("inside pdf : ")
+        }else {
+            setTypeName('');
+            setIsVaries(false);
+            setVariedBy('');
+            setImageUrls([]);
+            setTypeDetails([]);
+            setVisualMarks('');
+            setDescription('');
+            setKeywords([]);
+            console.log("inside pdf  else: ")
+        }
+    }, [defValues]);
+
 
     const handleAdd = () => {
         if (typeName && variedBy && visualMarks) {
@@ -68,7 +93,7 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState, defValues, o
             setDescription('');
             setKeywords([]);
 
-            defValues  = DefaultEmptyValues;
+            // defValues  = DefaultEmptyValues;
 
         }
     };
@@ -93,8 +118,8 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState, defValues, o
 
             {/* Leave imageUrls for now - TODO */}
             <SectionWrapper label={"Part Properties"} bgColor={"bg-fuchsia-200"}>
-            <TypeContainer inState={inState !== null} defValues={
-                inState !== null
+            <TypeContainer inState={inState} defValues={
+                inState
                     ? defValues.typeDetails : [] } onListChange={handleTypeDetailsChange} ></TypeContainer>
             </SectionWrapper>
 
@@ -104,7 +129,7 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState, defValues, o
                     <LabelAndTextInput label="Visual Marks" value={visualMarks} onChange={setVisualMarks}></LabelAndTextInput>
                     <LabelAndTextInput label="Description" value={description} onChange={setDescription}></LabelAndTextInput>
                 </div>
-                <TagInput inState={inState !== null} defValues={ inState !== null
+                <TagInput inState={inState} defValues={ inState
                     ? defValues.identifications.keywords : [] } onTagsChange={handleKeywordsChange} name="identifications.keywords" labelName="Keywords"/>
             </SectionWrapper>
             <button
