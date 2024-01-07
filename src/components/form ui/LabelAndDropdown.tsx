@@ -1,6 +1,6 @@
-// LabelAndDropdown.tsx
+// LabelAndDropdownText.tsx
 import React from 'react';
-import { Dropdown } from './Dropdown';
+import {Dropdown} from "@/components/Dropdown";
 
 interface LabelAndDropdownProps {
     label: string;

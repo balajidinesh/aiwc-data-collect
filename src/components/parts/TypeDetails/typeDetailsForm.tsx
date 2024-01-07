@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { LabelAndTextInput } from "@/components/non form ui/LabelAndTextInput";
 import {LabelAndDropdownState} from "@/components/non form ui/LabelAndDropdownText";
-import {TypeDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
-import {ScaleOptions} from "../../../models/IntefacesAndOptions/option";
+import {TypeDetailsProps} from "../../../../models/IntefacesAndOptions/interfaces";
+import {ScaleOptions} from "../../../../models/IntefacesAndOptions/option";
 
 
 export interface TypeDetailsFormProps {
@@ -39,7 +39,7 @@ const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ inState, defValues, o
     return (
         <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
-                <LabelAndTextInput label="Character Name" value={characterName} onChange={setCharacterName} />
+                <LabelAndTextInput label="Character Name" value={characterName} onChange={setCharacterName}/>
                 <LabelAndDropdownState label={"Scale"} options={ScaleOptions} selectedValue={scale} onSelectChange={setScale}></LabelAndDropdownState>
                 {/*<LabelAndTextInput label="Scale" value={scale} onChange={setScale} />*/}
                 <LabelAndTextInput label="Value" value={value} onChange={setValue} />

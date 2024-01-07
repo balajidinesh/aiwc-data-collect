@@ -1,7 +1,7 @@
 
 // LabelAndInput.tsx
 import React from 'react';
-import { Input } from './Input';
+import {Input} from "@/components/Input";
 
 interface LabelAndInputProps {
     label: string;

@@ -6,13 +6,14 @@ import { useRouter } from 'next/navigation';
 import {useState} from "react";
 import { Species } from '@/../models/species';
 import React from 'react';
-import {LabelAndInput} from "@/components/LableAndInput";
-import {LabelAndDropdown} from "@/components/LabelAndDropdown";
+import {LabelAndInput} from "@/components/form ui/LableAndInput";
+import {LabelAndDropdown} from "@/components/form ui/LabelAndDropdown";
+import {PartDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
 import TagInput from "@/components/TagInput";
 import { submitSpecies } from './submitSpecies';
 import {SectionWrapper} from "@/components/SectionWrapper"; // Import the server-side submit function
-import TabsContainer from "@/components/propnproplist/TabsContainer";
-
+// import TabsContainer from "@/components/propnproplist/TabsContainer";
+import PartContainer from "@/components/parts/PartContainer";
 
 interface CreateSpeciesFormProps {
 }
@@ -20,7 +21,8 @@ interface CreateSpeciesFormProps {
 const fieldsBody = [
     { label: 'Title', name: 'body.title', type: 'text', required: true },
     { label: 'Scientific Name', name: 'body.scientificName', type: 'text', required: true },
-    { label: 'Local Name', name: 'body.localName', type: 'text', required: true },{ label: 'Conservation Status', name: 'body.conservationStatus', type: 'dropdown', options: [
+    { label: 'Local Name', name: 'body.localName', type: 'text', required: true },
+    { label: 'Conservation Status', name: 'body.conservationStatus', type: 'dropdown', options: [
             { value: 'endangered', label: 'Endangered' },
             { value: 'threatened', label: 'Threatened' },
             { value: 'not_evaluated', label: 'Not Evaluated' },
@@ -41,12 +43,9 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = () => {
         setValue(name, {value:tags});
     };
 
-    const handlePropsListChange = (newPropsList: string[]) => {
-        setPropsList(newPropsList);
-    };
 
 
-    const handleTypChange =(tags: string[]) => {
+    const handlePartsChange =(tags: PartDetailsProps[]) => {
         console.log(tags);
     };
 
@@ -87,8 +86,8 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = () => {
             <SectionWrapper  label={"Technical Details"} bgColor={"bg-gray-200"}>
                 <TagInput onTagsChange={handleTagsChange} name={'technicals.speciesClass.similaritiesWith'} labelName={'Similar Species'} />
 
-                <SectionWrapper label={"Technical Details"} bgColor={"bg-blue-200"}>
-                    <TabsContainer></TabsContainer>
+                <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
+                    <PartContainer onListChange={handlePartsChange}></PartContainer>
                 </SectionWrapper>
 
             </SectionWrapper>

@@ -1,15 +1,25 @@
 // TagInput.tsx
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 interface TagInputProps {
     name : string
     labelName : string
-    onTagsChange: (tags: string[],name) => void;
+    defValues : string[]
+    inState : boolean
+    onTagsChange: (tags: string[],name: string) => void;
 }
 
-const TagInput: React.FC<TagInputProps> = ({ name,labelName , onTagsChange }) => {
-    const [inputValue, setInputValue] = useState('');
-    const [tags, setTags] = useState<string[]>([]);
+const TagInput: React.FC<TagInputProps> = ({ name,labelName,defValues, inState , onTagsChange }) => {
+    const [inputValue, setInputValue] = useState(inState ? defValues : []);
+    const [tags, setTags] = useState<string[]>(inState ? defValues : []);
+
+    useEffect(() => {
+        // Update form fields when defValues change
+        if (inState) {
+            setTags(defValues)
+            setInputValue('')
+        }
+    }, [defValues]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);

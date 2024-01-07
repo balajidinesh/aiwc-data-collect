@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import TypeDetailsForm from "@/components/propnproplist/TypeDetailsForm";
-import {TypeDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
+import {TypeDetailsProps} from "../../../../models/IntefacesAndOptions/interfaces";
 
-
-interface TabsContainerProps {
+interface TypeContainerProps {
+    defValues : TypeDetailsProps[];
+    inState : boolean;
     onListChange: (list: TypeDetailsProps[]) => void;
 }
 
@@ -13,9 +14,17 @@ const DefaultEmptyValues: TypeDetailsProps = {
     value: ''
 };
 
-const TabsContainer: React.FC<TabsContainerProps> = ({ onListChange }) => {
-    const [typeDetailsList, setTypeDetailsList] = useState<TypeDetailsProps[]>([]);
+const TypeContainer: React.FC<TypeContainerProps> = ({ defValues,inState,onListChange }) => {
+    const [typeDetailsList, setTypeDetailsList] = useState<TypeDetailsProps[]>(inState ? defValues : []);
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+
+    useEffect(() => {
+        // Update form fields when defValues change
+        if (inState) {
+            setTypeDetailsList(defValues)
+        }
+    }, [defValues]);
 
     const handleAddTypeDetails = (typeDetails: TypeDetailsProps) => {
         const updatedList = [...typeDetailsList];
@@ -76,4 +85,4 @@ const TabsContainer: React.FC<TabsContainerProps> = ({ onListChange }) => {
     );
 };
 
-export default TabsContainer;
+export default TypeContainer;
