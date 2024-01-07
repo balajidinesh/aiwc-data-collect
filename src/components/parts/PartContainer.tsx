@@ -1,43 +1,44 @@
 import React, {useEffect, useState} from 'react';
-import PartDetailsForm from "@/components/parts/PartDetailsForm";
+import PartDetailsForm, {partDetailsFormProps} from "@/components/parts/PartDetailsForm";
 import {PartDetailsProps, TypeDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
 
 interface PartContainerProps {
+    defValues : PartDetailsProps[];
+    inState : boolean;
     onListChange: (list: PartDetailsProps[]) => void;
 }
 
-const DefaultEmptyValues: PartDetailsProps = {
-    typeName: "" , // Name of the part or mark
-    isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
-    variedBy: "" , // Attribute by which it varies (e.g., SexMale)
-    imageUrls: [], // Images of the part
-    typeDetails: [],
-    identifications: {
-        visualMarks: "", // Pattern, scales, color
-        description: "", // Descriptive text of the pattern
-        keywords: [], // Keywords from the description
-    },
-};
 
-const PartContainer: React.FC<PartContainerProps> = ({ onListChange }) => {
-    const [partDetailsList, setPartDetailsList] = useState<PartDetailsProps[]>([]);
+const PartContainer: React.FC<PartContainerProps> = ({defValues,inState ,onListChange }) => {
+    const [partDetailsList, setPartDetailsList] = useState<PartDetailsProps[]>(inState ? defValues : []);
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
-    const handleAddPartDetails = (typeDetails: PartDetailsProps) => {
+
+
+    useEffect(() => {
+        onListChange(partDetailsList);
+    }, [onListChange, partDetailsList]);
+
+
+    useEffect(() => {
+        // Update form fields when defValues change
+        if (inState) {
+            setPartDetailsList(defValues)
+        }
+    }, [defValues]);
+
+    const handleAddPartDetails = (partDetails: PartDetailsProps) => {
         const updatedList = [...partDetailsList];
         if (editingIndex !== null) {
-            updatedList[editingIndex] = typeDetails; // Update existing tab
+            updatedList[editingIndex] = partDetails; // Update existing tab
+            setEditingIndex(null); // Reset editing index after update
         } else {
-            updatedList.push(typeDetails); // Add new tab
+            updatedList.push(partDetails); // Add new tab
         }
         setPartDetailsList(updatedList);
-        setEditingIndex(null); // Reset editing index after update
 
     };
 
-    useEffect(() => {
-        onListChange(partDetailsList)
-    }, [onListChange, partDetailsList]);
     const handleEditPartDetails = (index: number) => {
         const typeDetails = partDetailsList[index];
         setEditingIndex(index);
@@ -52,7 +53,6 @@ const PartContainer: React.FC<PartContainerProps> = ({ onListChange }) => {
         const newList = [...partDetailsList];
         newList.splice(index, 1);
         setPartDetailsList(newList);
-        onListChange(newList);
     };
 
     return (
@@ -78,9 +78,20 @@ const PartContainer: React.FC<PartContainerProps> = ({ onListChange }) => {
                     </div>
                 ))}
             </div>
-            <PartDetailsForm inState={editingIndex !== null} defValues={
+            <PartDetailsForm onEdit={editingIndex !== null} defValues={
                 editingIndex !== null
-                    ?partDetailsList[editingIndex] : DefaultEmptyValues} onAdd={handleAddPartDetails} />
+                    ?partDetailsList[editingIndex] : {
+                        typeName: "" , // Name of the part or mark
+                        isVaries: true , // If the same part or mark varies significantly due to constraints like age, puberty, gender
+                        variedBy: "" , // Attribute by which it varies (e.g., SexMale)
+                        imageUrls: [], // Images of the part
+                        typeDetails: [],
+                        identifications: {
+                            visualMarks: "", // Pattern, scales, color
+                            description: "", // Descriptive text of the pattern
+                            keywords: [], // Keywords from the description
+                        }}
+            } onAdd={handleAddPartDetails}></PartDetailsForm>
             {/*partDetailsList[editingIndex] :*/}
         </div>
     );

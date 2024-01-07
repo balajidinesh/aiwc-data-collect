@@ -14,8 +14,11 @@ import { submitSpecies } from './submitSpecies';
 import {SectionWrapper} from "@/components/SectionWrapper"; // Import the server-side submit function
 // import TabsContainer from "@/components/propnproplist/TabsContainer";
 import PartContainer from "@/components/parts/PartContainer";
+import PartDetailsForm from "@/components/parts/PartDetailsForm";
+import {tag} from "postcss-selector-parser";
 
 interface CreateSpeciesFormProps {
+    // isInEdit : boolean;
 }
 
 const fieldsBody = [
@@ -32,6 +35,20 @@ const fieldsBody = [
 const fieldsTechnical = [
     {label: 'Similar Species',name: 'technicals.speciesClass.similaritiesWith',type: 'TAG',required: false,},
 ];
+
+
+const DefaultEmptyValues: PartDetailsProps = {
+    typeName: "" , // Name of the part or mark
+    isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
+    variedBy: "" , // Attribute by which it varies (e.g., SexMale)
+    imageUrls: [], // Images of the part
+    typeDetails: [],
+    identifications: {
+        visualMarks: "", // Pattern, scales, color
+        description: "", // Descriptive text of the pattern
+        keywords: ["d"], // Keywords from the description
+    },
+};
 
 const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = () => {
     const { register, handleSubmit, reset ,setValue} = useForm<Species>();
@@ -87,7 +104,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = () => {
                 <TagInput onTagsChange={handleTagsChange} name={'technicals.speciesClass.similaritiesWith'} labelName={'Similar Species'} />
 
                 <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
-                    <PartContainer onListChange={handlePartsChange}></PartContainer>
+                    <PartContainer defValues={DefaultEmptyValues} onListChange={handlePartsChange}></PartContainer>
                 </SectionWrapper>
 
             </SectionWrapper>

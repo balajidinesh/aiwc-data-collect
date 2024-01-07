@@ -15,6 +15,7 @@ import TypeContainer from "@/components/parts/TypeDetails/typeContainer";
 export interface partDetailsFormProps {
     defValues: PartDetailsProps;
     inState : boolean ;
+    onEdit : boolean ;
     onAdd: (partDetails: PartDetailsProps) => void;
 }
 
@@ -31,21 +32,20 @@ const DefaultEmptyValues: PartDetailsProps = {
     },
 };
 
-const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState, defValues, onAdd }) => {
+const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState,onEdit, defValues, onAdd }) => {
 
-    const [typeName, setTypeName] = useState(inState ? defValues.typeName : '');
-    const [isVaries, setIsVaries] = useState(inState ? defValues.isVaries : false);
-    const [variedBy, setVariedBy] = useState(inState ? defValues.variedBy : '');
-    const [imageUrls, setImageUrls] = useState(inState ? defValues.imageUrls : []);
-    const [typeDetails, setTypeDetails] = useState<TypeDetailsProps[]>(inState ? defValues.typeDetails : []);
-    const [visualMarks, setVisualMarks] = useState(inState ? defValues.identifications.visualMarks : '');
-    const [description, setDescription] = useState(inState ? defValues.identifications.description : '');
-    const [keywords, setKeywords] = useState(inState ? defValues.identifications.keywords : []);
+    const [typeName, setTypeName] = useState( defValues.typeName );
+    const [isVaries, setIsVaries] = useState( defValues.isVaries );
+    const [variedBy, setVariedBy] = useState( defValues.variedBy );
+    const [imageUrls, setImageUrls] = useState( defValues.imageUrls );
+    const [typeDetails, setTypeDetails] = useState<TypeDetailsProps[]>( defValues.typeDetails);
+    const [visualMarks, setVisualMarks] = useState(defValues.identifications.visualMarks );
+    const [description, setDescription] = useState(defValues.identifications.description );
+    const [keywords, setKeywords] = useState<string[]>(defValues.identifications.keywords);
 
 
     useEffect(() => {
         // Update form fields when defValues change
-        if (inState) {
             setTypeName(defValues.typeName);
             setIsVaries(defValues.isVaries);
             setVariedBy(defValues.variedBy);
@@ -55,19 +55,13 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState, defValues, o
             setDescription(defValues.identifications.description);
             setKeywords(defValues.identifications.keywords);
             console.log("inside pdf : ")
-        }else {
-            setTypeName('');
-            setIsVaries(false);
-            setVariedBy('');
-            setImageUrls([]);
-            setTypeDetails([]);
-            setVisualMarks('');
-            setDescription('');
-            setKeywords([]);
-            console.log("inside pdf  else: ")
-        }
-    }, [defValues]);
+    }, defValues);
 
+
+    // useEffect(() => {
+    //     console.log("finally")
+    //     console.log(typeDetails)
+    // }, [typeDetails]);
 
     const handleAdd = () => {
         if (typeName && variedBy && visualMarks) {
@@ -76,11 +70,11 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState, defValues, o
                 isVaries,
                 variedBy,
                 imageUrls,
-                typeDetails,
+                typeDetails : [...typeDetails],
                 identifications: {
                     visualMarks,
                     description,
-                    keywords,
+                    keywords : [...keywords],
                 },
             });
 
@@ -99,12 +93,12 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState, defValues, o
     };
 
     const handleKeywordsChange = (tags: string[] , name : string) => {
-        console.log(tags);
+        // console.log(handleKeywordsChange);
         setKeywords(tags);
     };
     const handleTypeDetailsChange = (newPropsList: TypeDetailsProps[]) => {
         setTypeDetails(newPropsList);
-        console.log(newPropsList)
+        // console.log("handleTypeDetailsChange")
     };
 
 
@@ -118,9 +112,10 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState, defValues, o
 
             {/* Leave imageUrls for now - TODO */}
             <SectionWrapper label={"Part Properties"} bgColor={"bg-fuchsia-200"}>
-            <TypeContainer inState={inState} defValues={
+            <TypeContainer defValues={
                 inState
-                    ? defValues.typeDetails : [] } onListChange={handleTypeDetailsChange} ></TypeContainer>
+                    ? defValues.typeDetails : typeDetails }
+                           onListChange={handleTypeDetailsChange} ></TypeContainer>
             </SectionWrapper>
 
 
@@ -129,15 +124,16 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState, defValues, o
                     <LabelAndTextInput label="Visual Marks" value={visualMarks} onChange={setVisualMarks}></LabelAndTextInput>
                     <LabelAndTextInput label="Description" value={description} onChange={setDescription}></LabelAndTextInput>
                 </div>
-                <TagInput inState={inState} defValues={ inState
-                    ? defValues.identifications.keywords : [] } onTagsChange={handleKeywordsChange} name="identifications.keywords" labelName="Keywords"/>
+                <TagInput defValues={ inState
+                    ? defValues.identifications.keywords : keywords }
+                          onTagsChange={handleKeywordsChange} name="identifications.keywords" labelName="Keywords"/>
             </SectionWrapper>
             <button
                 className="mt-4 bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-green active:bg-green-800"
                 type="button"
                 onClick={handleAdd}
             >
-                {inState ? "Update" : "Add"}
+                {onEdit ? "Update" : "Add"}
             </button>
         </div>
     );

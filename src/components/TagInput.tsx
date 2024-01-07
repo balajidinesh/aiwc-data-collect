@@ -10,8 +10,8 @@ interface TagInputProps {
 }
 
 const TagInput: React.FC<TagInputProps> = ({ name,labelName,defValues, inState , onTagsChange }) => {
-    const [inputValue, setInputValue] = useState(inState ? defValues : []);
-    const [tags, setTags] = useState<string[]>(inState ? defValues : []);
+    const [inputValue, setInputValue] = useState('');
+    const [tags, setTags] = useState<string[]>(defValues?defValues:[]);
 
     useEffect(() => {
         // Update form fields when defValues change

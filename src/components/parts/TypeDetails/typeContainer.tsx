@@ -4,26 +4,27 @@ import {TypeDetailsProps} from "../../../../models/IntefacesAndOptions/interface
 
 interface TypeContainerProps {
     defValues : TypeDetailsProps[];
-    inState : boolean;
     onListChange: (list: TypeDetailsProps[]) => void;
 }
 
 const DefaultEmptyValues: TypeDetailsProps = {
     characterName: '',
     scale: '',
-    value: ''
+    value: '',
 };
 
-const TypeContainer: React.FC<TypeContainerProps> = ({ defValues,inState,onListChange }) => {
-    const [typeDetailsList, setTypeDetailsList] = useState<TypeDetailsProps[]>(inState ? defValues : []);
+const TypeContainer: React.FC<TypeContainerProps> = ({ defValues, onListChange }) => {
+    const [typeDetailsList, setTypeDetailsList] = useState<TypeDetailsProps[]>(defValues );
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
 
     useEffect(() => {
-        // Update form fields when defValues change
-        if (inState) {
-            setTypeDetailsList(defValues)
-        }
+        onListChange(typeDetailsList);
+        console.log("useEffect")
+    }, [typeDetailsList]);
+
+    useEffect(() => {
+        setTypeDetailsList(defValues)
     }, [defValues]);
 
     const handleAddTypeDetails = (typeDetails: TypeDetailsProps) => {
@@ -78,7 +79,7 @@ const TypeContainer: React.FC<TypeContainerProps> = ({ defValues,inState,onListC
                     </div>
                 ))}
             </div>
-            <TypeDetailsForm inState={editingIndex !== null} defValues={
+            <TypeDetailsForm onEdit={editingIndex !== null} defValues={
                 editingIndex !== null
                     ? typeDetailsList[editingIndex] : DefaultEmptyValues } onAdd={handleAddTypeDetails} />
         </div>

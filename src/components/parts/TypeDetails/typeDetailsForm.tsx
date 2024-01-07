@@ -7,33 +7,37 @@ import {ScaleOptions} from "../../../../models/IntefacesAndOptions/option";
 
 export interface TypeDetailsFormProps {
     defValues: TypeDetailsProps;
-    inState : boolean ;
+    onEdit : boolean ;
     onAdd: (typeDetails: TypeDetailsProps) => void;
 }
 
 
-const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ inState, defValues, onAdd }) => {
+const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ onEdit , defValues, onAdd }) => {
 
-    const [characterName, setCharacterName] = useState(inState ? defValues.characterName : "");
-    const [scale, setScale] = useState(inState ? defValues.scale : "");
-    const [value, setValue] = useState(inState ? defValues.value : "");
+    const [characterName, setCharacterName] = useState('');
+    const [scale, setScale] = useState('');
+    const [value, setValue] = useState('');
 
     useEffect(() => {
         // Update form fields when defValues change
-        if (inState) {
-            setCharacterName(defValues.characterName);
-            setScale(defValues.scale);
-            setValue(defValues.value);
-        }
-    }, [defValues]);
+        setCharacterName(defValues.characterName);
+        setScale(defValues.scale);
+        setValue(defValues.value);
+
+    }, [onEdit, defValues]);
+
+    const resetForm = () => {
+        setCharacterName('');
+        setScale('');
+        setValue('');
+    };
 
     const handleAdd = () => {
         if (characterName && scale && value) {
             onAdd({ characterName, scale, value });
-            setCharacterName('');
-            setScale('');
-            setValue('');
         }
+
+        // resetForm();
     };
 
     return (
@@ -49,7 +53,7 @@ const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ inState, defValues, o
                 type="button"
                 onClick={handleAdd}
             >
-                {inState ? "Update" : "Add"}
+                {onEdit ? "Update" : "Add"}
             </button>
         </div>
     );
