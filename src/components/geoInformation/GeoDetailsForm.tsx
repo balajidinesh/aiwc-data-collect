@@ -10,11 +10,11 @@ import {ScaleOptions} from "../../../models/IntefacesAndOptions/option";
 import {SectionWrapper} from "@/components/SectionWrapper";
 import TagInput from "@/components/TagInput";
 import TypeContainer from "@/components/parts/TypeDetails/typeContainer";
-import {LabelAndDescription} from "@/components/non form ui/Description";
 
 
 export interface partDetailsFormProps {
     defValues: PartDetailsProps;
+    inState : boolean ;
     onEdit : boolean ;
     onAdd: (partDetails: PartDetailsProps) => void;
 }
@@ -32,10 +32,10 @@ const DefaultEmptyValues: PartDetailsProps = {
     },
 };
 
-const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, onAdd }) => {
+const geoDetailsForm: React.FC<partDetailsFormProps> = ({ inState,onEdit, defValues, onAdd }) => {
 
     const [typeName, setTypeName] = useState( defValues.typeName );
-    const [isVaries, setIsVaries] = useState<string|boolean>( defValues.isVaries );
+    const [isVaries, setIsVaries] = useState( defValues.isVaries );
     const [variedBy, setVariedBy] = useState( defValues.variedBy );
     const [imageUrls, setImageUrls] = useState( defValues.imageUrls );
     const [typeDetails, setTypeDetails] = useState<TypeDetailsProps[]>( defValues.typeDetails);
@@ -82,14 +82,14 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
     const handleAdd = () => {
         if (typeName && variedBy && visualMarks) {
             onAdd({
-                typeName :typeName,
-                isVaries:isVaries,
-                variedBy:variedBy,
-                imageUrls:imageUrls,
+                typeName,
+                isVaries,
+                variedBy,
+                imageUrls,
                 typeDetails : [...typeDetails],
                 identifications: {
-                    visualMarks:visualMarks,
-                    description:description,
+                    visualMarks,
+                    description,
                     keywords : [...keywords],
                 },
             });
@@ -120,9 +120,9 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
             </div>
 
             {/* Leave imageUrls for now - TODO */}
-            <SectionWrapper label={"characteristics"} bgColor={"bg-fuchsia-200"}>
-            <TypeContainer onEdit={onEdit} defValues={
-                onEdit
+            <SectionWrapper label={"Part Properties"} bgColor={"bg-fuchsia-200"}>
+            <TypeContainer isNew={!onEdit} onEdit={onEdit} defValues={
+                inState
                     ? defValues.typeDetails : typeDetails }
                            onListChange={handleTypeDetailsChange} ></TypeContainer>
             </SectionWrapper>
@@ -131,9 +131,9 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
             <SectionWrapper label="Identification" bgColor="bg-blue-200">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
                     <LabelAndTextInput label="Visual Marks" value={visualMarks} onChange={setVisualMarks}></LabelAndTextInput>
+                    <LabelAndTextInput label="Description" value={description} onChange={setDescription}></LabelAndTextInput>
                 </div>
-                <LabelAndDescription label="Description" description={description} onChange={setDescription}></LabelAndDescription>
-                <TagInput inState={true} defValues={ onEdit
+                <TagInput inState={true} defValues={ inState
                     ? defValues.identifications.keywords : keywords }
                           onTagsChange={handleKeywordsChange} name="identifications.keywords" labelName="Keywords"/>
             </SectionWrapper>
@@ -148,4 +148,4 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
     );
 };
 
-export default partDetailsForm;
+export default geoDetailsForm;

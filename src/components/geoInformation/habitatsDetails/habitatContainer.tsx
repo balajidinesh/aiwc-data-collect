@@ -4,6 +4,7 @@ import {TypeDetailsProps} from "../../../../models/IntefacesAndOptions/interface
 
 interface TypeContainerProps {
     onEdit : boolean;
+    isNew : boolean ;
     defValues : TypeDetailsProps[];
     onListChange: (list: TypeDetailsProps[]) => void;
 }
@@ -14,7 +15,7 @@ const DefaultEmptyValues: TypeDetailsProps = {
     value: '',
 };
 
-const TypeContainer: React.FC<TypeContainerProps> = ({ onEdit,defValues, onListChange }) => {
+const HabitatContainer: React.FC<TypeContainerProps> = ({ onEdit,isNew,defValues, onListChange }) => {
     const [typeDetailsList, setTypeDetailsList] = useState<TypeDetailsProps[]>(onEdit? defValues:[] );
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
@@ -29,7 +30,7 @@ const TypeContainer: React.FC<TypeContainerProps> = ({ onEdit,defValues, onListC
         // }else if (isNew) {
         //     setTypeDetailsList([])
         // }
-    }, [onEdit,defValues]);
+    }, [onEdit,isNew,defValues]);
 
     const handleAddTypeDetails = (typeDetails: TypeDetailsProps) => {
         const updatedList = [...typeDetailsList];
@@ -90,4 +91,4 @@ const TypeContainer: React.FC<TypeContainerProps> = ({ onEdit,defValues, onListC
     );
 };
 
-export default TypeContainer;
+export default HabitatContainer;

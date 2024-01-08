@@ -4,9 +4,9 @@ import { Dropdown } from './Dropdown';
 
 interface LabelAndDropdownStateProps {
     label: string;
-    options: { value: string; label: string }[];
-    selectedValue: string;
-    onSelectChange: (value: string) => void;
+    options: { value: string|boolean; label: string }[];
+    selectedValue: string|boolean;
+    onSelectChange: (value: string|boolean) => void;
 }
 
 const LabelAndDropdownState: React.FC<LabelAndDropdownStateProps> = ({ label, options, selectedValue, onSelectChange }) => {

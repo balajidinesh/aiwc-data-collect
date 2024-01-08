@@ -3,59 +3,64 @@
 import React, { useState, useEffect } from 'react';
 import { LabelAndTextInput } from "@/components/non form ui/LabelAndTextInput";
 import {LabelAndDropdownState} from "@/components/non form ui/LabelAndDropdownText";
-import {PartDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
+import {ArticleDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
 import {TypeDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
 import {BoolOption} from "../../../models/IntefacesAndOptions/option";
 import {ScaleOptions} from "../../../models/IntefacesAndOptions/option";
 import {SectionWrapper} from "@/components/SectionWrapper";
 import TagInput from "@/components/TagInput";
-import TypeContainer from "@/components/parts/TypeDetails/typeContainer";
+import TypeContainer from "@/components/harvestedArticles/TypeDetails/typeContainer";
+import {bool} from "prop-types";
 import {LabelAndDescription} from "@/components/non form ui/Description";
 
-
-export interface partDetailsFormProps {
-    defValues: PartDetailsProps;
+export interface harvestDetailsFormProps {
+    defValues: ArticleDetailsProps;
     onEdit : boolean ;
-    onAdd: (partDetails: PartDetailsProps) => void;
+    onAdd: (partDetails: ArticleDetailsProps) => void;
 }
 
-const DefaultEmptyValues: PartDetailsProps = {
-    typeName: "" , // Name of the part or mark
+const DefaultEmptyValues: ArticleDetailsProps = {
+    articleName: "" , // Name of the part or mark
+    isHarvested: false, // Is the animal likely to be killed or farmed
+    alternateName: "", // Any known local name
     isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
     variedBy: "" , // Attribute by which it varies (e.g., SexMale)
     imageUrls: [], // Images of the part
     typeDetails: [],
     identifications: {
         visualMarks: "", // Pattern, scales, color
-        description: "", // Descriptive text of the pattern
+        describe: "", // Descriptive text of the pattern
         keywords: [], // Keywords from the description
     },
 };
 
-const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, onAdd }) => {
+const harvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValues, onAdd }) => {
 
-    const [typeName, setTypeName] = useState( defValues.typeName );
-    const [isVaries, setIsVaries] = useState<string|boolean>( defValues.isVaries );
+    const [articleName, setArticleName] = useState( defValues.articleName );
+    const [isHarvested, setIsHarvested] = useState( defValues.isHarvested );
+    const [alternateName, setAlternateName] = useState( defValues.alternateName );
+    const [isVaries, setIsVaries] = useState( defValues.isVaries );
     const [variedBy, setVariedBy] = useState( defValues.variedBy );
     const [imageUrls, setImageUrls] = useState( defValues.imageUrls );
     const [typeDetails, setTypeDetails] = useState<TypeDetailsProps[]>( defValues.typeDetails);
     const [visualMarks, setVisualMarks] = useState(defValues.identifications.visualMarks );
-    const [description, setDescription] = useState(defValues.identifications.description );
+    const [describe, setDescribe] = useState(defValues.identifications.describe );
     const [keywords, setKeywords] = useState<string[]>(defValues.identifications.keywords);
 
 
     useEffect(() => {
         // Update form fields when defValues change
         if (onEdit) {
-            setTypeName(defValues.typeName);
+            setArticleName(defValues.articleName);
+            setIsHarvested(defValues.isHarvested);
             setIsVaries(defValues.isVaries);
             setVariedBy(defValues.variedBy);
+            setAlternateName(defValues.alternateName)
             setImageUrls(defValues.imageUrls);
             setTypeDetails(defValues.typeDetails);
             setVisualMarks(defValues.identifications.visualMarks);
-            setDescription(defValues.identifications.description);
+            setDescribe(defValues.identifications.describe);
             setKeywords(defValues.identifications.keywords);
-            console.log("inside pdf : ")
         }else{
             resetForm();
         }
@@ -63,13 +68,15 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
 
     const resetForm =( ) =>{
 
-        setTypeName("");
+        setArticleName("");
+        setIsHarvested(false);
         setIsVaries(false);
         setVariedBy("");
+        setAlternateName(defValues.alternateName)
         setImageUrls([]);
         setTypeDetails([]);
         setVisualMarks("");
-        setDescription("");
+        setDescribe("");
         setKeywords([]);
 
     }
@@ -80,16 +87,18 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
     // }, [typeDetails]);
 
     const handleAdd = () => {
-        if (typeName && variedBy && visualMarks) {
+        if (articleName && variedBy && visualMarks) {
             onAdd({
-                typeName :typeName,
-                isVaries:isVaries,
-                variedBy:variedBy,
-                imageUrls:imageUrls,
+                articleName: articleName,
+                isHarvested : isHarvested,
+                alternateName : alternateName,
+                isVaries : isVaries,
+                variedBy : variedBy,
+                imageUrls : imageUrls,
                 typeDetails : [...typeDetails],
                 identifications: {
-                    visualMarks:visualMarks,
-                    description:description,
+                    visualMarks : visualMarks,
+                    describe: describe,
                     keywords : [...keywords],
                 },
             });
@@ -113,26 +122,29 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
 
     return (
         <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
-                <LabelAndTextInput label="Type Name" value={typeName} onChange={setTypeName}></LabelAndTextInput>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto mb-10">
+                <LabelAndTextInput label="Type Name" value={articleName} onChange={setArticleName}></LabelAndTextInput>
+                <LabelAndDropdownState label="Is Harvested" options={BoolOption} selectedValue={isHarvested} onSelectChange={setIsHarvested}></LabelAndDropdownState>
                 <LabelAndDropdownState label="Is Varies" options={BoolOption} selectedValue={isVaries} onSelectChange={setIsVaries}></LabelAndDropdownState>
                 <LabelAndTextInput label="Varied By" value={variedBy} onChange={setVariedBy}></LabelAndTextInput>
+                <LabelAndTextInput label="Alternate Name" value={alternateName} onChange={setAlternateName}></LabelAndTextInput>
             </div>
 
             {/* Leave imageUrls for now - TODO */}
-            <SectionWrapper label={"characteristics"} bgColor={"bg-fuchsia-200"}>
-            <TypeContainer onEdit={onEdit} defValues={
-                onEdit
-                    ? defValues.typeDetails : typeDetails }
-                           onListChange={handleTypeDetailsChange} ></TypeContainer>
+            <SectionWrapper label={"Article characteristics"} bgColor={"bg-fuchsia-200"}>
+                <TypeContainer onEdit={onEdit} defValues={
+                    onEdit
+                        ? defValues.typeDetails : typeDetails }
+                               onListChange={handleTypeDetailsChange} ></TypeContainer>
             </SectionWrapper>
 
 
             <SectionWrapper label="Identification" bgColor="bg-blue-200">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
                     <LabelAndTextInput label="Visual Marks" value={visualMarks} onChange={setVisualMarks}></LabelAndTextInput>
+
                 </div>
-                <LabelAndDescription label="Description" description={description} onChange={setDescription}></LabelAndDescription>
+                <LabelAndDescription label="Description" description={describe} onChange={setDescribe}></LabelAndDescription>
                 <TagInput inState={true} defValues={ onEdit
                     ? defValues.identifications.keywords : keywords }
                           onTagsChange={handleKeywordsChange} name="identifications.keywords" labelName="Keywords"/>
@@ -148,4 +160,4 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
     );
 };
 
-export default partDetailsForm;
+export default harvestDetailsForm;

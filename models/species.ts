@@ -45,11 +45,11 @@ const speciesSchema
                 characterName: { type: String }, // Description of the characteristic
                 scale: { type: String }, // Type of units
                 value: { type: String }, // Value of the characteristic
-                identifications: {
-                    visualMarks: { type: String }, // Pattern, scales, color
-                    describe: { type: String }, // Descriptive text of the pattern
-                    keywords: [{ type: String }], // Keywords from the description
-                },
+            },
+            identifications: {
+                visualMarks: { type: String }, // Pattern, scales, color
+                describe: { type: String }, // Descriptive text of the pattern
+                keywords: [{ type: String }], // Keywords from the description
             },
         }],
     },

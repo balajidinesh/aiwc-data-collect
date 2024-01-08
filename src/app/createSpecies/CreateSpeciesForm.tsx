@@ -8,14 +8,18 @@ import { Species } from '@/../models/species';
 import React from 'react';
 import {LabelAndInput} from "@/components/form ui/LableAndInput";
 import {LabelAndDropdown} from "@/components/form ui/LabelAndDropdown";
-import {PartDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
+import {PartDetailsProps,ArticleDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
+import TagOptions from "@/components/tagOptions";
 import TagInput from "@/components/TagInput";
 import { submitSpecies } from './submitSpecies';
 import {SectionWrapper} from "@/components/SectionWrapper"; // Import the server-side submit function
 // import TabsContainer from "@/components/propnproplist/TabsContainer";
 import PartContainer from "@/components/parts/PartContainer";
+import HarvestContainer from "@/components/harvestedArticles/harvestContainer";
 import PartDetailsForm from "@/components/parts/PartDetailsForm";
 import {tag} from "postcss-selector-parser";
+import {habitatOptions} from "../../../models/IntefacesAndOptions/option";
+
 
 interface CreateSpeciesFormProps {
     // isInEdit : boolean;
@@ -37,7 +41,7 @@ const fieldsTechnical = [
 ];
 
 
-const DefaultEmptyValues: PartDetailsProps = {
+const DefaultEmptyPartValues: PartDetailsProps = {
     typeName: "" , // Name of the part or mark
     isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
     variedBy: "" , // Attribute by which it varies (e.g., SexMale)
@@ -47,6 +51,21 @@ const DefaultEmptyValues: PartDetailsProps = {
         visualMarks: "", // Pattern, scales, color
         description: "", // Descriptive text of the pattern
         keywords: ["d"], // Keywords from the description
+    },
+};
+
+const DefaultEmptyArticleValues: ArticleDetailsProps = {
+    articleName: "" , // Name of the part or mark
+    isHarvested: false, // Is the animal likely to be killed or farmed
+    alternateName: "", // Any known local name
+    isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
+    variedBy: "" , // Attribute by which it varies (e.g., SexMale)
+    imageUrls: [], // Images of the part
+    typeDetails: [],
+    identifications: {
+        visualMarks: "", // Pattern, scales, color
+        describe: "", // Descriptive text of the pattern
+        keywords: [], // Keywords from the description
     },
 };
 
@@ -60,6 +79,15 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = () => {
         setValue(name, {value:tags});
     };
 
+    const handlePlacesChange = (tags: string[] , name : string) => {
+        console.log(tags);
+        // setValue(name, {value:tags});
+    };
+
+    const handleHabitatChange = (tags: string[] , name : string) => {
+        console.log(tags);
+        // setValue(name, {value:tags});
+    };
 
 
     const handlePartsChange =(tags: PartDetailsProps[]) => {
@@ -100,15 +128,29 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = () => {
                 <TagInput onTagsChange={handleTagsChange} name={'body.tags'} labelName={'Tags'}/>
             </SectionWrapper>
 
-            <SectionWrapper  label={"Technical Details"} bgColor={"bg-gray-200"}>
+            <SectionWrapper  label={"Morphology"} bgColor={"bg-gray-200"}>
                 <TagInput onTagsChange={handleTagsChange} name={'technicals.speciesClass.similaritiesWith'} labelName={'Similar Species'} />
 
                 <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
-                    <PartContainer defValues={DefaultEmptyValues} onListChange={handlePartsChange}></PartContainer>
+                    <PartContainer defValues={DefaultEmptyPartValues} onListChange={handlePartsChange}></PartContainer>
+                </SectionWrapper>
+
+                <SectionWrapper label={"Articles"} bgColor={"bg-blue-200"}>
+                    <HarvestContainer defValues={DefaultEmptyArticleValues} onListChange={handlePartsChange}></HarvestContainer>
                 </SectionWrapper>
 
             </SectionWrapper>
 
+
+
+            <SectionWrapper  label={"Geo Information"} bgColor={"bg-gray-200"}>
+                <TagInput onTagsChange={handlePlacesChange} name={'places'} labelName={'Places Found'} />
+
+                <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
+                   <TagOptions name={'habitats'} labelName={'Select Habitats'} options={habitatOptions}  onTagsChange={handleHabitatChange}></TagOptions>
+                </SectionWrapper>
+
+            </SectionWrapper>
 
 
 

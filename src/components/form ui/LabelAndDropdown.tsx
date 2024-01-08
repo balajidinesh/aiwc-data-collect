@@ -5,7 +5,7 @@ import {Dropdown} from "@/components/Dropdown";
 interface LabelAndDropdownProps {
     label: string;
     name: string;
-    options: { value: string; label: string }[];
+    options: { value: string|boolean; label: string }[];
     register: any;
     required?: boolean;
 }
