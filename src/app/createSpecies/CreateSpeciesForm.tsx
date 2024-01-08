@@ -12,6 +12,7 @@ import {PartDetailsProps,ArticleDetailsProps} from "../../../models/IntefacesAnd
 import TagOptions from "@/components/tagOptions";
 import TagInput from "@/components/TagInput";
 import { submitSpecies } from './submitSpecies';
+import {LabelAndDescription} from "@/components/non form ui/Description";
 import {SectionWrapper} from "@/components/SectionWrapper"; // Import the server-side submit function
 // import TabsContainer from "@/components/propnproplist/TabsContainer";
 import PartContainer from "@/components/parts/PartContainer";
@@ -73,7 +74,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = () => {
     const { register, handleSubmit, reset ,setValue} = useForm<Species>();
     const router = useRouter();
     const [propsList, setPropsList] = useState<string[]>([]);
-
+    const [des,setDes] = useState('');
     const handleTagsChange = (tags: string[] , name : string) => {
         console.log(tags);
         setValue(name, {value:tags});
@@ -152,7 +153,11 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = () => {
 
             </SectionWrapper>
 
+            <SectionWrapper  label={"Summary and Miscellaneous Information"} bgColor={"bg-gray-200"}>
 
+
+                <LabelAndDescription label="Description" description={des} onChange={setDes}></LabelAndDescription>
+            </SectionWrapper>
 
             <div className="mt-5">
                 <button type="submit" className="bg-zinc-900 text-white py-2 px-4">
