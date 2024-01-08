@@ -46,6 +46,7 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState,onEdit, defVa
 
     useEffect(() => {
         // Update form fields when defValues change
+        if (onEdit) {
             setTypeName(defValues.typeName);
             setIsVaries(defValues.isVaries);
             setVariedBy(defValues.variedBy);
@@ -55,8 +56,23 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState,onEdit, defVa
             setDescription(defValues.identifications.description);
             setKeywords(defValues.identifications.keywords);
             console.log("inside pdf : ")
-    }, defValues);
+        }else{
+            resetForm();
+        }
+    }, [onEdit, defValues]);
 
+    const resetForm =( ) =>{
+
+        setTypeName("");
+        setIsVaries(false);
+        setVariedBy("");
+        setImageUrls([]);
+        setTypeDetails([]);
+        setVisualMarks("");
+        setDescription("");
+        setKeywords([]);
+
+    }
 
     // useEffect(() => {
     //     console.log("finally")
@@ -78,14 +94,7 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState,onEdit, defVa
                 },
             });
 
-            setTypeName('');
-            setIsVaries(false);
-            setVariedBy('');
-            setImageUrls([]);
-            setTypeDetails([]);
-            setVisualMarks('');
-            setDescription('');
-            setKeywords([]);
+            resetForm();
 
             // defValues  = DefaultEmptyValues;
 
@@ -112,7 +121,7 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState,onEdit, defVa
 
             {/* Leave imageUrls for now - TODO */}
             <SectionWrapper label={"Part Properties"} bgColor={"bg-fuchsia-200"}>
-            <TypeContainer defValues={
+            <TypeContainer isNew={!onEdit} onEdit={onEdit} defValues={
                 inState
                     ? defValues.typeDetails : typeDetails }
                            onListChange={handleTypeDetailsChange} ></TypeContainer>
@@ -124,7 +133,7 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ inState,onEdit, defVa
                     <LabelAndTextInput label="Visual Marks" value={visualMarks} onChange={setVisualMarks}></LabelAndTextInput>
                     <LabelAndTextInput label="Description" value={description} onChange={setDescription}></LabelAndTextInput>
                 </div>
-                <TagInput defValues={ inState
+                <TagInput inState={true} defValues={ inState
                     ? defValues.identifications.keywords : keywords }
                           onTagsChange={handleKeywordsChange} name="identifications.keywords" labelName="Keywords"/>
             </SectionWrapper>

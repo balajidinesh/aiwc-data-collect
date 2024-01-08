@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import TypeDetailsForm from "@/components/propnproplist/TypeDetailsForm";
+import {TypeDetailsForm} from "@/components/parts/TypeDetails/typeDetailsForm";
 import {TypeDetailsProps} from "../../../../models/IntefacesAndOptions/interfaces";
 
 interface TypeContainerProps {
+    onEdit : boolean;
+    isNew : boolean ;
     defValues : TypeDetailsProps[];
     onListChange: (list: TypeDetailsProps[]) => void;
 }
@@ -13,19 +15,22 @@ const DefaultEmptyValues: TypeDetailsProps = {
     value: '',
 };
 
-const TypeContainer: React.FC<TypeContainerProps> = ({ defValues, onListChange }) => {
-    const [typeDetailsList, setTypeDetailsList] = useState<TypeDetailsProps[]>(defValues );
+const TypeContainer: React.FC<TypeContainerProps> = ({ onEdit,isNew,defValues, onListChange }) => {
+    const [typeDetailsList, setTypeDetailsList] = useState<TypeDetailsProps[]>(onEdit? defValues:[] );
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
 
-    useEffect(() => {
-        onListChange(typeDetailsList);
-        console.log("useEffect")
-    }, [typeDetailsList]);
+    // useEffect(() => {
+    //     onListChange(typeDetailsList);
+    //     console.log("useEffect")
+    // }, [typeDetailsList]);
 
     useEffect(() => {
         setTypeDetailsList(defValues)
-    }, [defValues]);
+        // }else if (isNew) {
+        //     setTypeDetailsList([])
+        // }
+    }, [onEdit,isNew,defValues]);
 
     const handleAddTypeDetails = (typeDetails: TypeDetailsProps) => {
         const updatedList = [...typeDetailsList];

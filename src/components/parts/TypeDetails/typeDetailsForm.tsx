@@ -12,7 +12,7 @@ export interface TypeDetailsFormProps {
 }
 
 
-const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ onEdit , defValues, onAdd }) => {
+export const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ onEdit , defValues, onAdd }) => {
 
     const [characterName, setCharacterName] = useState(defValues.characterName);
     const [scale, setScale] = useState(defValues.scale);
@@ -42,9 +42,10 @@ const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ onEdit , defValues, o
     const handleAdd = () => {
         if (characterName && scale && value) {
             onAdd({ characterName, scale, value });
+
+            resetForm();
         }
 
-        resetForm();
     };
 
     return (
@@ -66,4 +67,4 @@ const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ onEdit , defValues, o
     );
 };
 
-export default TypeDetailsForm;
+
