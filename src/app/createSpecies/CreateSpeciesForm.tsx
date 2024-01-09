@@ -3,7 +3,6 @@
 
 import {useForm} from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import {useState} from "react";
 import { Species } from '@/../models/species';
 import React from 'react';
 import {LabelAndInput} from "@/components/form ui/LableAndInput";
@@ -18,12 +17,10 @@ import PartContainer from "@/components/parts/PartContainer";
 import HarvestContainer from "@/components/harvestedArticles/harvestContainer";
 import {habitatOptions} from "../../../models/IntefacesAndOptions/option";
 
-import { get } from 'lodash';
-
 import {fieldsBody} from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyPartValues} from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyArticleValues} from "../../../models/IntefacesAndOptions/DefaultValues";
-import {is} from "whatwg-url/dist/URL";
+
 
 
 interface CreateSpeciesFormProps {
@@ -32,9 +29,14 @@ interface CreateSpeciesFormProps {
 }
 
 
+function getNestedValue(obj, path) {
+    const keys = path.split('.');
+    return keys.reduce((acc, key) => (acc && acc[key] !== 'undefined' ? acc[key] : undefined), obj);
+}
+
 
 const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,defValues}) => {
-    const { register, handleSubmit, reset ,setValue,getValues} = useForm<Species>(defValues);
+    const { register, handleSubmit ,setValue,getValues} = useForm<Species>(defValues);
     const router = useRouter();
 
 
@@ -81,7 +83,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
             console.log(formData)
             await submitSpecies(formData);
             //
-            await router.replace('/')
+            await router.replace('/');
             await router.reload()
         } catch (error) {
             console.error('Error connecting to MongoDB:', error);
@@ -97,10 +99,10 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                     <div key={index}>
                         {field.type === 'text' ? (
                             <LabelAndInput label={field.label} name={field.name} type="text" register={register}
-                                           required={field.required} defaultValue={isInEdit ? get(defValues,field.name) : ''}/>
+                                           required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : ''}/>
                         ) : field.type === 'dropdown' ? (
                             <LabelAndDropdown label={field.label} name={field.name} options={field.options}
-                                              register={register} required={field.required} defaultValue={isInEdit ? get(defValues,field.name) : ''}/>
+                                              register={register} required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : ''}/>
                         ) : null}
                     </div>
                 ))}
