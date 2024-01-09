@@ -32,15 +32,21 @@ const TypeContainer: React.FC<TypeContainerProps> = ({ onEdit,defValues, onListC
     }, [onEdit,defValues]);
 
     const handleAddTypeDetails = (typeDetails: TypeDetailsProps) => {
-        const updatedList = [...typeDetailsList];
-        if (editingIndex !== null) {
-            updatedList[editingIndex] = typeDetails; // Update existing tab
-            setEditingIndex(null); // Reset editing index after update
-        } else {
-            updatedList.push(typeDetails); // Add new tab
+        if (typeDetailsList) {
+            const updatedList = [...typeDetailsList]
+            if (editingIndex !== null) {
+                updatedList[editingIndex] = typeDetails; // Update existing tab
+                setEditingIndex(null); // Reset editing index after update
+            } else {
+                updatedList.push(typeDetails); // Add new tab
+            }
+            setTypeDetailsList(updatedList);
+            onListChange(updatedList);
+        }else{
+            setTypeDetailsList([typeDetails]);
+            onListChange([typeDetails]);
         }
-        setTypeDetailsList(updatedList);
-        onListChange(updatedList);
+
     };
 
     const handleEditTypeDetails = (index: number) => {
@@ -63,7 +69,7 @@ const TypeContainer: React.FC<TypeContainerProps> = ({ onEdit,defValues, onListC
     return (
         <div>
             <div className="flex flex-wrap gap-2">
-                {typeDetailsList.map((typeDetails, index) => (
+                {typeDetailsList && typeDetailsList.map((typeDetails, index) => (
                     <div key={index} className="bg-blue-400 rounded-md p-2 flex items-center">
                         <span className="text-white">{`${typeDetailsList[index].characterName}`}</span>
                         <button

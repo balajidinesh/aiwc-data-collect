@@ -18,6 +18,7 @@ import PartContainer from "@/components/parts/PartContainer";
 import HarvestContainer from "@/components/harvestedArticles/harvestContainer";
 import {habitatOptions} from "../../../models/IntefacesAndOptions/option";
 
+import { get } from 'lodash';
 
 import {fieldsBody} from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyPartValues} from "../../../models/IntefacesAndOptions/DefaultValues";
@@ -35,6 +36,7 @@ interface CreateSpeciesFormProps {
 const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,defValues}) => {
     const { register, handleSubmit, reset ,setValue,getValues} = useForm<Species>(defValues);
     const router = useRouter();
+
 
 
     const handleTagsChange = (value: string[]) => {
@@ -95,10 +97,10 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                     <div key={index}>
                         {field.type === 'text' ? (
                             <LabelAndInput label={field.label} name={field.name} type="text" register={register}
-                                           required={field.required}/>
+                                           required={field.required} defaultValue={isInEdit ? get(defValues,field.name) : ''}/>
                         ) : field.type === 'dropdown' ? (
                             <LabelAndDropdown label={field.label} name={field.name} options={field.options}
-                                              register={register} required={field.required}/>
+                                              register={register} required={field.required} defaultValue={isInEdit ? get(defValues,field.name) : ''}/>
                         ) : null}
                     </div>
                 ))}
