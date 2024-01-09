@@ -84,7 +84,6 @@ const PartContainer: React.FC<PartContainerProps> = ({defValues,inState ,onListC
                         typeName: "" , // Name of the part or mark
                         isVaries: true , // If the same part or mark varies significantly due to constraints like age, puberty, gender
                         variedBy: "" , // Attribute by which it varies (e.g., SexMale)
-                        imageUrls: [], // Images of the part
                         typeDetails: [],
                         identifications: {
                             visualMarks: "", // Pattern, scales, color

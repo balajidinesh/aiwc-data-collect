@@ -39,7 +39,7 @@ const HarvestContainer: React.FC<ArticleContainerProps> = ({defValues,inState ,o
     };
 
     const handleEditArticleDetails = (index: number) => {
-        const typeDetails = articleDetailsList[index];
+        // const typeDetails = articleDetailsList[index];
         setEditingIndex(index);
 
         // setTypeDetailsList(updatedList);
@@ -59,7 +59,7 @@ const HarvestContainer: React.FC<ArticleContainerProps> = ({defValues,inState ,o
             <div className="flex flex-wrap gap-2">
                 {articleDetailsList.map((typeDetails, index) => (
                     <div key={index} className="bg-blue-400 rounded-md p-2 flex items-center">
-                        <span className="text-white">{`${index + 1}`}</span>
+                        <span className="text-white">{`${articleDetailsList[index].articleName}`}</span>
                         <button
                             type="button"
                             onClick={() => handleEditArticleDetails(index)}
@@ -85,7 +85,6 @@ const HarvestContainer: React.FC<ArticleContainerProps> = ({defValues,inState ,o
                         alternateName: "", // Any known local name
                         isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
                         variedBy: "" , // Attribute by which it varies (e.g., SexMale)
-                        imageUrls: [], // Images of the part
                         typeDetails: [],
                         identifications: {
                             visualMarks: "", // Pattern, scales, color

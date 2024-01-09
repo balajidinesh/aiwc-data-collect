@@ -2,15 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { LabelAndTextInput } from "@/components/non form ui/LabelAndTextInput";
-import {LabelAndDropdownState} from "@/components/non form ui/LabelAndDropdownText";
 import {ArticleDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
 import {TypeDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
-import {BoolOption} from "../../../models/IntefacesAndOptions/option";
-import {ScaleOptions} from "../../../models/IntefacesAndOptions/option";
 import {SectionWrapper} from "@/components/SectionWrapper";
 import TagInput from "@/components/TagInput";
 import TypeContainer from "@/components/harvestedArticles/TypeDetails/typeContainer";
-import {bool} from "prop-types";
 import {LabelAndDescription} from "@/components/non form ui/Description";
 import SwitchToggle from "@/components/SwitchToggle";
 
@@ -20,29 +16,13 @@ export interface harvestDetailsFormProps {
     onAdd: (partDetails: ArticleDetailsProps) => void;
 }
 
-const DefaultEmptyValues: ArticleDetailsProps = {
-    articleName: "" , // Name of the part or mark
-    isHarvested: false, // Is the animal likely to be killed or farmed
-    alternateName: "", // Any known local name
-    isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
-    variedBy: "" , // Attribute by which it varies (e.g., SexMale)
-    imageUrls: [], // Images of the part
-    typeDetails: [],
-    identifications: {
-        visualMarks: "", // Pattern, scales, color
-        describe: "", // Descriptive text of the pattern
-        keywords: [], // Keywords from the description
-    },
-};
-
-const harvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValues, onAdd }) => {
+const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValues, onAdd }) => {
 
     const [articleName, setArticleName] = useState( defValues.articleName );
     const [isHarvested, setIsHarvested] = useState( defValues.isHarvested );
     const [alternateName, setAlternateName] = useState( defValues.alternateName );
     const [isVaries, setIsVaries] = useState( defValues.isVaries );
     const [variedBy, setVariedBy] = useState( defValues.variedBy );
-    const [imageUrls, setImageUrls] = useState( defValues.imageUrls );
     const [typeDetails, setTypeDetails] = useState<TypeDetailsProps[]>( defValues.typeDetails);
     const [visualMarks, setVisualMarks] = useState(defValues.identifications.visualMarks );
     const [describe, setDescribe] = useState(defValues.identifications.describe );
@@ -56,8 +36,7 @@ const harvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
             setIsHarvested(defValues.isHarvested);
             setIsVaries(defValues.isVaries);
             setVariedBy(defValues.variedBy);
-            setAlternateName(defValues.alternateName)
-            setImageUrls(defValues.imageUrls);
+            setAlternateName(defValues.alternateName);
             setTypeDetails(defValues.typeDetails);
             setVisualMarks(defValues.identifications.visualMarks);
             setDescribe(defValues.identifications.describe);
@@ -74,7 +53,6 @@ const harvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
         setIsVaries(false);
         setVariedBy("");
         setAlternateName(defValues.alternateName)
-        setImageUrls([]);
         setTypeDetails([]);
         setVisualMarks("");
         setDescribe("");
@@ -94,8 +72,7 @@ const harvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
                 isHarvested : isHarvested,
                 alternateName : alternateName,
                 isVaries : isVaries,
-                variedBy : variedBy,
-                imageUrls : imageUrls,
+                variedBy : isVaries ? variedBy : '',
                 typeDetails : [...typeDetails],
                 identifications: {
                     visualMarks : visualMarks,
@@ -145,7 +122,7 @@ const harvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
                     <LabelAndTextInput label="Visual Marks" value={visualMarks} onChange={setVisualMarks}></LabelAndTextInput>
 
                 </div>
-                <LabelAndDescription label="Description" description={describe} onChange={setDescribe}></LabelAndDescription>
+                <LabelAndDescription start={describe} label="Description" description={describe} onChange={setDescribe}></LabelAndDescription>
                 <TagInput inState={true} defValues={ onEdit
                     ? defValues.identifications.keywords : keywords }
                           onTagsChange={handleKeywordsChange} name="identifications.keywords" labelName="Keywords"/>
@@ -161,4 +138,4 @@ const harvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
     );
 };
 
-export default harvestDetailsForm;
+export default HarvestDetailsForm;

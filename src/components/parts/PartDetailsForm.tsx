@@ -2,11 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { LabelAndTextInput } from "@/components/non form ui/LabelAndTextInput";
-import {LabelAndDropdownState} from "@/components/non form ui/LabelAndDropdownText";
 import {PartDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
 import {TypeDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
-import {BoolOption} from "../../../models/IntefacesAndOptions/option";
-import {ScaleOptions} from "../../../models/IntefacesAndOptions/option";
 import {SectionWrapper} from "@/components/SectionWrapper";
 import TagInput from "@/components/TagInput";
 import TypeContainer from "@/components/parts/TypeDetails/typeContainer";
@@ -20,25 +17,11 @@ export interface partDetailsFormProps {
     onAdd: (partDetails: PartDetailsProps) => void;
 }
 
-const DefaultEmptyValues: PartDetailsProps = {
-    typeName: "" , // Name of the part or mark
-    isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
-    variedBy: "" , // Attribute by which it varies (e.g., SexMale)
-    imageUrls: [], // Images of the part
-    typeDetails: [],
-    identifications: {
-        visualMarks: "", // Pattern, scales, color
-        description: "", // Descriptive text of the pattern
-        keywords: [], // Keywords from the description
-    },
-};
-
-const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, onAdd }) => {
+const PartDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, onAdd }) => {
 
     const [typeName, setTypeName] = useState( defValues.typeName );
     const [isVaries, setIsVaries] = useState<string|boolean>( defValues.isVaries );
     const [variedBy, setVariedBy] = useState( defValues.variedBy );
-    const [imageUrls, setImageUrls] = useState( defValues.imageUrls );
     const [typeDetails, setTypeDetails] = useState<TypeDetailsProps[]>( defValues.typeDetails);
     const [visualMarks, setVisualMarks] = useState(defValues.identifications.visualMarks );
     const [description, setDescription] = useState(defValues.identifications.description );
@@ -51,12 +34,11 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
             setTypeName(defValues.typeName);
             setIsVaries(defValues.isVaries);
             setVariedBy(defValues.variedBy);
-            setImageUrls(defValues.imageUrls);
             setTypeDetails(defValues.typeDetails);
             setVisualMarks(defValues.identifications.visualMarks);
             setDescription(defValues.identifications.description);
             setKeywords(defValues.identifications.keywords);
-            console.log("inside pdf : ")
+            // console.log("inside pdf : ")
         }else{
             resetForm();
         }
@@ -67,7 +49,6 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
         setTypeName("");
         setIsVaries(false);
         setVariedBy("");
-        setImageUrls([]);
         setTypeDetails([]);
         setVisualMarks("");
         setDescription("");
@@ -85,8 +66,7 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
             onAdd({
                 typeName :typeName,
                 isVaries:isVaries,
-                variedBy:variedBy,
-                imageUrls:imageUrls,
+                variedBy : isVaries ? variedBy : '',
                 typeDetails : [...typeDetails],
                 identifications: {
                     visualMarks:visualMarks,
@@ -102,7 +82,7 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
         }
     };
 
-    const handleKeywordsChange = (tags: string[] , name : string) => {
+    const handleKeywordsChange = (tags: string[]) => {
         // console.log(handleKeywordsChange);
         setKeywords(tags);
     };
@@ -133,7 +113,7 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
                     <LabelAndTextInput label="Visual Marks" value={visualMarks} onChange={setVisualMarks}></LabelAndTextInput>
                 </div>
-                <LabelAndDescription label="Description" description={description} onChange={setDescription}></LabelAndDescription>
+                <LabelAndDescription start={description} label="Description" description={description} onChange={setDescription}></LabelAndDescription>
                 <TagInput inState={true} defValues={ onEdit
                     ? defValues.identifications.keywords : keywords }
                           onTagsChange={handleKeywordsChange} name="identifications.keywords" labelName="Keywords"/>
@@ -149,4 +129,4 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
     );
 };
 
-export default partDetailsForm;
+export default PartDetailsForm;

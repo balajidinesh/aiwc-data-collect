@@ -25,8 +25,8 @@ export const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ onEdit , defVa
             setScale(defValues.scale);
             setValue(defValues.value);
 
-            console.log("im")
-            console.log(defValues);
+            // console.log("im")
+            // console.log(defValues);
         }else {
             resetForm();
         }
