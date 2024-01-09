@@ -28,8 +28,9 @@ interface CreateSpeciesFormProps {
     defValues : Species;
 }
 
+type NestedObject = { [key: string]: NestedObject | any };
 
-function getNestedValue(obj, path) {
+function getNestedValue(obj: NestedObject, path: string): any {
     const keys = path.split('.');
     return keys.reduce((acc, key) => (acc && acc[key] !== 'undefined' ? acc[key] : undefined), obj);
 }
