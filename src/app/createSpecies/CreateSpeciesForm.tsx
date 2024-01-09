@@ -25,7 +25,7 @@ import {DefaultEmptyArticleValues} from "../../../models/IntefacesAndOptions/Def
 
 interface CreateSpeciesFormProps {
     isInEdit : boolean;
-    defValues : Species;
+    defValues : Species | any ;
 }
 
 type NestedObject = { [key: string]: NestedObject | any };
@@ -37,7 +37,7 @@ function getNestedValue(obj: NestedObject, path: string): any {
 
 
 const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,defValues}) => {
-    const { register, handleSubmit ,setValue,getValues} = useForm<Species>(defValues);
+    const { register, handleSubmit ,setValue,getValues} = useForm<Species>();
     const router = useRouter();
 
 
