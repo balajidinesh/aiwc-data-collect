@@ -1,6 +1,11 @@
 // Dropdown.tsx
 import React from 'react';
 
+interface DropdownProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+    options: DropdownOption[];
+}
+
+
 const Dropdown: React.FC<DropdownProps> = React.forwardRef<HTMLSelectElement, DropdownProps>(
     ({ className, options, ...props }, ref) => {
         return (
