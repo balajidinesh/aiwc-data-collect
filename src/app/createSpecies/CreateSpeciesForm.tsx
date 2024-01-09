@@ -25,7 +25,7 @@ import {DefaultEmptyArticleValues} from "../../../models/IntefacesAndOptions/Def
 
 interface CreateSpeciesFormProps {
     isInEdit : boolean;
-    defValues : Species | any ;
+    defValues : Partial<Species>;
 }
 
 type NestedObject = { [key: string]: NestedObject | any };
@@ -43,38 +43,38 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
 
 
     const handleTagsChange = (value: string[]) => {
-        setValue('body.tags', value);
+        setValue<string[]>('body.tags', value);
     };
 
     const handleSimilarChange = (value: string[]) => {
-        setValue('technicals.speciesClass.similaritiesWith', value);
+        setValue<string[]>('technicals.speciesClass.similaritiesWith', value);
     };
 
 
     const handlePartsChange = (parts : PartDetailsProps[]) =>{
-        setValue("technicals.parts" ,parts);
+        setValue<PartDetailsProps[]>("technicals.parts", parts);
     }
 
     const handleArticleChange = (articles : ArticleDetailsProps[]) =>{
-        setValue("technicals.harvestedArticles" , articles);
+        setValue<ArticleDetailsProps[]>("technicals.harvestedArticles" , articles);
     }
 
     const handlePlacesChange = (places: string[]) => {
         // console.log(tags);
-        setValue("geoInformation.foundAt.places", places);
+        setValue<string[]>("geoInformation.foundAt.places", places);
     };
 
     const handleHabitatChange = (habitats: [] ) => {
         // console.log(tags);
 
-        setValue("geoInformation.habitats", habitats);
+        setValue<[]>("geoInformation.habitats", habitats);
     };
 
 
     const handleDescriptionChange =(description: "") => {
         // console.log(tags);
 
-        setValue("descriptionOrExplanation", description);
+        setValue<string[]>("descriptionOrExplanation", description);
     };
 
 
