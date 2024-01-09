@@ -14,85 +14,58 @@ import TagInput from "@/components/TagInput";
 import { submitSpecies } from './submitSpecies';
 import {LabelAndDescription} from "@/components/non form ui/Description";
 import {SectionWrapper} from "@/components/SectionWrapper"; // Import the server-side submit function
-// import TabsContainer from "@/components/propnproplist/TabsContainer";
 import PartContainer from "@/components/parts/PartContainer";
 import HarvestContainer from "@/components/harvestedArticles/harvestContainer";
-import PartDetailsForm from "@/components/parts/PartDetailsForm";
-import {tag} from "postcss-selector-parser";
 import {habitatOptions} from "../../../models/IntefacesAndOptions/option";
+
+
+import {fieldsBody} from "../../../models/IntefacesAndOptions/DefaultValues";
+import {DefaultEmptyPartValues} from "../../../models/IntefacesAndOptions/DefaultValues";
+import {DefaultEmptyArticleValues} from "../../../models/IntefacesAndOptions/DefaultValues";
 
 
 interface CreateSpeciesFormProps {
     // isInEdit : boolean;
 }
 
-const fieldsBody = [
-    { label: 'Title', name: 'body.title', type: 'text', required: true },
-    { label: 'Scientific Name', name: 'body.scientificName', type: 'text', required: true },
-    { label: 'Local Name', name: 'body.localName', type: 'text', required: true },
-    { label: 'Conservation Status', name: 'body.conservationStatus', type: 'dropdown', options: [
-            { value: 'endangered', label: 'Endangered' },
-            { value: 'threatened', label: 'Threatened' },
-            { value: 'not_evaluated', label: 'Not Evaluated' },
-        ] },
-];
 
-const fieldsTechnical = [
-    {label: 'Similar Species',name: 'technicals.speciesClass.similaritiesWith',type: 'TAG',required: false,},
-];
-
-
-const DefaultEmptyPartValues: PartDetailsProps = {
-    typeName: "" , // Name of the part or mark
-    isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
-    variedBy: "" , // Attribute by which it varies (e.g., SexMale)
-    imageUrls: [], // Images of the part
-    typeDetails: [],
-    identifications: {
-        visualMarks: "", // Pattern, scales, color
-        description: "", // Descriptive text of the pattern
-        keywords: ["d"], // Keywords from the description
-    },
-};
-
-const DefaultEmptyArticleValues: ArticleDetailsProps = {
-    articleName: "" , // Name of the part or mark
-    isHarvested: false, // Is the animal likely to be killed or farmed
-    alternateName: "", // Any known local name
-    isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
-    variedBy: "" , // Attribute by which it varies (e.g., SexMale)
-    imageUrls: [], // Images of the part
-    typeDetails: [],
-    identifications: {
-        visualMarks: "", // Pattern, scales, color
-        describe: "", // Descriptive text of the pattern
-        keywords: [], // Keywords from the description
-    },
-};
 
 const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = () => {
-    const { register, handleSubmit, reset ,setValue} = useForm<Species>();
+    const { register, handleSubmit, reset ,setValue,getValues} = useForm<Species>();
     const router = useRouter();
     const [propsList, setPropsList] = useState<string[]>([]);
-    const [des,setDes] = useState('');
+    const [description,setDescription] = useState('');
+
+
     const handleTagsChange = (tags: string[] , name : string) => {
-        console.log(tags);
-        setValue(name, {value:tags});
-    };
-
-    const handlePlacesChange = (tags: string[] , name : string) => {
-        console.log(tags);
-        // setValue(name, {value:tags});
-    };
-
-    const handleHabitatChange = (tags: string[] , name : string) => {
-        console.log(tags);
-        // setValue(name, {value:tags});
+        setValue("body.tags", {value:tags});
     };
 
 
-    const handlePartsChange =(tags: PartDetailsProps[]) => {
-        console.log(tags);
+    const handlePartsChange = (parts : PartDetailsProps[]) =>{
+        setValue("technicals.parts" ,{value : parts});
+    }
+
+    const handleArticleChange = (articles : ArticleDetailsProps[]) =>{
+        setValue("technicals.harvestedArticles" , {value : articles});
+    }
+
+    const handlePlacesChange = (places: string[] , name : string) => {
+        // console.log(tags);
+        setValue("geoInformation.foundAt.places", {value:places});
+    };
+
+    const handleHabitatChange = (habitats: [] ) => {
+        // console.log(tags);
+
+        setValue("geoInformation.habitats", {value:habitats});
+    };
+
+
+    const handleDescriptionChange =(description: "") => {
+        // console.log(tags);
+
+        setValue("descriptionOrExplanation", {value:description});
     };
 
 
@@ -130,7 +103,6 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = () => {
             </SectionWrapper>
 
             <SectionWrapper  label={"Morphology"} bgColor={"bg-gray-200"}>
-                <TagInput onTagsChange={handleTagsChange} name={'technicals.speciesClass.similaritiesWith'} labelName={'Similar Species'} />
 
                 <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
                     <PartContainer defValues={DefaultEmptyPartValues} onListChange={handlePartsChange}></PartContainer>
@@ -140,9 +112,10 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = () => {
                     <HarvestContainer defValues={DefaultEmptyArticleValues} onListChange={handlePartsChange}></HarvestContainer>
                 </SectionWrapper>
 
+                <TagInput onTagsChange={handleTagsChange} name={'technicals.speciesClass.similaritiesWith'} labelName={'Similar Species'} />
             </SectionWrapper>
 
-
+            {/*<SwitchToggle label={'hi'} value={tfval} onChange={setTfval}></SwitchToggle>*/}
 
             <SectionWrapper  label={"Geo Information"} bgColor={"bg-gray-200"}>
                 <TagInput onTagsChange={handlePlacesChange} name={'places'} labelName={'Places Found'} />
@@ -156,7 +129,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = () => {
             <SectionWrapper  label={"Summary and Miscellaneous Information"} bgColor={"bg-gray-200"}>
 
 
-                <LabelAndDescription label="Description" description={des} onChange={setDes}></LabelAndDescription>
+                <LabelAndDescription label="Description" description={getValues('descriptionOrExplanation')} onChange={handleDescriptionChange}></LabelAndDescription>
             </SectionWrapper>
 
             <div className="mt-5">

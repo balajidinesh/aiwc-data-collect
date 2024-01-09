@@ -11,6 +11,7 @@ import {SectionWrapper} from "@/components/SectionWrapper";
 import TagInput from "@/components/TagInput";
 import TypeContainer from "@/components/parts/TypeDetails/typeContainer";
 import {LabelAndDescription} from "@/components/non form ui/Description";
+import SwitchToggle from "@/components/SwitchToggle";
 
 
 export interface partDetailsFormProps {
@@ -80,7 +81,7 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
     // }, [typeDetails]);
 
     const handleAdd = () => {
-        if (typeName && variedBy && visualMarks) {
+        if (typeName && visualMarks) {
             onAdd({
                 typeName :typeName,
                 isVaries:isVaries,
@@ -115,8 +116,8 @@ const partDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
         <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
                 <LabelAndTextInput label="Type Name" value={typeName} onChange={setTypeName}></LabelAndTextInput>
-                <LabelAndDropdownState label="Is Varies" options={BoolOption} selectedValue={isVaries} onSelectChange={setIsVaries}></LabelAndDropdownState>
-                <LabelAndTextInput label="Varied By" value={variedBy} onChange={setVariedBy}></LabelAndTextInput>
+                <SwitchToggle label="Is Varies" value={isVaries} onChange={setIsVaries}></SwitchToggle>
+                {isVaries && (<LabelAndTextInput label="Varied By" value={variedBy} onChange={setVariedBy}></LabelAndTextInput>)}
             </div>
 
             {/* Leave imageUrls for now - TODO */}

@@ -25,3 +25,29 @@
 /*    )*/
 /*    rgb(var(--background-start-rgb));*/
 /*}*/
+
+
+/* Add these styles to your global CSS or component styles */
+/* Add these styles to your global CSS or component styles */
+/* Add these styles to your global CSS or component styles */
+.toggle-checkbox {
+  transition: all 0.3s ease-in-out;
+}
+
+.toggle-checkbox.checked {
+  transform: translateX(100%);
+}
+
+.toggle-label {
+  display: block;
+  overflow: hidden;
+  height: 24px;
+  border-radius: 12px; /* or use 50% for rounded-full */
+  background-color: #cbd5e0; /* Adjust this color to match your design */
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.toggle-checkbox.checked ~ .toggle-label {
+  background-color: #136bd5; /* Change this color to match your design */
+}

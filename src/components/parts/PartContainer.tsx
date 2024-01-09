@@ -60,7 +60,7 @@ const PartContainer: React.FC<PartContainerProps> = ({defValues,inState ,onListC
             <div className="flex flex-wrap gap-2">
                 {partDetailsList.map((typeDetails, index) => (
                     <div key={index} className="bg-blue-400 rounded-md p-2 flex items-center">
-                        <span className="text-white">{`${index + 1}`}</span>
+                        <span className="text-white">{`${partDetailsList[index].typeName}`}</span>
                         <button
                             type="button"
                             onClick={() => handleEditPartDetails(index)}

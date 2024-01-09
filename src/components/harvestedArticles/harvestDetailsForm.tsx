@@ -12,6 +12,7 @@ import TagInput from "@/components/TagInput";
 import TypeContainer from "@/components/harvestedArticles/TypeDetails/typeContainer";
 import {bool} from "prop-types";
 import {LabelAndDescription} from "@/components/non form ui/Description";
+import SwitchToggle from "@/components/SwitchToggle";
 
 export interface harvestDetailsFormProps {
     defValues: ArticleDetailsProps;
@@ -87,7 +88,7 @@ const harvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
     // }, [typeDetails]);
 
     const handleAdd = () => {
-        if (articleName && variedBy && visualMarks) {
+        if (articleName && visualMarks) {
             onAdd({
                 articleName: articleName,
                 isHarvested : isHarvested,
@@ -124,9 +125,9 @@ const harvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
         <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto mb-10">
                 <LabelAndTextInput label="Type Name" value={articleName} onChange={setArticleName}></LabelAndTextInput>
-                <LabelAndDropdownState label="Is Harvested" options={BoolOption} selectedValue={isHarvested} onSelectChange={setIsHarvested}></LabelAndDropdownState>
-                <LabelAndDropdownState label="Is Varies" options={BoolOption} selectedValue={isVaries} onSelectChange={setIsVaries}></LabelAndDropdownState>
-                <LabelAndTextInput label="Varied By" value={variedBy} onChange={setVariedBy}></LabelAndTextInput>
+                <SwitchToggle label={"Is Harvested"} value={isHarvested} onChange={setIsHarvested}></SwitchToggle>
+                <SwitchToggle label="Is Varies" value={isVaries} onChange={setIsVaries}></SwitchToggle>
+                {isVaries && (<LabelAndTextInput label="Varied By" value={variedBy} onChange={setVariedBy}></LabelAndTextInput>)}
                 <LabelAndTextInput label="Alternate Name" value={alternateName} onChange={setAlternateName}></LabelAndTextInput>
             </div>
 

@@ -6,7 +6,7 @@ const speciesSchema
     // General Information
     body: {
         title: { type: String, required: true }, // Title of the species
-        mainImageUrls: [{ type: String }], // URLs for main images
+        // mainImageUrls: [{ type: String }], // URLs for main images
         scientificName: { type: String, required: true }, // Scientific name
         localName: { type: String, required: true }, // Local name
         conservationStatus: { type: String }, // Conservation status
@@ -15,14 +15,11 @@ const speciesSchema
 
     // Technical Details
     technicals: {
-        speciesClass: {
-            similaritiesWith: [{ type: String }], // Known the closest family of species
-        },
         parts: [{
             typeName: { type: String }, // Name of the part or mark
             isVaries: { type: Boolean }, // If the same part or mark varies significantly due to constraints like age, puberty, gender
             variedBy: { type: String }, // Attribute by which it varies (e.g., SexMale)
-            imageUrls: [{ type: String }], // Images of the part
+            // imageUrls: [{ type: String }], // Images of the part
             typeDetails: [{
                 characterName: { type: String }, // Name of characteristic (e.g., color, height, width, depth)
                 scale: { type: String }, // Type of unit for the characteristic
@@ -34,9 +31,10 @@ const speciesSchema
                 keywords: [{ type: String }], // Keywords from the description
             },
         }],
+
         harvestedArticles: [{
             articleName: { type: String }, // Article name
-            imageUrls: [{ type: String }], // Article images
+            // imageUrls: [{ type: String }], // Article images
             isHarvested: { type: Boolean }, // Is the animal likely to be killed or farmed
             alternateName: { type: String }, // Any known local name
             isVaries: { type: Boolean }, // If the same article varies significantly due to constraints like age, puberty, gender
@@ -52,34 +50,32 @@ const speciesSchema
                 keywords: [{ type: String }], // Keywords from the description
             },
         }],
+
+
+        speciesClass: {
+            similaritiesWith: [{ type: String }], // Known the closest family of species
+        },
+
+
     },
+
+
 
     // Geographic Information
     geoInformation: {
         foundAt: {
             places: [{ type: String }], // List of places where the species is found
         },
-        habitats: [{
-            name: { type: String }, // Name of the habitat
-            class: [{ type: String }], // Terrestrial or aquatic
-            typesList: [{
-                type: { type: String }, // Type of habitat (Forests, Grasslands, Deserts)
-                subtypes: [{ type: String }], // Subtypes (Temperate, Tropical)
-            }],
-        }],
+        habitats: [{ type : String}],
     },
 
-    // Description or Explanation
+    // Description or Explanation // Miscellaneous Information
     descriptionOrExplanation: { type: String }, // Describe the animal, summarize, any details that need external description
 
-    // Miscellaneous Information
-    miscellaneous: {
-        isPoisonous: { type: Boolean }, // If the species is poisonous
-        isVenomous: { type: Boolean }, // If the species is venomous
-        isTradedAlive: { type: Boolean }, // If the species is traded alive
-        population: { type: Number }, // Population count if available
-    },
+
 }, {timestamps : true});
+
+
 
 const SpeciesModel = models.Species ?? mongoose.model('Species', speciesSchema);
 console.log('SpeciesModel:', SpeciesModel);

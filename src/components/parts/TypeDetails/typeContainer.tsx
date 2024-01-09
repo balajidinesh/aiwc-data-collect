@@ -65,7 +65,7 @@ const TypeContainer: React.FC<TypeContainerProps> = ({ onEdit,defValues, onListC
             <div className="flex flex-wrap gap-2">
                 {typeDetailsList.map((typeDetails, index) => (
                     <div key={index} className="bg-blue-400 rounded-md p-2 flex items-center">
-                        <span className="text-white">{`${index + 1}`}</span>
+                        <span className="text-white">{`${typeDetailsList[index].characterName}`}</span>
                         <button
                             type="button"
                             onClick={() => handleEditTypeDetails(index)}
