@@ -33,7 +33,7 @@ interface CreateSpeciesFormProps {
 
 
 const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,defValues}) => {
-    const { register, handleSubmit, reset ,setValue,getValues} = useForm<Species>();
+    const { register, handleSubmit, reset ,setValue,getValues} = useForm<Species>(defValues);
     const router = useRouter();
 
 

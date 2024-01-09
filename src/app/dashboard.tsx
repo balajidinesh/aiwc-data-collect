@@ -35,7 +35,7 @@ const Dashboard: NextPage<DashboardProps> = ({ speciesData }) => {
                                 {species.body.scientificName}
                             </td>
                             <td className="border px-4 py-2">
-                                <Link href={`/edit/${species._id}`} passHref>
+                                <Link href={`/edit?id=${species._id}`} passHref>
                                     <span className="text-blue-500 cursor-pointer">Edit</span>
                                 </Link>
                             </td>
