@@ -1,6 +1,6 @@
 // server.js
 import {connectClient} from "../../lib/mongodb";
-import {SpeciesModel,Species} from "../../models/species";
+import SpeciesModel, { Species } from "../../models/species";
 import {paraSpecies} from "@/app/page";
 
 

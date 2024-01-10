@@ -7,12 +7,14 @@ import React, { useEffect, useState } from 'react';
 import CreateSpeciesForm from "@/app/createSpecies/CreateSpeciesForm";
 
 
-const EditSpecies: React.FC<EditSpeciesProps> = ({ }) => {
-    const [species, setSpecies] = useState<Species | null>(null);
+
+
+const EditSpecies: React.FC = () => {
+    const [species, setSpecies] = useState< any | null>(null);
     const router = useRouter();
 
     const searchParams = useSearchParams()
-    const id  = searchParams.get('id')
+    const id  = searchParams?.get('id') ?? ''
 
 
 

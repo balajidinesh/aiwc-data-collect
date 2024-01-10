@@ -80,5 +80,6 @@ const speciesSchema
 const SpeciesModel = models.Species ?? mongoose.model('Species', speciesSchema);
 console.log('SpeciesModel:', SpeciesModel);
 
-export type Species = InferSchemaType<typeof speciesSchema>;
 export default SpeciesModel;
+
+export type Species = InferSchemaType<typeof speciesSchema>;

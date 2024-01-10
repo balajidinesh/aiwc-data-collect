@@ -1,9 +1,8 @@
 // createSpecies/page.tsx
 import CreateSpeciesForm from "@/app/createSpecies/CreateSpeciesForm";
-import Species from "../../../models/species";
 
 // import React from "react"; // Import the CreateSpeciesForm component
-const defaultValues: Partial<Species> = {
+const defaultValues = {
     "body": {
         "title": "BlackBuck",
         "scientificName": "Antilope cervicapra",
@@ -80,10 +79,13 @@ const defaultValues: Partial<Species> = {
         ]
     },
     "descriptionOrExplanation": "Adult males are dark brown to black on the dorsal surface and the underside is white, female, sub-adults and fawn are reddish yellow on the dorsal side, white on the ventral side. adult males have long and spiraled horns. females are hornless; eyes, nose are surrounded by white rings. buttocks and legs are covered with white color.",
+    // "createdAt": new Date("2024-01-09T21:04:30.076Z"),
+    // "updatedAt": new Date("2024-01-09T21:04:30.076Z"),
 };
 
 
 const CreateSpeciesPage: React.FC = () => {
+    // @ts-ignore
     return (
         <main className="pt-16 px-5">
             <h1 className="text-left text-2xl font-semibold mb-5">Create New Species</h1>

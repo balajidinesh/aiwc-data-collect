@@ -2,10 +2,10 @@
 import React, {useEffect, useState} from 'react';
 
 interface TagInputProps {
-    name : string
-    labelName : string
-    defValues : string[]
-    inState : boolean
+    name : string;
+    labelName : string;
+    defValues : string[];
+    inState : boolean;
     onTagsChange: (tags: string[],name: string) => void;
 }
 
@@ -19,7 +19,7 @@ const TagInput: React.FC<TagInputProps> = ({ name,labelName,defValues, inState ,
             setTags(defValues)
             setInputValue('')
         }
-    }, [defValues]);
+    }, [defValues,inState]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
@@ -38,7 +38,7 @@ const TagInput: React.FC<TagInputProps> = ({ name,labelName,defValues, inState ,
         const trimmedValue = inputValue.trim();
         if (trimmedValue && !tags.includes(trimmedValue)) {
             setTags([...tags, trimmedValue]);
-            onTagsChange([...tags, trimmedValue]);
+            onTagsChange([...tags, trimmedValue],name);
             setInputValue('');
         }
     };
@@ -48,7 +48,7 @@ const TagInput: React.FC<TagInputProps> = ({ name,labelName,defValues, inState ,
             const newTags = [...tags];
             newTags.pop();
             setTags(newTags);
-            onTagsChange(newTags);
+            onTagsChange(newTags,name);
         }
     };
 

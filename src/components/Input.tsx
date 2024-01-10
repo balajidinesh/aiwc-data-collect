@@ -1,5 +1,6 @@
 // Input.tsx
 import React from "react";
+import {InputProps} from "react-select";
 
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(

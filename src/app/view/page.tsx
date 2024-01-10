@@ -6,12 +6,13 @@ import { useSearchParams } from 'next/navigation'; // Assuming you are using rea
 import React, { useEffect, useState } from 'react';
 
 
-const EditSpecies: React.FC<EditSpeciesProps> = ({ }) => {
-    const [species, setSpecies] = useState<Species | null>(null);
+const ViewSpecies: React.FC= ({ }) => {
+    const [species, setSpecies] = useState< any | null>(null);
     const router = useRouter();
 
     const searchParams = useSearchParams()
-    const id  = searchParams.get('id')
+    const id  = searchParams?.get('id') ?? ''
+
 
 
 
@@ -50,4 +51,4 @@ const EditSpecies: React.FC<EditSpeciesProps> = ({ }) => {
     );
 };
 
-export default EditSpecies;
+export default ViewSpecies;

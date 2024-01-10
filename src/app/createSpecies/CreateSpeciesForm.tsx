@@ -3,7 +3,6 @@
 
 import {useForm} from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { Species } from '@/../models/species';
 import React from 'react';
 import {LabelAndInput} from "@/components/form ui/LableAndInput";
 import {LabelAndDropdown} from "@/components/form ui/LabelAndDropdown";
@@ -25,7 +24,7 @@ import {DefaultEmptyArticleValues} from "../../../models/IntefacesAndOptions/Def
 
 interface CreateSpeciesFormProps {
     isInEdit : boolean;
-    defValues : Partial<Species>;
+    defValues :any;
 }
 
 type NestedObject = { [key: string]: NestedObject | any };
@@ -37,7 +36,7 @@ function getNestedValue(obj: NestedObject, path: string): any {
 
 
 const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,defValues}) => {
-    const { register, handleSubmit ,setValue,getValues} = useForm<Species>();
+    const { register, handleSubmit ,setValue,getValues} = useForm();
     const router = useRouter();
 
 
@@ -47,34 +46,34 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
     };
 
     const handleSimilarChange = (value: string[]) => {
-        setValue<Partial<Species>>('technicals.speciesClass.similaritiesWith', value);
+        setValue('technicals.speciesClass.similaritiesWith', value);
     };
 
 
     const handlePartsChange = (parts : PartDetailsProps[]) =>{
-        setValue<Partial<Species>>("technicals.parts", parts);
+        setValue("technicals.parts", parts);
     }
 
     const handleArticleChange = (articles : ArticleDetailsProps[]) =>{
-        setValue<Partial<Species>>("technicals.harvestedArticles" , articles);
+        setValue("technicals.harvestedArticles" , articles);
     }
 
     const handlePlacesChange = (places: string[]) => {
         // console.log(tags);
-        setValue<Partial<Species>>("geoInformation.foundAt.places", places);
+        setValue("geoInformation.foundAt.places", places);
     };
 
-    const handleHabitatChange = (habitats: [] ) => {
+    const handleHabitatChange = (habitats: string[] ) => {
         // console.log(tags);
 
-        setValue<Partial<Species>>("geoInformation.habitats", habitats);
+        setValue("geoInformation.habitats", habitats);
     };
 
 
-    const handleDescriptionChange =(description: "") => {
+    const handleDescriptionChange =(description: string) => {
         // console.log(tags);
 
-        setValue<Partial<Species>>("descriptionOrExplanation", description);
+        setValue("descriptionOrExplanation", description);
     };
 
 
@@ -85,7 +84,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
             await submitSpecies(formData);
             //
             await router.replace('/');
-            await router.reload()
+            // await router.reload()
         } catch (error) {
             console.error('Error connecting to MongoDB:', error);
         }
@@ -108,29 +107,44 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                     </div>
                 ))}
             </div>
-                <TagInput inState={isInEdit} defValues={isInEdit ? defValues.body.tags : ''} onTagsChange={handleTagsChange} name={'body.tags'} labelName={'Tags'}/>
+                <TagInput inState={isInEdit} defValues={isInEdit ?( defValues?.body?.tags ?? ['']) : ['']} onTagsChange={handleTagsChange} name={'body.tags'} labelName={'Tags'}/>
             </SectionWrapper>
 
             <SectionWrapper  label={"Morphology"} bgColor={"bg-gray-200"}>
 
                 <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
-                    <PartContainer defValues={isInEdit? defValues.technicals.parts : DefaultEmptyPartValues} onListChange={handlePartsChange} inState={isInEdit}></PartContainer>
+                    <PartContainer defValues={isInEdit? (defValues?.technicals?.parts?.map((part: { toObject: () => any; typeName: any; }) => {
+                            // Ensure typeName is a string and not null or undefined
+                            return {
+                                ...part.toObject(),
+                                typeName: part.typeName || '',
+                            };
+                        }) ?? [DefaultEmptyPartValues])
+                        : [DefaultEmptyPartValues]
+                    } onListChange={handlePartsChange} inState={isInEdit}></PartContainer>
                 </SectionWrapper>
 
                 <SectionWrapper label={"Articles"} bgColor={"bg-blue-200"}>
-                    <HarvestContainer defValues={isInEdit? defValues.technicals.harvestedArticles : DefaultEmptyArticleValues} onListChange={handleArticleChange} inState={isInEdit}></HarvestContainer>
+                    <HarvestContainer defValues={isInEdit? (defValues?.technicals?.harvestedArticles?.map((Article: { toObject: () => any; articleName: any; }) => {
+                            // Ensure typeName is a string and not null or undefined
+                            return {
+                                ...Article.toObject(),
+                                articleName: Article.articleName || '',
+                            };
+                        }) ?? [DefaultEmptyArticleValues])
+                        : [DefaultEmptyArticleValues]} onListChange={handleArticleChange} inState={isInEdit}></HarvestContainer>
                 </SectionWrapper>
 
-                <TagInput onTagsChange={handleSimilarChange} name={'technicals.speciesClass.similaritiesWith'} labelName={'Similar Species'}  defValues={isInEdit ? defValues.technicals.speciesClass.similaritiesWith : ''} inState={isInEdit}/>
+                <TagInput onTagsChange={handleSimilarChange} name={'technicals.speciesClass.similaritiesWith'} labelName={'Similar Species'}  defValues={isInEdit ? (defValues?.technicals?.speciesClass?.similaritiesWith ?? ['']) : ['']} inState={isInEdit}/>
             </SectionWrapper>
 
             {/*<SwitchToggle label={'hi'} value={tfval} onChange={setTfval}></SwitchToggle>*/}
 
             <SectionWrapper  label={"Geo Information"} bgColor={"bg-gray-200"}>
-                <TagInput inState={isInEdit} defValues={isInEdit ? defValues.geoInformation.foundAt.places : ['']} onTagsChange={handlePlacesChange} name={'geoInformation.foundAt.places'} labelName={'Places Found'} />
+                <TagInput inState={isInEdit} defValues={isInEdit ?( defValues?.geoInformation?.foundAt?.places ?? ['']) : ['']} onTagsChange={handlePlacesChange} name={'geoInformation.foundAt.places'} labelName={'Places Found'} />
 
                 <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
-                   <TagOptions inState={isInEdit} name={'habitats'} labelName={'Select Habitats'} options={habitatOptions}  onTagsChange={handleHabitatChange} defValues={isInEdit ? defValues.geoInformation.habitats : []}></TagOptions>
+                   <TagOptions inState={isInEdit} name={'habitats'} labelName={'Select Habitats'} options={habitatOptions}  onTagsChange={handleHabitatChange} defValues={isInEdit ?( defValues?.geoInformation?.habitats ?? ['']) : ['']}></TagOptions>
                 </SectionWrapper>
 
             </SectionWrapper>
@@ -138,7 +152,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
             <SectionWrapper  label={"Summary and Miscellaneous Information"} bgColor={"bg-gray-200"}>
 
                 {/*<LabelAndDescription start={describe} label="Description" description={describe} onChange={setDescribe}></LabelAndDescription>*/}
-                <LabelAndDescription label="Description" description={getValues('descriptionOrExplanation')} onChange={handleDescriptionChange} start={isInEdit ? defValues.descriptionOrExplanation : ''}></LabelAndDescription>
+                <LabelAndDescription label="Description" description={getValues('descriptionOrExplanation')} onChange={handleDescriptionChange} start={isInEdit ?( defValues?.descriptionOrExplanation ?? '') : ''}></LabelAndDescription>
             </SectionWrapper>
 
             <div className="mt-5">

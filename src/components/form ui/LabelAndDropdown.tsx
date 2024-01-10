@@ -6,7 +6,7 @@ interface LabelAndDropdownProps {
     label: string;
     name: string;
     defaultValue : string ;
-    options: { value: string|boolean; label: string }[];
+    options: { value: string|boolean; label: string }[] | undefined;
     register: any;
     required?: boolean;
 }

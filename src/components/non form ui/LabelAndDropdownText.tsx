@@ -1,5 +1,5 @@
 // LabelAndDropdownState.tsx
-import React from 'react';
+import React,{ ChangeEvent} from 'react';
 import { Dropdown } from './Dropdown';
 
 interface LabelAndDropdownStateProps {
@@ -10,10 +10,18 @@ interface LabelAndDropdownStateProps {
 }
 
 const LabelAndDropdownState: React.FC<LabelAndDropdownStateProps> = ({ label, options, selectedValue, onSelectChange }) => {
+
+
+    const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        onSelectChange(e.target.value);
+    };
+
+
+
     return (
         <div className="mt-4">
             <label className="text-sm text-zinc-800">{label}:</label>
-            <Dropdown value={selectedValue} onChange={(e) => onSelectChange(e.target.value)} options={options} />
+            <Dropdown value={selectedValue} onChange={handleSelectChange} options={options} />
         </div>
     );
 };
