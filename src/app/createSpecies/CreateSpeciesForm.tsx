@@ -113,10 +113,11 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
             <SectionWrapper  label={"Morphology"} bgColor={"bg-gray-200"}>
 
                 <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
-                    <PartContainer defValues={isInEdit? (defValues?.technicals?.parts?.map((part: { toObject: () => any; typeName: any; }) => {
+                    <PartContainer defValues={isInEdit
+                        ? (defValues?.technicals?.parts?.map((part: any) => {
                             // Ensure typeName is a string and not null or undefined
                             return {
-                                ...part.toObject(),
+                                ...(part.toObject ? part.toObject() : part),
                                 typeName: part.typeName || '',
                             };
                         }) ?? [DefaultEmptyPartValues])
@@ -125,11 +126,12 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                 </SectionWrapper>
 
                 <SectionWrapper label={"Articles"} bgColor={"bg-blue-200"}>
-                    <HarvestContainer defValues={isInEdit? (defValues?.technicals?.harvestedArticles?.map((Article: { toObject: () => any; articleName: any; }) => {
-                            // Ensure typeName is a string and not null or undefined
+                    <HarvestContainer defValues={ isInEdit
+                        ? (defValues?.technicals?.harvestedArticles?.map((article: any) => {
+                            // Ensure articleName is a string and not null or undefined
                             return {
-                                ...Article.toObject(),
-                                articleName: Article.articleName || '',
+                                ...(article.toObject ? article.toObject() : article),
+                                articleName: article.articleName || '',
                             };
                         }) ?? [DefaultEmptyArticleValues])
                         : [DefaultEmptyArticleValues]} onListChange={handleArticleChange} inState={isInEdit}></HarvestContainer>
@@ -141,7 +143,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
             {/*<SwitchToggle label={'hi'} value={tfval} onChange={setTfval}></SwitchToggle>*/}
 
             <SectionWrapper  label={"Geo Information"} bgColor={"bg-gray-200"}>
-                <TagInput inState={isInEdit} defValues={isInEdit ?( defValues?.geoInformation?.foundAt?.places ?? ['']) : ['']} onTagsChange={handlePlacesChange} name={'geoInformation.foundAt.places'} labelName={'Places Found'} />
+                <TagInput inState={isInEdit} defValues={isInEdit ?( defValues?.geoInformation?.places ?? ['']) : ['']} onTagsChange={handlePlacesChange} name={'geoInformation.places'} labelName={'Places Found'} />
 
                 <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
                    <TagOptions inState={isInEdit} name={'habitats'} labelName={'Select Habitats'} options={habitatOptions}  onTagsChange={handleHabitatChange} defValues={isInEdit ?( defValues?.geoInformation?.habitats ?? ['']) : ['']}></TagOptions>

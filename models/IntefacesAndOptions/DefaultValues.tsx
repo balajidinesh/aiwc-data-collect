@@ -6,11 +6,23 @@ export const fieldsBody = [
     { label: 'Title', name: 'body.title', type: 'text', required: true },
     { label: 'Scientific Name', name: 'body.scientificName', type: 'text', required: true },
     { label: 'Local Name', name: 'body.localName', type: 'text', required: true },
-    { label: 'Conservation Status', name: 'body.conservationStatus', type: 'dropdown', options: [
-            { value: 'endangered', label: 'Endangered' },
-            { value: 'threatened', label: 'Threatened' },
-            { value: 'not_evaluated', label: 'Not Evaluated' },
-        ] },
+    {
+        label: 'Conservation Status',
+        name: 'body.conservationStatus',
+        type: 'dropdown',
+        options: [
+            { value: 'EX', label: 'Extinct (EX)' },
+            { value: 'EW', label: 'Extinct in the wild (EW)' },
+            { value: 'CR', label: 'Critically Endangered (CR)' },
+            { value: 'EN', label: 'Endangered (EN)' },
+            { value: 'VU', label: 'Vulnerable (VU)' },
+            { value: 'NT', label: 'Near Threatened (NT)' },
+            { value: 'CD', label: 'Conservation Dependent (CD)' },
+            { value: 'LC', label: 'Least concern (LC)' },
+            { value: 'DD', label: 'Data deficient (DD)' },
+            { value: 'NE', label: 'Not evaluated (NE)' },
+        ],
+    },
 ];
 
 export const fieldsTechnical = [

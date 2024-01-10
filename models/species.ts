@@ -39,11 +39,11 @@ const speciesSchema
             alternateName: { type: String }, // Any known local name
             isVaries: { type: Boolean }, // If the same article varies significantly due to constraints like age, puberty, gender
             variedBy: { type: String }, // Attribute by which it varies (e.g., SexMale)
-            typeDetails: {
+            typeDetails: [{
                 characterName: { type: String }, // Description of the characteristic
                 scale: { type: String }, // Type of units
                 value: { type: String }, // Value of the characteristic
-            },
+            }],
             identifications: {
                 visualMarks: { type: String }, // Pattern, scales, color
                 describe: { type: String }, // Descriptive text of the pattern
@@ -63,9 +63,7 @@ const speciesSchema
 
     // Geographic Information
     geoInformation: {
-        foundAt: {
-            places: [{ type: String }], // List of places where the species is found
-        },
+        places: [{ type: String }], // List of places where the species is found
         habitats: [{ type : String}],
     },
 

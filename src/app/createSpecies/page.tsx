@@ -24,9 +24,6 @@ const defaultValues = {
                         "characterName": "height",
                         "scale": "Length",
                         "value": "35-75",
-                        "_id": {
-                            "$oid": "659db4ded7df79dd034393d6"
-                        }
                     }
                 ],
                 "identifications": {
@@ -37,9 +34,6 @@ const defaultValues = {
                         "ringed horns"
                     ]
                 },
-                "_id": {
-                    "$oid": "659db4ded7df79dd034393d5"
-                }
             }
         ],
         "harvestedArticles": [
@@ -57,9 +51,6 @@ const defaultValues = {
                         "dorsal surface"
                     ]
                 },
-                "_id": {
-                    "$oid": "659db4ded7df79dd034393d7"
-                }
             }
         ],
         "speciesClass": {
@@ -67,12 +58,10 @@ const defaultValues = {
         }
     },
     "geoInformation": {
-        "foundAt": {
-            "places": [
+        "places": [
                 "Tamil Nadu",
                 "Eastern Cost Andhra"
-            ]
-        },
+            ],
         "habitats": [
             "tropical",
             "tropicalGrasslands"

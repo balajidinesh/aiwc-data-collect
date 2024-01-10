@@ -52,7 +52,7 @@ const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
         setIsHarvested(false);
         setIsVaries(false);
         setVariedBy("");
-        setAlternateName(defValues.alternateName)
+        setAlternateName("")
         setTypeDetails([]);
         setVisualMarks("");
         setDescribe("");
@@ -88,7 +88,7 @@ const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
         }
     };
 
-    const handleKeywordsChange = (tags: string[] , name : string) => {
+    const handleKeywordsChange = (tags: string[] ) => {
         // console.log(handleKeywordsChange);
         setKeywords(tags);
     };

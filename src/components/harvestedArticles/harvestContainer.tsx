@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ArticleDetailsProps, TypeDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
+import {ArticleDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
 import HarvestDetailsForm from "@/components/harvestedArticles/harvestDetailsForm";
 
 interface ArticleContainerProps {
@@ -24,7 +24,7 @@ const HarvestContainer: React.FC<ArticleContainerProps> = ({defValues,inState ,o
         if (inState) {
             setArticleDetailsList(defValues)
         }
-    }, [defValues]);
+    }, [defValues, inState]);
 
     const handleAddArticleDetails = (articleDetails: ArticleDetailsProps) => {
         const updatedList = [...articleDetailsList];

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import PartDetailsForm, {partDetailsFormProps} from "@/components/parts/PartDetailsForm";
-import {PartDetailsProps, TypeDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
+import PartDetailsForm from "@/components/parts/PartDetailsForm";
+import {PartDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
 
 interface PartContainerProps {
     defValues : PartDetailsProps[];
@@ -25,7 +25,7 @@ const PartContainer: React.FC<PartContainerProps> = ({defValues,inState ,onListC
         if (inState) {
             setPartDetailsList(defValues)
         }
-    }, [defValues]);
+    }, [defValues, inState]);
 
     const handleAddPartDetails = (partDetails: PartDetailsProps) => {
         const updatedList = [...partDetailsList];
@@ -40,7 +40,6 @@ const PartContainer: React.FC<PartContainerProps> = ({defValues,inState ,onListC
     };
 
     const handleEditPartDetails = (index: number) => {
-        const typeDetails = partDetailsList[index];
         setEditingIndex(index);
 
         // setTypeDetailsList(updatedList);
