@@ -43,7 +43,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
 
 
     const handleTagsChange = (value: string[]) => {
-        setValue<Partial<Species>>('body.tags', value);
+        setValue('body.tags', value as any);
     };
 
     const handleSimilarChange = (value: string[]) => {
