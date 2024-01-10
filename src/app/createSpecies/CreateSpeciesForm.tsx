@@ -43,38 +43,38 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
 
 
     const handleTagsChange = (value: string[]) => {
-        setValue<string[]>('body.tags', value);
+        setValue<Partial<Species>>('body.tags', value);
     };
 
     const handleSimilarChange = (value: string[]) => {
-        setValue<string[]>('technicals.speciesClass.similaritiesWith', value);
+        setValue<Partial<Species>>('technicals.speciesClass.similaritiesWith', value);
     };
 
 
     const handlePartsChange = (parts : PartDetailsProps[]) =>{
-        setValue<PartDetailsProps[]>("technicals.parts", parts);
+        setValue<Partial<Species>>("technicals.parts", parts);
     }
 
     const handleArticleChange = (articles : ArticleDetailsProps[]) =>{
-        setValue<ArticleDetailsProps[]>("technicals.harvestedArticles" , articles);
+        setValue<Partial<Species>>("technicals.harvestedArticles" , articles);
     }
 
     const handlePlacesChange = (places: string[]) => {
         // console.log(tags);
-        setValue<string[]>("geoInformation.foundAt.places", places);
+        setValue<Partial<Species>>("geoInformation.foundAt.places", places);
     };
 
     const handleHabitatChange = (habitats: [] ) => {
         // console.log(tags);
 
-        setValue<[]>("geoInformation.habitats", habitats);
+        setValue<Partial<Species>>("geoInformation.habitats", habitats);
     };
 
 
     const handleDescriptionChange =(description: "") => {
         // console.log(tags);
 
-        setValue<string[]>("descriptionOrExplanation", description);
+        setValue<Partial<Species>>("descriptionOrExplanation", description);
     };
 
 
@@ -127,7 +127,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
             {/*<SwitchToggle label={'hi'} value={tfval} onChange={setTfval}></SwitchToggle>*/}
 
             <SectionWrapper  label={"Geo Information"} bgColor={"bg-gray-200"}>
-                <TagInput inState={isInEdit} defValues={isInEdit ? defValues.geoInformation.foundAt.places : ''} onTagsChange={handlePlacesChange} name={'geoInformation.foundAt.places'} labelName={'Places Found'} />
+                <TagInput inState={isInEdit} defValues={isInEdit ? defValues.geoInformation.foundAt.places : ['']} onTagsChange={handlePlacesChange} name={'geoInformation.foundAt.places'} labelName={'Places Found'} />
 
                 <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
                    <TagOptions inState={isInEdit} name={'habitats'} labelName={'Select Habitats'} options={habitatOptions}  onTagsChange={handleHabitatChange} defValues={isInEdit ? defValues.geoInformation.habitats : []}></TagOptions>

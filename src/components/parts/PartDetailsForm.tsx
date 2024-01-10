@@ -20,7 +20,7 @@ export interface partDetailsFormProps {
 const PartDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, onAdd }) => {
 
     const [typeName, setTypeName] = useState( defValues.typeName );
-    const [isVaries, setIsVaries] = useState<string|boolean>( defValues.isVaries );
+    const [isVaries, setIsVaries] = useState<boolean>( defValues.isVaries );
     const [variedBy, setVariedBy] = useState( defValues.variedBy );
     const [typeDetails, setTypeDetails] = useState<TypeDetailsProps[]>( defValues.typeDetails);
     const [visualMarks, setVisualMarks] = useState(defValues.identifications.visualMarks );

@@ -1,9 +1,9 @@
 // createSpecies/page.tsx
 import CreateSpeciesForm from "@/app/createSpecies/CreateSpeciesForm";
+import Species from "../../../models/species";
 
 // import React from "react"; // Import the CreateSpeciesForm component
-
-const defaultValues = {
+const defaultValues: Partial<Species> = {
     "body": {
         "title": "BlackBuck",
         "scientificName": "Antilope cervicapra",
@@ -35,7 +35,7 @@ const defaultValues = {
                     "description": "The long, ringed horns, that resemble corkscrews, are generally present only on males.",
                     "keywords": [
                         "long",
-                        "ringged horns"
+                        "ringed horns"
                     ]
                 },
                 "_id": {
@@ -79,8 +79,9 @@ const defaultValues = {
             "tropicalGrasslands"
         ]
     },
-    "descriptionOrExplanation": "Adult males are dark brown to black on the dorsal surface and the underside is white, female,sub-adults and fawn are reddish yellow on the dorsal side,white on the ventral side. adult males are long and spiraled horns . females are hornless eyes,nose are surrounded by white rings. buttocks and legs are cover white colour.",
-}
+    "descriptionOrExplanation": "Adult males are dark brown to black on the dorsal surface and the underside is white, female, sub-adults and fawn are reddish yellow on the dorsal side, white on the ventral side. adult males have long and spiraled horns. females are hornless; eyes, nose are surrounded by white rings. buttocks and legs are covered with white color.",
+};
+
 
 const CreateSpeciesPage: React.FC = () => {
     return (

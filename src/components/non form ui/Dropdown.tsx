@@ -1,6 +1,12 @@
 // Dropdown.tsx
 import React from 'react';
 
+
+interface DropdownOption {
+    label: string;
+    value: string | number;
+}
+
 interface DropdownProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
     options: DropdownOption[];
 }
