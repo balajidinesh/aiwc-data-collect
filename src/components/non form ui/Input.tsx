@@ -3,6 +3,7 @@ import React from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     className?: string;
+    value : string ;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -15,7 +16,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     (className ? ` ${className}` : "")
                 }
                 ref={ref}
-                defaultValue={value}
+                value={value}
+                // defaultValue={value}
                 {...props}
             />
         );

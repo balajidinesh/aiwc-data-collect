@@ -26,7 +26,7 @@ export const fieldsBody = [
 ];
 
 export const fieldsTechnical = [
-    {label: 'Similar Species',name: 'technicals.speciesClass.similaritiesWith',type: 'TAG',required: false,},
+    {label: 'Similar Species',name: 'technicals.similaritiesWith',type: 'TAG',required: false,},
 ];
 
 

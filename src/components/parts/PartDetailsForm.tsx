@@ -6,7 +6,7 @@ import {PartDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
 import {TypeDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
 import {SectionWrapper} from "@/components/SectionWrapper";
 import TagInput from "@/components/TagInput";
-import TypeContainer from "@/components/parts/TypeDetails/typeContainer";
+import TypeContainer from "@/components/TypeDetails/typeContainer";
 import {LabelAndDescription} from "@/components/non form ui/Description";
 import SwitchToggle from "@/components/SwitchToggle";
 
@@ -96,7 +96,7 @@ const PartDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
         <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
                 <LabelAndTextInput label="Type Name" value={typeName} onChange={setTypeName}></LabelAndTextInput>
-                <SwitchToggle label="Is Varies" value={isVaries} onChange={setIsVaries}></SwitchToggle>
+                <SwitchToggle id="partvaries" label="Is Varies" value={isVaries} onChange={setIsVaries}></SwitchToggle>
                 {isVaries && (<LabelAndTextInput label="Varied By" value={variedBy} onChange={setVariedBy}></LabelAndTextInput>)}
             </div>
 

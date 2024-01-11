@@ -52,10 +52,7 @@ const speciesSchema
         }],
 
 
-        speciesClass: {
-            similaritiesWith: [{ type: String }], // Known the closest family of species
-        },
-
+        similaritiesWith: [{ type: String }], // Known the closest family of species
 
     },
 

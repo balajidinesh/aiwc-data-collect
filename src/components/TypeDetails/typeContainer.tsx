@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {TypeDetailsForm} from "@/components/parts/TypeDetails/typeDetailsForm";
-import {TypeDetailsProps} from "../../../../models/IntefacesAndOptions/interfaces";
+import {TypeDetailsForm} from "@/components/TypeDetails/typeDetailsForm";
+import {TypeDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
 
 interface TypeContainerProps {
     onEdit : boolean;
@@ -15,7 +15,7 @@ const DefaultEmptyValues: TypeDetailsProps = {
 };
 
 const TypeContainer: React.FC<TypeContainerProps> = ({ onEdit,defValues, onListChange }) => {
-    const [typeDetailsList, setTypeDetailsList] = useState<TypeDetailsProps[]>(onEdit? defValues:[] );
+    const [typeDetailsList, setTypeDetailsList] = useState<TypeDetailsProps[]>(onEdit? (defValues ?? []):[] );
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
 
@@ -24,36 +24,28 @@ const TypeContainer: React.FC<TypeContainerProps> = ({ onEdit,defValues, onListC
     //     console.log("useEffect")
     // }, [typeDetailsList]);
 
+
+
     useEffect(() => {
-        setTypeDetailsList(defValues)
-        // }else if (isNew) {
-        //     setTypeDetailsList([])
-        // }
+        // if (onEdit) {
+            setTypeDetailsList(defValues);
     }, [onEdit,defValues]);
 
-    const handleAddTypeDetails = (typeDetails: TypeDetailsProps) => {
-        if (typeDetailsList) {
-            const updatedList = [...typeDetailsList]
-            if (editingIndex !== null) {
-                updatedList[editingIndex] = typeDetails; // Update existing tab
-                setEditingIndex(null); // Reset editing index after update
-            } else {
-                updatedList.push(typeDetails); // Add new tab
-            }
-            setTypeDetailsList(updatedList);
-            onListChange(updatedList);
-        }else{
-            setTypeDetailsList([typeDetails]);
-            onListChange([typeDetails]);
-        }
 
+    const handleAddTypeDetails = (typeDetails: TypeDetailsProps) => {
+        const updatedList = [...typeDetailsList]
+        if (editingIndex !== null) {
+            updatedList[editingIndex] = typeDetails; // Update existing tab
+            setEditingIndex(null); // Reset editing index after update
+        } else {
+            updatedList.push(typeDetails); // Add new tab
+        }
+        setTypeDetailsList(updatedList);
+        onListChange(updatedList);
     };
 
     const handleEditTypeDetails = (index: number) => {
-        const typeDetails = typeDetailsList[index];
         setEditingIndex(index);
-
-        // setTypeDetailsList(updatedList);
     };
 
     const handleRemoveTypeDetails = (index: number) => {
@@ -91,7 +83,7 @@ const TypeContainer: React.FC<TypeContainerProps> = ({ onEdit,defValues, onListC
             </div>
             <TypeDetailsForm onEdit={editingIndex !== null} defValues={
                 editingIndex !== null
-                    ? typeDetailsList[editingIndex] : DefaultEmptyValues } onAdd={handleAddTypeDetails} ></TypeDetailsForm>
+                    ? (typeDetailsList[editingIndex] ?? DefaultEmptyValues ) : DefaultEmptyValues } onAdd={handleAddTypeDetails} ></TypeDetailsForm>
         </div>
     );
 };

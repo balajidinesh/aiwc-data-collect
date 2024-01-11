@@ -1,5 +1,6 @@
 // createSpecies/page.tsx
 import CreateSpeciesForm from "@/app/createSpecies/CreateSpeciesForm";
+import React from "react";
 
 // import React from "react"; // Import the CreateSpeciesForm component
 const defaultValues = {
@@ -53,9 +54,7 @@ const defaultValues = {
                 },
             }
         ],
-        "speciesClass": {
-            "similaritiesWith": []
-        }
+        "similaritiesWith": []
     },
     "geoInformation": {
         "places": [

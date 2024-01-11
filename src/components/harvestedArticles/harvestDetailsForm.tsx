@@ -6,7 +6,7 @@ import {ArticleDetailsProps} from "../../../models/IntefacesAndOptions/interface
 import {TypeDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
 import {SectionWrapper} from "@/components/SectionWrapper";
 import TagInput from "@/components/TagInput";
-import TypeContainer from "@/components/harvestedArticles/TypeDetails/typeContainer";
+import TypeContainer from "@/components/TypeDetails/typeContainer";
 import {LabelAndDescription} from "@/components/non form ui/Description";
 import SwitchToggle from "@/components/SwitchToggle";
 
@@ -102,8 +102,8 @@ const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
         <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto mb-10">
                 <LabelAndTextInput label="Type Name" value={articleName} onChange={setArticleName}></LabelAndTextInput>
-                <SwitchToggle label={"Is Harvested"} value={isHarvested} onChange={setIsHarvested}></SwitchToggle>
-                <SwitchToggle label="Is Varies" value={isVaries} onChange={setIsVaries}></SwitchToggle>
+                <SwitchToggle id="articleharvested" label={"Is Harvested"} value={isHarvested} onChange={setIsHarvested}></SwitchToggle>
+                <SwitchToggle id="articlevaries" label="Is Varies" value={isVaries} onChange={setIsVaries}></SwitchToggle>
                 {isVaries && (<LabelAndTextInput label="Varied By" value={variedBy} onChange={setVariedBy}></LabelAndTextInput>)}
                 <LabelAndTextInput label="Alternate Name" value={alternateName} onChange={setAlternateName}></LabelAndTextInput>
             </div>

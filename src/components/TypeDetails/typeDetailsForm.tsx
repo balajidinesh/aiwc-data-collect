@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { LabelAndTextInput } from "@/components/non form ui/LabelAndTextInput";
 import {LabelAndDropdownState} from "@/components/non form ui/LabelAndDropdownText";
-import {TypeDetailsProps} from "../../../../models/IntefacesAndOptions/interfaces";
-import {ScaleOptions} from "../../../../models/IntefacesAndOptions/option";
+import {TypeDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
+import {ScaleOptions} from "../../../models/IntefacesAndOptions/option";
 
 
 export interface TypeDetailsFormProps {
@@ -14,24 +14,10 @@ export interface TypeDetailsFormProps {
 
 export const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ onEdit , defValues, onAdd }) => {
 
-    const [characterName, setCharacterName] = useState(defValues.characterName);
-    const [scale, setScale] = useState(defValues.scale);
-    const [value, setValue] = useState(defValues.value);
+    const [characterName, setCharacterName] = useState(onEdit ? defValues.characterName : '');
+    const [scale, setScale] = useState(onEdit ? defValues.scale : '');
+    const [value, setValue] = useState(onEdit ? defValues.value : '');
 
-    useEffect(() => {
-        // Update form fields when defValues change
-        if (onEdit) {
-            setCharacterName(defValues.characterName);
-            setScale(defValues.scale);
-            setValue(defValues.value);
-
-            // console.log("im")
-            // console.log(defValues);
-        }else {
-            resetForm();
-        }
-
-    }, [onEdit, defValues]);
 
     const resetForm = () => {
         setCharacterName('');
@@ -39,13 +25,29 @@ export const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ onEdit , defVa
         setValue('');
     };
 
-    const handleAdd = () => {
-        if (characterName && scale && value) {
-            onAdd({ characterName, scale, value });
 
+    useEffect(() => {
+        // Update form fields when defValues change
+        if (onEdit) {
+            setCharacterName(defValues.characterName);
+            setScale(defValues.scale);
+            setValue(defValues.value);
+        }else {
             resetForm();
         }
 
+    }, [onEdit, defValues]);
+
+    const handleAdd = () => {
+        if (characterName && scale && value) {
+            const toAdd ={
+                characterName: characterName,
+                scale: scale,
+                value: value,
+            };
+            resetForm();
+            onAdd(toAdd);
+        }
     };
 
     return (

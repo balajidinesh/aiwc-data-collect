@@ -42,11 +42,11 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
 
 
     const handleTagsChange = (value: string[]) => {
-        setValue('body.tags', value as any);
+        setValue('body.tags', value);
     };
 
     const handleSimilarChange = (value: string[]) => {
-        setValue('technicals.speciesClass.similaritiesWith', value);
+        setValue('technicals.similaritiesWith', value);
     };
 
 
@@ -60,7 +60,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
 
     const handlePlacesChange = (places: string[]) => {
         // console.log(tags);
-        setValue("geoInformation.foundAt.places", places);
+        setValue("geoInformation.places", places);
     };
 
     const handleHabitatChange = (habitats: string[] ) => {
@@ -78,12 +78,11 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
 
 
     const onSubmit = async (formData: any) => {
-
         try {
             console.log(formData)
             await submitSpecies(formData);
             //
-            await router.replace('/');
+            router.replace('/');
             // await router.reload()
         } catch (error) {
             console.error('Error connecting to MongoDB:', error);
@@ -107,7 +106,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                     </div>
                 ))}
             </div>
-                <TagInput inState={isInEdit} defValues={isInEdit ?( defValues?.body?.tags ?? ['']) : ['']} onTagsChange={handleTagsChange} name={'body.tags'} labelName={'Tags'}/>
+                <TagInput inState={isInEdit} defValues={isInEdit ?( defValues?.body?.tags ?? []) : []} onTagsChange={handleTagsChange} name={'body.tags'} labelName={'Tags'}/>
             </SectionWrapper>
 
             <SectionWrapper  label={"Morphology"} bgColor={"bg-gray-200"}>
@@ -137,7 +136,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                         : [DefaultEmptyArticleValues]} onListChange={handleArticleChange} inState={isInEdit}></HarvestContainer>
                 </SectionWrapper>
 
-                <TagInput onTagsChange={handleSimilarChange} name={'technicals.speciesClass.similaritiesWith'} labelName={'Similar Species'}  defValues={isInEdit ? (defValues?.technicals?.speciesClass?.similaritiesWith ?? ['']) : ['']} inState={isInEdit}/>
+                <TagInput onTagsChange={handleSimilarChange} name={'technicals.similaritiesWith'} labelName={'Similar Species'}  defValues={isInEdit ? (defValues?.technicals?.similaritiesWith ?? []) : []} inState={isInEdit}/>
             </SectionWrapper>
 
             {/*<SwitchToggle label={'hi'} value={tfval} onChange={setTfval}></SwitchToggle>*/}
