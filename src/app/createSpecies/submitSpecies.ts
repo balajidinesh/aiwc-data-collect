@@ -3,9 +3,6 @@
 
 import mongoose from "mongoose";
 import { connectClient } from '@/../lib/mongodb';
-import { useRouter } from 'next/navigation';
-import jsonData from '@/app/constants/speciesExample.json'
-
 export async function submitSpecies(formData: mongoose.UpdateQuery<any> | undefined, id : string = '') {
     try {
         await connectClient(); // Connect to MongoDB server
@@ -22,12 +19,12 @@ export async function submitSpecies(formData: mongoose.UpdateQuery<any> | undefi
                 return ('Species not found for the given id') ;
             }
 
-            // console.log('Species updated:', updatedSpecies);
+            console.log('Species updated:', updatedSpecies);
             return 'Species updated';
         } else {
             // If id is not provided, create a new species
             const newSpecies = await mongoose.models.Species.create(formData);
-
+            console.log('Species updated:',newSpecies)
             // console.log('New Species created:', newSpecies);
             return 'New species created';
         }
