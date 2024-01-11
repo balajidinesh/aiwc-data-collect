@@ -1,4 +1,5 @@
 import mongoose, {InferSchemaType, models} from 'mongoose';
+import {connectClient} from "../lib/mongodb";
 
 
 const speciesSchema
@@ -70,8 +71,7 @@ const speciesSchema
 
 }, {timestamps : true});
 
-
-
+await connectClient();
 const SpeciesModel = models.Species ?? mongoose.model('Species', speciesSchema);
 console.log('SpeciesModel:', SpeciesModel);
 
