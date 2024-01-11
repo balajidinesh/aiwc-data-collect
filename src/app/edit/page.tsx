@@ -46,7 +46,7 @@ const EditSpecies: React.FC = () => {
     }
 
     return (
-        <CreateSpeciesForm isInEdit={true} defValues={species}></CreateSpeciesForm>
+        <CreateSpeciesForm isInEdit={true} defValues={species} idofEdit={id}></CreateSpeciesForm>
     );
 };
 

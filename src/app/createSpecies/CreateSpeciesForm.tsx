@@ -25,6 +25,7 @@ import {DefaultEmptyArticleValues} from "../../../models/IntefacesAndOptions/Def
 interface CreateSpeciesFormProps {
     isInEdit : boolean;
     defValues :any;
+    idofEdit : string;
 }
 
 type NestedObject = { [key: string]: NestedObject | any };
@@ -35,11 +36,11 @@ function getNestedValue(obj: NestedObject, path: string): any {
 }
 
 
-const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,defValues}) => {
+const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,defValues,idofEdit}) => {
     const { register, handleSubmit ,setValue,getValues} = useForm();
     const router = useRouter();
 
-
+    // console.log(defValues)
 
     const handleTagsChange = (value: string[]) => {
         setValue('body.tags', value);
@@ -80,7 +81,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
     const onSubmit = async (formData: any) => {
         try {
             console.log(formData)
-            await submitSpecies(formData);
+            await submitSpecies(formData,idofEdit);
             //
             router.replace('/');
             // await router.reload()

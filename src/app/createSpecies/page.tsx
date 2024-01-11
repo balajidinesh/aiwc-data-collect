@@ -78,7 +78,7 @@ const CreateSpeciesPage: React.FC = () => {
         <main className="pt-16 px-5">
             <h1 className="text-left text-2xl font-semibold mb-5">Create New Species</h1>
 
-            <CreateSpeciesForm isInEdit={false} defValues={defaultValues}></CreateSpeciesForm>
+            <CreateSpeciesForm isInEdit={false} defValues={defaultValues} idofEdit={''} ></CreateSpeciesForm>
         </main>
     );
 };
