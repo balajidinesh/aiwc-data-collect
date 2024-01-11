@@ -19,7 +19,9 @@ const ViewSpecies: React.FC= ({ }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`/api/species/${id}`);
+                const response = await fetch(`/api/species/${id}`,{
+                    next: { revalidate: 0 },
+                  });
                 console.log(response)
                 const data = await response.json();
                 if (response.status === 200) {
