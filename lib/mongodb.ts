@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+export const revalidate = 0;
 
 export async function connectClient() {
     try {

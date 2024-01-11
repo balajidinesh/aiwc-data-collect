@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation'; // Assuming you are using react-router-dom for navigation
 import React, { useEffect, useState } from 'react';
 
-
+export const revalidate = 0;
 const ViewSpecies: React.FC= ({ }) => {
     const [species, setSpecies] = useState< any | null>(null);
     const router = useRouter();

@@ -2,6 +2,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import {connectClient} from "../../../lib/mongodb";
 import SpeciesModel from "../../../models/species";
+export const revalidate = 0;
 
 export default async function handler(
     req: NextApiRequest,

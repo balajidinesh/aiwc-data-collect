@@ -20,7 +20,7 @@ import {fieldsBody} from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyPartValues} from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyArticleValues} from "../../../models/IntefacesAndOptions/DefaultValues";
 
-
+export const revalidate = 0;
 
 interface CreateSpeciesFormProps {
     isInEdit : boolean;

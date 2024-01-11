@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation'; // Assuming you are using rea
 import React, { useEffect, useState } from 'react';
 import CreateSpeciesForm from "@/app/createSpecies/CreateSpeciesForm";
 
-
+export const revalidate = 0;
 
 
 const EditSpecies: React.FC = () => {

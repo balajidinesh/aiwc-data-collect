@@ -3,6 +3,7 @@ import {connectClient} from "../../lib/mongodb";
 import SpeciesModel, { Species } from "../../models/species";
 import {paraSpecies} from "@/app/page";
 
+export const revalidate = 0;
 
 export async function getServerSide(){
     try {

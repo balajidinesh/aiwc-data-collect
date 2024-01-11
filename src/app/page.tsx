@@ -2,6 +2,7 @@
 
 import {getServerSide} from "@/app/server";
 import Dashboard from "@/app/dashboard";
+export const revalidate = 0;
 
 export type paraSpecies = {
     _id: string;
