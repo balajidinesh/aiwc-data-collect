@@ -5,7 +5,7 @@ import {ArticleDetailsProps} from "./interfaces";
 export const fieldsBody = [
     { label: 'Title', name: 'body.title', type: 'text', required: true },
     { label: 'Scientific Name', name: 'body.scientificName', type: 'text', required: true },
-    { label: 'Local Name', name: 'body.localName', type: 'text', required: true },
+    { label: 'Tamil name', name: 'body.localName', type: 'text', required: true },
     {
         label: 'Conservation Status',
         name: 'body.conservationStatus',
