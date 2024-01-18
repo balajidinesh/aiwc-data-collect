@@ -8,9 +8,20 @@ const speciesSchema
     body: {
         title: { type: String, required: true }, // Title of the species
         // mainImageUrls: [{ type: String }], // URLs for main images
-        scientificName: { type: String, required: true }, // Scientific name
-        localName: { type: String, required: true }, // Local name
+        tamilName: { type: String, required: true }, // tamil name
         conservationStatus: { type: String }, // Conservation status
+        domain: { type: String, required: true }, // Domain
+        kingdom: { type: String, required: true }, // Kingdom
+        phylum: { type: String, required: true }, // Phylum
+        class: { type: String, required: true }, // Class
+        order: { type: String, required: true }, // Order
+        family: { type: String, required: true }, // Family
+        subfamily: { type: String, required: true }, // Subfamily
+        tribe: { type: String, required: true }, // Tribe
+        genus: { type: String, required: true }, // Genus
+        scientificName: { type: String, required: true }, // Scientific name
+        categories: { type: String, required: true }, // category
+        subCategories: { type: String, required: true },
         tags: [{ type: String }], // Tags like Traded, Endangered
     },
 

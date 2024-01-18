@@ -10,7 +10,7 @@ export type paraSpecies = {
         title: string;
         mainImageUrls: string[];
         scientificName: string;
-        localName: string;
+        tamilName: string;
         conservationStatus: string;
         tags: string[];
     };

@@ -21,7 +21,7 @@ const Dashboard: NextPage<DashboardProps> = ({ speciesData }) => {
                     <thead>
                     <tr>
                         <th className="border px-4 py-2">Name</th>
-                        <th className="border px-4 py-2">Local Name</th>
+                        <th className="border px-4 py-2">Tamil Name</th>
                         <th className="border px-4 py-2">Scientific Name</th>
                         <th className="border px-4 py-2">Actions</th>
                     </tr>
@@ -30,7 +30,7 @@ const Dashboard: NextPage<DashboardProps> = ({ speciesData }) => {
                     {speciesData.map((species) => (
                         <tr key={species._id}>
                             <td className="border px-4 py-2">{species.body.title}</td>
-                            <td className="border px-4 py-2">{species.body.localName}</td>
+                            <td className="border px-4 py-2">{species.body.tamilName}</td>
                             <td className="border px-4 py-2">
                                 {species.body.scientificName}
                             </td>

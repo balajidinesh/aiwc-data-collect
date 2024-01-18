@@ -4,8 +4,7 @@ import {ArticleDetailsProps} from "./interfaces";
 
 export const fieldsBody = [
     { label: 'Title', name: 'body.title', type: 'text', required: true },
-    { label: 'Scientific Name', name: 'body.scientificName', type: 'text', required: true },
-    { label: 'Tamil name', name: 'body.localName', type: 'text', required: true },
+    { label: 'Tamil name', name: 'body.tamilName', type: 'text', required: true },
     {
         label: 'Conservation Status',
         name: 'body.conservationStatus',
@@ -23,6 +22,35 @@ export const fieldsBody = [
             { value: 'NE', label: 'Not evaluated (NE)' },
         ],
     },
+    { label: 'Categories', name: 'body.categories', type: 'dropdown',
+        options: [
+            { value: 'S1', label: 'S1' },
+            { value: 'S2', label: 'S2' },
+        ],
+    },
+    { label: 'Subcategories', name: 'body.subCategories', type: 'dropdown',
+        options: [
+            { value: 'A', label: 'A' },
+            { value: 'B', label: 'B' },
+            { value: 'C', label: 'C' },
+            { value: 'D', label: 'D' },
+            { value: 'E', label: 'E' },
+            { value: 'F', label: 'F' },
+            { value: 'G', label: 'G' },
+            { value: 'H', label: 'H' },
+            { value: 'I', label: 'I' },
+        ],
+    },
+    { label: 'Domain', name: 'body.domain', type: 'text', required: true },
+    { label: 'Kingdom', name: 'body.kingdom', type: 'text', required: true },
+    { label: 'Phylum', name: 'body.phylum', type: 'text', required: true },
+    { label: 'Class', name: 'body.class', type: 'text', required: true },
+    { label: 'Order', name: 'body.order', type: 'text', required: true },
+    { label: 'Family', name: 'body.family', type: 'text', required: true },
+    { label: 'Subfamily', name: 'body.subfamily', type: 'text', required: true },
+    { label: 'Tribe', name: 'body.tribe', type: 'text', required: true },
+    { label: 'Genus', name: 'body.genus', type: 'text', required: true },
+    { label: 'Scientific Name', name: 'body.scientificName', type: 'text', required: true },
 ];
 
 export const fieldsTechnical = [
