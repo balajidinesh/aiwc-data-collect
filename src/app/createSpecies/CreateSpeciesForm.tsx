@@ -3,7 +3,7 @@
 
 import {useForm} from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, {useState} from 'react';
 import {LabelAndInput} from "@/components/form ui/LableAndInput";
 import {LabelAndDropdown} from "@/components/form ui/LabelAndDropdown";
 import {PartDetailsProps,ArticleDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
@@ -16,7 +16,12 @@ import PartContainer from "@/components/parts/PartContainer";
 import HarvestContainer from "@/components/harvestedArticles/harvestContainer";
 import {habitatOptions} from "../../../models/IntefacesAndOptions/option";
 
-import {fieldsBody} from "../../../models/IntefacesAndOptions/DefaultValues";
+import {
+    fieldsBody,
+    fieldsScientific,
+    fieldsScientificName,
+    optionsScientific
+} from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyPartValues} from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyArticleValues} from "../../../models/IntefacesAndOptions/DefaultValues";
 
@@ -39,9 +44,26 @@ function getNestedValue(obj: NestedObject, path: string): any {
 const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,defValues,idofEdit}) => {
     const { register, handleSubmit ,setValue,getValues} = useForm();
     const router = useRouter();
+    const [scheduleNames, setScheduleNames] = useState<string>('');
 
-    // console.log(defValues)
+    const handleScheduleDropdownChange = (value: string) => {
+        setScheduleNames(value);
+    };
 
+    const get_option_Schedules = () => {
+        if (scheduleNames) {
+
+            const selectedScheduleIndex = fieldsScientific[0].options.findIndex(
+                (option) => option.value === scheduleNames
+            );
+
+            if (selectedScheduleIndex !== -1) {
+                return optionsScientific[0].options[selectedScheduleIndex]; // Adding 1 because array indices start from 0
+            }
+        }
+
+        return [];
+    };
     const handleTagsChange = (value: string[]) => {
         setValue('body.tags', value);
     };
@@ -102,15 +124,40 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                                            required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : ''}/>
                         ) : field.type === 'dropdown' ? (
                             <LabelAndDropdown label={field.label} name={field.name} options={field.options}
-                                              register={register} required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : ''}/>
+                                              register={register} required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : '' } onChange={()=>{}}/>
                         ) : null}
                     </div>
                 ))}
+
             </div>
                 <TagInput inState={isInEdit} defValues={isInEdit ?( defValues?.body?.tags ?? []) : []} onTagsChange={handleTagsChange} name={'body.tags'} labelName={'Tags'}/>
             </SectionWrapper>
 
-            <SectionWrapper  label={"Morphology"} bgColor={"bg-gray-200"}>
+            <SectionWrapper label={"Scientific Description"} bgColor={"bg-gray-200"}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
+                    <LabelAndDropdown label={fieldsScientific[0].label} name={fieldsScientific[0].name} defaultValue={isInEdit ? getNestedValue(defValues, fieldsScientific[0].name) : ''} register={register} options={fieldsScientific[0].options} onChange={handleScheduleDropdownChange}/>
+
+                    {scheduleNames && <LabelAndDropdown label={fieldsScientific[1].label} name={fieldsScientific[1].name} defaultValue={isInEdit ? getNestedValue(defValues, fieldsScientific[0].name) : ''} options={get_option_Schedules()} register={register}
+                                       onChange={()=>{}}/>}
+
+                    {fieldsScientificName.map((field, index) => (
+                        <div key={index}>
+                            {field.type === 'text' ? (
+                                <LabelAndInput label={field.label} name={field.name} type="text" register={register}
+                                               required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : ''}/>
+                            )
+                            //     : field.type === 'dropdown' ? (
+                            //     <LabelAndDropdown label={field.label} name={field.name} options={field.options}
+                            //                       register={register} required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : '' } onChange={()=>{}}/>
+                            // )
+                                : null}
+                        </div>
+                    ))}
+                </div>
+
+            </SectionWrapper>
+
+            <SectionWrapper label={"Morphology"} bgColor={"bg-gray-200"}>
 
                 <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
                     <PartContainer defValues={isInEdit
@@ -126,7 +173,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                 </SectionWrapper>
 
                 <SectionWrapper label={"Articles"} bgColor={"bg-blue-200"}>
-                    <HarvestContainer defValues={ isInEdit
+                <HarvestContainer defValues={ isInEdit
                         ? (defValues?.technicals?.harvestedArticles?.map((article: any) => {
                             // Ensure articleName is a string and not null or undefined
                             return {

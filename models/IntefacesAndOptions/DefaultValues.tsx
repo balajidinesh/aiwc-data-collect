@@ -22,14 +22,36 @@ export const fieldsBody = [
             { value: 'NE', label: 'Not evaluated (NE)' },
         ],
     },
-    { label: 'Categories', name: 'body.categories', type: 'dropdown',
+
+
+
+];
+
+export const fieldsScientific = [
+    { label: 'Schedule', name: 'body.Schedule', type: 'dropdown',
         options: [
-            { value: 'S1', label: 'S1' },
-            { value: 'S2', label: 'S2' },
+            { value: 'Schedule 1', label: 'Schedule Ⅰ' },
+            { value: 'Schedule 2', label: 'Schedule Ⅱ' },
         ],
     },
+];
+
+export const optionsScientific = [
     { label: 'Subcategories', name: 'body.subCategories', type: 'dropdown',
-        options: [
+        options:[ [
+        { value: 'A', label: 'A' },
+        { value: 'B', label: 'B' },
+        { value: 'C', label: 'C' },
+        { value: 'D', label: 'D' },
+        { value: 'E', label: 'E' },
+        { value: 'F', label: 'F' },
+        { value: 'G', label: 'G' },
+        { value: 'H', label: 'H' },
+        { value: 'I', label: 'I' },
+        { value: 'J', label: 'J' },
+        { value: 'K', label: 'K' },
+    ],
+        [
             { value: 'A', label: 'A' },
             { value: 'B', label: 'B' },
             { value: 'C', label: 'C' },
@@ -39,8 +61,12 @@ export const fieldsBody = [
             { value: 'G', label: 'G' },
             { value: 'H', label: 'H' },
             { value: 'I', label: 'I' },
-        ],
+        ]
+    ],
     },
+]
+
+export const fieldsScientificName = [
     { label: 'Domain', name: 'body.domain', type: 'text', required: true },
     { label: 'Kingdom', name: 'body.kingdom', type: 'text', required: true },
     { label: 'Phylum', name: 'body.phylum', type: 'text', required: true },
@@ -48,10 +74,10 @@ export const fieldsBody = [
     { label: 'Order', name: 'body.order', type: 'text', required: true },
     { label: 'Family', name: 'body.family', type: 'text', required: true },
     { label: 'Subfamily', name: 'body.subfamily', type: 'text', required: true },
-    { label: 'Tribe', name: 'body.tribe', type: 'text', required: true },
     { label: 'Genus', name: 'body.genus', type: 'text', required: true },
+    { label: 'Species', name: 'body.Species', type: 'text', required: true },
     { label: 'Scientific Name', name: 'body.scientificName', type: 'text', required: true },
-];
+]
 
 export const fieldsTechnical = [
     {label: 'Similar Species',name: 'technicals.similaritiesWith',type: 'TAG',required: false,},
