@@ -9,8 +9,8 @@ interface SectionWrapperProps {
 
 const SectionWrapper: React.FC<SectionWrapperProps> = ({ label, children, bgColor = 'bg-gray-200' }) => {
     return (
-        <div className={`${bgColor} rounded-md p-5 pr-10 mb-4`}>
-            <label className="text-sm text-zinc-800 font-bold mb-2">{label}</label>
+        <div className={`${bgColor} rounded-md p-5 pr-10 mb-4 mt-4`}>
+            <label className="text-lg text-zinc-800 font-bold mb-2 mt-4">{label}</label>
             {children}
         </div>
 

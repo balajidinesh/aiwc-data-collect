@@ -11,8 +11,8 @@ const SwitchToggle: React.FC<SwitchToggleProps> = ({ id ,label, value, onChange 
 
     return (
         <div className="flex items-center mt-4 mb-4">
-            <label className="text-sm text-zinc-800 mr-4">{label}</label>
-            <div className="relative inline-block w-10 h-6 mr-2 align-middle select-none">
+            <label htmlFor={id} className="text-sm text-zinc-800 mr-4">{label}</label>
+            <div className="relative inline-block w-10 h-6 mr-2 align-middle select-none" onClick={() => {onChange(!value)}}>
                 <input
                     type="checkbox"
                     id={id}

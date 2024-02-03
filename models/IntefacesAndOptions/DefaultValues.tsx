@@ -36,8 +36,8 @@ export const fieldsScientific = [
     },
 ];
 
-export const optionsScientific = [
-    { label: 'Subcategories', name: 'body.subCategories', type: 'dropdown',
+export const optionsScientificParts = [
+    { label: 'Schedule Part', name: 'body.SchedulePart', type: 'dropdown',
         options:[ [
         { value: 'A', label: 'A' },
         { value: 'B', label: 'B' },

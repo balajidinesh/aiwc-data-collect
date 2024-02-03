@@ -117,11 +117,13 @@ const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
             </SectionWrapper>
 
 
-            <SectionWrapper label="Identification" bgColor="bg-blue-200">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
-                    <LabelAndTextInput label="Visual Marks" value={visualMarks} onChange={setVisualMarks}></LabelAndTextInput>
+            <SectionWrapper label="Identification" bgColor="bg-blue-100">
+                {/*<div className="mx-auto">*/}
+                {/*    </div>*/}
+                <LabelAndTextInput label="Visual Marks" value={visualMarks} onChange={setVisualMarks} inputClassName={"w-full"}></LabelAndTextInput>
 
-                </div>
+                <LabelAndDescription start={visualMarks} label="Visual Marks" description={visualMarks} onChange={setVisualMarks}></LabelAndDescription>
+
                 <LabelAndDescription start={describe} label="Description" description={describe} onChange={setDescribe}></LabelAndDescription>
                 <TagInput inState={true} defValues={ onEdit
                     ? defValues.identifications.keywords : keywords }

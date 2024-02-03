@@ -8,10 +8,11 @@ interface LabelAndTextInputProps {
     label: string;
     value: string;
     onChange: (value: string) => void;
+    inputClassName?: string; // Optional input class name prop
 }
 
-const LabelAndTextInput: React.FC<LabelAndTextInputProps> = ({ label, value, onChange }) => {
 
+const LabelAndTextInput: React.FC<LabelAndTextInputProps> = ({ label, value, onChange, inputClassName }) => {
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.value);
     };
@@ -19,9 +20,11 @@ const LabelAndTextInput: React.FC<LabelAndTextInputProps> = ({ label, value, onC
     return (
         <div className="mt-4">
             <label className="text-sm text-zinc-800">{label}:</label>
-            <Input type="text" value={value} onChange={handleInputChange} />
+            {/* Apply inputClassName to the Input component */}
+            <Input type="text" value={value} onChange={handleInputChange} className={inputClassName} />
         </div>
     );
 };
 
 export { LabelAndTextInput };
+

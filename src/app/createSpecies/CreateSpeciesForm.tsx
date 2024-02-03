@@ -20,7 +20,7 @@ import {
     fieldsBody,
     fieldsScientific,
     fieldsScientificName,
-    optionsScientific
+    optionsScientificParts
 } from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyPartValues} from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyArticleValues} from "../../../models/IntefacesAndOptions/DefaultValues";
@@ -58,7 +58,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
             );
 
             if (selectedScheduleIndex !== -1) {
-                return optionsScientific[0].options[selectedScheduleIndex]; // Adding 1 because array indices start from 0
+                return optionsScientificParts[0].options[selectedScheduleIndex]; // Adding 1 because array indices start from 0
             }
         }
 
@@ -137,7 +137,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
                     <LabelAndDropdown label={fieldsScientific[0].label} name={fieldsScientific[0].name} defaultValue={isInEdit ? getNestedValue(defValues, fieldsScientific[0].name) : ''} register={register} options={fieldsScientific[0].options} onChange={handleScheduleDropdownChange}/>
 
-                    {scheduleNames && <LabelAndDropdown label={fieldsScientific[1].label} name={fieldsScientific[1].name} defaultValue={isInEdit ? getNestedValue(defValues, fieldsScientific[0].name) : ''} options={get_option_Schedules()} register={register}
+                    {<LabelAndDropdown label={optionsScientificParts[0].label} name={optionsScientificParts[0].name} defaultValue={isInEdit ? getNestedValue(defValues, optionsScientificParts[0].name) : ''} options={get_option_Schedules()} register={register}
                                        onChange={()=>{}}/>}
 
                     {fieldsScientificName.map((field, index) => (
