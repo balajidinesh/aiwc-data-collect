@@ -7,7 +7,7 @@ const speciesSchema
     // General Information
     body: {
         title: { type: String, required: true }, // Title of the species
-        // mainImageUrls: [{ type: String }], // URLs for main images
+        mainImageUrls: [{ type: String }], // URLs for main images
         tamilName: { type: String, required: true }, // tamil name
         conservationStatus: { type: String }, // Conservation status
         domain: { type: String, required: true }, // Domain
@@ -31,7 +31,7 @@ const speciesSchema
             typeName: { type: String }, // Name of the part or mark
             isVaries: { type: Boolean }, // If the same part or mark varies significantly due to constraints like age, puberty, gender
             variedBy: { type: String }, // Attribute by which it varies (e.g., SexMale)
-            // imageUrls: [{ type: String }], // Images of the part
+            imageUrls: { type: String }, // Images of the part
             typeDetails: [{
                 characterName: { type: String }, // Name of characteristic (e.g., color, height, width, depth)
                 scale: { type: String }, // Type of unit for the characteristic
@@ -46,7 +46,7 @@ const speciesSchema
 
         harvestedArticles: [{
             articleName: { type: String }, // Article name
-            // imageUrls: [{ type: String }], // Article images
+            imageUrls: { type: String }, // Article images
             isHarvested: { type: Boolean }, // Is the animal likely to be killed or farmed
             alternateName: { type: String }, // Any known local name
             isVaries: { type: Boolean }, // If the same article varies significantly due to constraints like age, puberty, gender
@@ -63,12 +63,9 @@ const speciesSchema
             },
         }],
 
-
         similaritiesWith: [{ type: String }], // Known the closest family of species
 
     },
-
-
 
     // Geographic Information
     geoInformation: {
@@ -78,7 +75,6 @@ const speciesSchema
 
     // Description or Explanation // Miscellaneous Information
     descriptionOrExplanation: { type: String }, // Describe the animal, summarize, any details that need external description
-
 
 }, {timestamps : true});
 
