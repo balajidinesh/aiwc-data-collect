@@ -45,7 +45,7 @@ const HarvestContainer: React.FC<ArticleContainerProps> = ({defValues,inState ,o
         // setTypeDetailsList(updatedList);
     };
 
-    const handleRemoveArtcileDetails = (index: number) => {
+    const handleRemoveArticleDetails = (index: number) => {
         if (editingIndex == index){
             setEditingIndex(null)
         }
@@ -69,7 +69,7 @@ const HarvestContainer: React.FC<ArticleContainerProps> = ({defValues,inState ,o
                         </button>
                         <button
                             type="button"
-                            onClick={() => handleRemoveArtcileDetails(index)}
+                            onClick={() => handleRemoveArticleDetails(index)}
                             className="ml-3 text-red-600 hover:text-red-500"
                         >
                             &times;
@@ -85,6 +85,7 @@ const HarvestContainer: React.FC<ArticleContainerProps> = ({defValues,inState ,o
                         alternateName: "", // Any known local name
                         isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
                         variedBy: "" , // Attribute by which it varies (e.g., SexMale)
+                        imageUrls: "",
                         typeDetails: [],
                         identifications: {
                             visualMarks: "", // Pattern, scales, color

@@ -88,6 +88,7 @@ export const DefaultEmptyPartValues: PartDetailsProps = {
     typeName: "" , // Name of the part or mark
     isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
     variedBy: "" , // Attribute by which it varies (e.g., SexMale)
+    imageUrls: "",
     typeDetails: [],
     identifications: {
         visualMarks: "", // Pattern, scales, color
@@ -102,6 +103,7 @@ export const DefaultEmptyArticleValues: ArticleDetailsProps = {
     alternateName: "", // Any known local name
     isVaries: false , // If the same part or mark varies significantly due to constraints like age, puberty, gender
     variedBy: "" , // Attribute by which it varies (e.g., SexMale)
+    imageUrls: "",
     typeDetails: [],
     identifications: {
         visualMarks: "", // Pattern, scales, color

@@ -52,15 +52,13 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
 
 
     function onGenusChange(value: string) {
-        // console.log("fiyebi")
         setGenus(value)
-        // setsNUpdate(((prevSnUpdate) => prevSnUpdate + 1));
-        console.log(genusName??"")
+        // console.log(genusName??"")
     }
 
     function onSpeciesChange(value: string) {
         setSpecies(value)
-        console.log(speciesName??"")
+        // console.log(speciesName??"")
     }
 
     const handleScheduleDropdownChange = (value: string) => {

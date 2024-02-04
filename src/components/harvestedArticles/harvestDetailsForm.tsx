@@ -9,6 +9,7 @@ import TagInput from "@/components/TagInput";
 import TypeContainer from "@/components/TypeDetails/typeContainer";
 import {LabelAndDescription} from "@/components/non form ui/Description";
 import SwitchToggle from "@/components/SwitchToggle";
+import ImageInput from "@/components/imageComponents/ImageInput";
 
 export interface harvestDetailsFormProps {
     defValues: ArticleDetailsProps;
@@ -23,6 +24,7 @@ const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
     const [alternateName, setAlternateName] = useState( defValues.alternateName );
     const [isVaries, setIsVaries] = useState( defValues.isVaries );
     const [variedBy, setVariedBy] = useState( defValues.variedBy );
+    const [imageUrls, setImageUrls] = useState(defValues.imageUrls);
     const [typeDetails, setTypeDetails] = useState<TypeDetailsProps[]>( defValues.typeDetails);
     const [visualMarks, setVisualMarks] = useState(defValues.identifications.visualMarks );
     const [describe, setDescribe] = useState(defValues.identifications.describe );
@@ -36,6 +38,7 @@ const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
             setIsHarvested(defValues.isHarvested);
             setIsVaries(defValues.isVaries);
             setVariedBy(defValues.variedBy);
+            setImageUrls(defValues.imageUrls);
             setAlternateName(defValues.alternateName);
             setTypeDetails(defValues.typeDetails);
             setVisualMarks(defValues.identifications.visualMarks);
@@ -52,6 +55,7 @@ const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
         setIsHarvested(false);
         setIsVaries(false);
         setVariedBy("");
+        setImageUrls("");
         setAlternateName("")
         setTypeDetails([]);
         setVisualMarks("");
@@ -73,6 +77,7 @@ const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
                 alternateName : alternateName,
                 isVaries : isVaries,
                 variedBy : isVaries ? variedBy : '',
+                imageUrls: "",
                 typeDetails : [...typeDetails],
                 identifications: {
                     visualMarks : visualMarks,
@@ -106,6 +111,8 @@ const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
                 <SwitchToggle id="articlevaries" label="Is Varies" value={isVaries} onChange={setIsVaries}></SwitchToggle>
                 {isVaries && (<LabelAndTextInput label="Varied By" value={variedBy} onChange={setVariedBy}></LabelAndTextInput>)}
                 <LabelAndTextInput label="Alternate Name" value={alternateName} onChange={setAlternateName}></LabelAndTextInput>
+                <ImageInput labelName={"Image of Article"} inState={true} defValues={onEdit
+                    ? defValues.imageUrls : imageUrls }  name={"imageUrls"} onImagesChange={setImageUrls}></ImageInput>
             </div>
 
             {/* Leave imageUrls for now - TODO */}
