@@ -9,6 +9,7 @@ import TagInput from "@/components/TagInput";
 import TypeContainer from "@/components/TypeDetails/typeContainer";
 import {LabelAndDescription} from "@/components/non form ui/Description";
 import SwitchToggle from "@/components/SwitchToggle";
+import ImageInput from "@/components/imageComponents/ImageInput";
 
 
 export interface partDetailsFormProps {
@@ -22,6 +23,7 @@ const PartDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
     const [typeName, setTypeName] = useState( defValues.typeName );
     const [isVaries, setIsVaries] = useState<boolean>( defValues.isVaries );
     const [variedBy, setVariedBy] = useState( defValues.variedBy );
+    const [imageUrls, setImageUrls] = useState(defValues.imageUrls);
     const [typeDetails, setTypeDetails] = useState<TypeDetailsProps[]>( defValues.typeDetails);
     const [visualMarks, setVisualMarks] = useState(defValues.identifications.visualMarks );
     const [description, setDescription] = useState(defValues.identifications.description );
@@ -34,6 +36,7 @@ const PartDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
             setTypeName(defValues.typeName);
             setIsVaries(defValues.isVaries);
             setVariedBy(defValues.variedBy);
+            setImageUrls(defValues.imageUrls);
             setTypeDetails(defValues.typeDetails);
             setVisualMarks(defValues.identifications.visualMarks);
             setDescription(defValues.identifications.description);
@@ -49,6 +52,7 @@ const PartDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
         setTypeName("");
         setIsVaries(false);
         setVariedBy("");
+        setImageUrls("");
         setTypeDetails([]);
         setVisualMarks("");
         setDescription("");
@@ -67,6 +71,7 @@ const PartDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
                 typeName :typeName,
                 isVaries:isVaries,
                 variedBy : isVaries ? variedBy : '',
+                imageUrls: "",
                 typeDetails : [...typeDetails],
                 identifications: {
                     visualMarks:visualMarks,
@@ -98,6 +103,8 @@ const PartDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
                 <LabelAndTextInput label="Name of Physical Property" value={typeName} onChange={setTypeName}></LabelAndTextInput>
                 <SwitchToggle id="partvaries" label="Is Varies" value={isVaries} onChange={setIsVaries}></SwitchToggle>
                 {isVaries && (<LabelAndTextInput label="Varied By" value={variedBy} onChange={setVariedBy}></LabelAndTextInput>)}
+                <ImageInput labelName={"Image of Physical Property"} inState={true} defValues={onEdit
+                    ? defValues.imageUrls : imageUrls }  name={"imageUrls"} onImagesChange={setImageUrls}></ImageInput>
             </div>
 
             {/* Leave imageUrls for now - TODO */}

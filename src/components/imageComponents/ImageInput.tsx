@@ -23,6 +23,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
 
     return (
         <div>
+            <p>loaded images</p>
             {/* Your ImageInput component JSX goes here */}
             {/* For now, let's keep it empty */}
         </div>

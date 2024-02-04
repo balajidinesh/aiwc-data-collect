@@ -24,6 +24,7 @@ import {
 } from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyPartValues} from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyArticleValues} from "../../../models/IntefacesAndOptions/DefaultValues";
+import ImageInput from "@/components/imageComponents/ImageInput";
 // import {slice} from "lodash";
 
 export const revalidate = 0;
@@ -79,6 +80,10 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
 
         return [];
     };
+
+    const handleImagesChange = (value : string) => {
+        setValue('body.mainImageUrls', value);
+    }
     const handleTagsChange = (value: string[]) => {
         // console.log("u")
         setValue('body.tags', value);
@@ -120,9 +125,10 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
     const onSubmit = async (formData: any) => {
         try {
             console.log(formData)
-            // await submitSpecies(formData,idofEdit);
+            await submitSpecies(formData,idofEdit);
             //
-            // router.replace('/');
+            router.replace('/');
+            router.refresh();
             // await router.reload()
         } catch (error) {
             console.error('Error connecting to MongoDB:', error);
@@ -147,8 +153,8 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                         ) : null}
                     </div>
                 ))}
-
             </div>
+                <ImageInput name={"body.mainImageUrls"} labelName={"Uploaded Images"} inState={isInEdit} defValues={isInEdit ?( defValues.body.mainImageUrls ?? []) : []} onImagesChange={handleImagesChange}/>
                 <TagInput inState={isInEdit} defValues={isInEdit ?( defValues?.body?.tags ?? []) : []} onTagsChange={handleTagsChange} name={'body.tags'} labelName={'Tags'}/>
             </SectionWrapper>
 
@@ -171,7 +177,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                                 />
                             )
                             //     : field.type === 'dropdown' ? (
-                            //     <LabelAndDropdown label={field.label} name={field.name} options={field.options}
+                            //     <LabelAndDropdown label={field.label} name={field.name} options={field}
                             //                       register={register} required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : '' } onChange={()=>{}}/>
                             // )
                                 : null}
