@@ -19,11 +19,11 @@ const Dropdown: React.FC<DropdownProps> = React.forwardRef<HTMLSelectElement, Dr
                 ref={ref}
 
                 className={`
-          flex h-10 w-[70vw] sm:w-[35vw] md:w-[22vw] mb-4
-          rounded-md text-zinc-800 border border-input bg-background px-3 py-2 text-sm ring-offset-background
-          file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-          disabled:cursor-not-allowed disabled:opacity-50
+                    flex h-10 w-full sm:w-[32vw] md:w-[22vw] my-2 mx-1 mb-4
+                    rounded-md text-zinc-800 border border-input bg-background px-3 py-2 text-sm ring-offset-background
+                    file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+                    disabled:cursor-not-allowed disabled:opacity-50
           ${className}
         `}
                 {...props}

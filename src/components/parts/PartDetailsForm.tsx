@@ -95,13 +95,13 @@ const PartDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
     return (
         <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
-                <LabelAndTextInput label="Type Name" value={typeName} onChange={setTypeName}></LabelAndTextInput>
+                <LabelAndTextInput label="Name of Physical Property" value={typeName} onChange={setTypeName}></LabelAndTextInput>
                 <SwitchToggle id="partvaries" label="Is Varies" value={isVaries} onChange={setIsVaries}></SwitchToggle>
                 {isVaries && (<LabelAndTextInput label="Varied By" value={variedBy} onChange={setVariedBy}></LabelAndTextInput>)}
             </div>
 
             {/* Leave imageUrls for now - TODO */}
-            <SectionWrapper label={"characteristics"} bgColor={"bg-fuchsia-200"}>
+            <SectionWrapper label={(typeName?(""+ typeName+" "):"")+"Characteristics/Properties"} bgColor={"bg-fuchsia-200"}>
             <TypeContainer onEdit={onEdit} defValues={
                 onEdit
                     ? defValues.typeDetails : typeDetails }
@@ -110,9 +110,7 @@ const PartDetailsForm: React.FC<partDetailsFormProps> = ({ onEdit, defValues, on
 
 
             <SectionWrapper label="Identification" bgColor="bg-blue-100">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
-                    <LabelAndTextInput label="Visual Marks" value={visualMarks} onChange={setVisualMarks}></LabelAndTextInput>
-                </div>
+                <LabelAndTextInput label={"Visual Marks"+(typeName?(" of "+ typeName):"")+" "} value={visualMarks} onChange={setVisualMarks} inputClassName={"w-full"}></LabelAndTextInput>
                 <LabelAndDescription start={description} label="Description" description={description} onChange={setDescription}></LabelAndDescription>
                 <TagInput inState={true} defValues={ onEdit
                     ? defValues.identifications.keywords : keywords }

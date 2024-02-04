@@ -53,10 +53,10 @@ export const TypeDetailsForm: React.FC<TypeDetailsFormProps> = ({ onEdit , defVa
     return (
         <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
-                <LabelAndTextInput label="Character Name" value={characterName} onChange={setCharacterName}/>
-                <LabelAndDropdownState label={"Scale"} options={ScaleOptions} selectedValue={scale} onSelectChange={setScale}></LabelAndDropdownState>
+                <LabelAndTextInput label="Property Name" value={characterName} onChange={setCharacterName}/>
+                <LabelAndDropdownState label={"Measuring Scale"} options={ScaleOptions} selectedValue={scale} onSelectChange={setScale}></LabelAndDropdownState>
                 {/*<LabelAndTextInput label="Scale" value={scale} onChange={setScale} />*/}
-                <LabelAndTextInput label="Value" value={value} onChange={setValue} />
+                <LabelAndTextInput label="Value/Range" value={value} onChange={setValue} />
             </div>
             <button
                 className="mt-4 bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-green active:bg-green-800"

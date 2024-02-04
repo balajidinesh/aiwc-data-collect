@@ -24,12 +24,13 @@ import {
 } from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyPartValues} from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyArticleValues} from "../../../models/IntefacesAndOptions/DefaultValues";
+// import {slice} from "lodash";
 
 export const revalidate = 0;
 
 interface CreateSpeciesFormProps {
     isInEdit : boolean;
-    defValues :any;
+    defValues ?:any;
     idofEdit : string;
 }
 
@@ -45,6 +46,22 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
     const { register, handleSubmit ,setValue,getValues} = useForm();
     const router = useRouter();
     const [scheduleNames, setScheduleNames] = useState<string>('');
+    const [speciesName , setSpecies] = useState<string>('')
+    const [genusName , setGenus ] = useState<string>('')
+    // const [snUpdate, setsNUpdate] = useState<number>(0)
+
+
+    function onGenusChange(value: string) {
+        // console.log("fiyebi")
+        setGenus(value)
+        // setsNUpdate(((prevSnUpdate) => prevSnUpdate + 1));
+        console.log(genusName??"")
+    }
+
+    function onSpeciesChange(value: string) {
+        setSpecies(value)
+        console.log(speciesName??"")
+    }
 
     const handleScheduleDropdownChange = (value: string) => {
         setScheduleNames(value);
@@ -65,6 +82,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
         return [];
     };
     const handleTagsChange = (value: string[]) => {
+        // console.log("u")
         setValue('body.tags', value);
     };
 
@@ -84,6 +102,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
     const handlePlacesChange = (places: string[]) => {
         // console.log(tags);
         setValue("geoInformation.places", places);
+
     };
 
     const handleHabitatChange = (habitats: string[] ) => {
@@ -112,6 +131,8 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
         }
     };
 
+
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="max-w-[90vw] mx-auto ">
             
@@ -121,7 +142,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                     <div key={index}>
                         {field.type === 'text' ? (
                             <LabelAndInput label={field.label} name={field.name} type="text" register={register}
-                                           required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : ''}/>
+                                           required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : ''} onChange={()=>{}}/>
                         ) : field.type === 'dropdown' ? (
                             <LabelAndDropdown label={field.label} name={field.name} options={field.options}
                                               register={register} required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : '' } onChange={()=>{}}/>
@@ -140,11 +161,16 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                     {<LabelAndDropdown label={optionsScientificParts[0].label} name={optionsScientificParts[0].name} defaultValue={isInEdit ? getNestedValue(defValues, optionsScientificParts[0].name) : ''} options={get_option_Schedules()} register={register}
                                        onChange={()=>{}}/>}
 
-                    {fieldsScientificName.map((field, index) => (
+                    {fieldsScientificName.slice(0,-1).map((field, index) => (
                         <div key={index}>
                             {field.type === 'text' ? (
-                                <LabelAndInput label={field.label} name={field.name} type="text" register={register}
-                                               required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : ''}/>
+                                <LabelAndInput
+                                    label={field.label} name={field.name} type="text" register={register}
+                                    required={field.required}
+                                    defaultValue={isInEdit ? getNestedValue(defValues,field.name) : ''}
+                                    onChange={field.name === 'body.genus' ?
+                                        onGenusChange : field.name === 'body.species' ? onSpeciesChange : ()=>{}}
+                                />
                             )
                             //     : field.type === 'dropdown' ? (
                             //     <LabelAndDropdown label={field.label} name={field.name} options={field.options}
@@ -153,13 +179,26 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                                 : null}
                         </div>
                     ))}
+
+                    {fieldsScientificName.slice(-1).map((field) => (
+                        <div key={`${genusName}-${speciesName}`}>
+                            <LabelAndInput label={field.label}
+                                           name={field.name} type={"text"}
+                                           defaultValue={isInEdit ? getNestedValue(defValues, field.name) : (genusName + " " + speciesName)}
+                                           register={register} required={field.required}
+                                           onChange={() => {
+                                           }}>
+
+                            </LabelAndInput>
+                        </div>
+                    ))}
                 </div>
 
             </SectionWrapper>
 
             <SectionWrapper label={"Morphology"} bgColor={"bg-gray-200"}>
 
-                <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
+                <SectionWrapper label={"Species Physical Properties"} bgColor={"bg-blue-200"}>
                     <PartContainer defValues={isInEdit
                         ? (defValues?.technicals?.parts?.map((part: any) => {
                             // Ensure typeName is a string and not null or undefined
@@ -172,7 +211,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
                     } onListChange={handlePartsChange} inState={isInEdit}></PartContainer>
                 </SectionWrapper>
 
-                <SectionWrapper label={"Articles"} bgColor={"bg-blue-200"}>
+                <SectionWrapper label={"Species Article Properties"} bgColor={"bg-blue-200"}>
                 <HarvestContainer defValues={ isInEdit
                         ? (defValues?.technicals?.harvestedArticles?.map((article: any) => {
                             // Ensure articleName is a string and not null or undefined

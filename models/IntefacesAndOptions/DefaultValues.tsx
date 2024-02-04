@@ -75,7 +75,7 @@ export const fieldsScientificName = [
     { label: 'Family', name: 'body.family', type: 'text', required: true },
     { label: 'Subfamily', name: 'body.subfamily', type: 'text', required: true },
     { label: 'Genus', name: 'body.genus', type: 'text', required: true },
-    { label: 'Species', name: 'body.Species', type: 'text', required: true },
+    { label: 'Species', name: 'body.species', type: 'text', required: true },
     { label: 'Scientific Name', name: 'body.scientificName', type: 'text', required: true },
 ]
 

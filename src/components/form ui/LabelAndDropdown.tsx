@@ -9,7 +9,7 @@ interface LabelAndDropdownProps {
     options: boolean | { value: string ; label: string }[] | undefined ;
     register: any;
     required?: boolean;
-    onChange : ( value : string) => void ;
+    onChange: ( value : string) => void ;
 }
 
 const LabelAndDropdown: React.FC<LabelAndDropdownProps> = ({ label, name, defaultValue,options, register, required = false ,onChange}) => {

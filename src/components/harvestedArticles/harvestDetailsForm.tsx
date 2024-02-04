@@ -101,7 +101,7 @@ const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
     return (
         <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto mb-10">
-                <LabelAndTextInput label="Type Name" value={articleName} onChange={setArticleName}></LabelAndTextInput>
+                <LabelAndTextInput label="Article Name" value={articleName} onChange={setArticleName}></LabelAndTextInput>
                 <SwitchToggle id="articleharvested" label={"Is Harvested"} value={isHarvested} onChange={setIsHarvested}></SwitchToggle>
                 <SwitchToggle id="articlevaries" label="Is Varies" value={isVaries} onChange={setIsVaries}></SwitchToggle>
                 {isVaries && (<LabelAndTextInput label="Varied By" value={variedBy} onChange={setVariedBy}></LabelAndTextInput>)}
@@ -109,7 +109,7 @@ const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
             </div>
 
             {/* Leave imageUrls for now - TODO */}
-            <SectionWrapper label={"Article characteristics"} bgColor={"bg-fuchsia-200"}>
+            <SectionWrapper label={(articleName?(""+ articleName+" "):"") + "Article Characteristics/Properties"} bgColor={"bg-fuchsia-200"}>
                 <TypeContainer onEdit={onEdit} defValues={
                     onEdit
                         ? defValues.typeDetails : typeDetails }
@@ -120,10 +120,7 @@ const HarvestDetailsForm: React.FC<harvestDetailsFormProps> = ({ onEdit, defValu
             <SectionWrapper label="Identification" bgColor="bg-blue-100">
                 {/*<div className="mx-auto">*/}
                 {/*    </div>*/}
-                <LabelAndTextInput label="Visual Marks" value={visualMarks} onChange={setVisualMarks} inputClassName={"w-full"}></LabelAndTextInput>
-
-                <LabelAndDescription start={visualMarks} label="Visual Marks" description={visualMarks} onChange={setVisualMarks}></LabelAndDescription>
-
+                <LabelAndTextInput label={"Visual Marks"+(articleName?(" of "+ articleName):"")+" "} value={visualMarks} onChange={setVisualMarks} inputClassName={"w-full"}></LabelAndTextInput>
                 <LabelAndDescription start={describe} label="Description" description={describe} onChange={setDescribe}></LabelAndDescription>
                 <TagInput inState={true} defValues={ onEdit
                     ? defValues.identifications.keywords : keywords }

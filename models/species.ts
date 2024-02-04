@@ -17,11 +17,11 @@ const speciesSchema
         order: { type: String, required: true }, // Order
         family: { type: String, required: true }, // Family
         subfamily: { type: String, required: true }, // Subfamily
-        tribe: { type: String, required: true }, // Tribe
         genus: { type: String, required: true }, // Genus
+        species: { type: String, required: true }, // species
         scientificName: { type: String, required: true }, // Scientific name
-        categories: { type: String, required: true }, // category
-        subCategories: { type: String, required: true },
+        Schedule: { type: String, required: true }, // category
+        SchedulePart: { type: String, required: true },
         tags: [{ type: String }], // Tags like Traded, Endangered
     },
 
