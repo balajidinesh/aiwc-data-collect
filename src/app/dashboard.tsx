@@ -9,7 +9,6 @@ interface DashboardProps {
 
 const Dashboard: NextPage<DashboardProps> = ({ speciesData }) => {
     console.log(speciesData)
-
     return (
         <main className="text-center pt-10 px-5">
             <h1 className="text-4xl font-semibold mb-7">Species Table</h1>

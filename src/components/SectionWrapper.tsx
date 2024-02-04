@@ -7,6 +7,7 @@ interface SectionWrapperProps {
     bgColor? : string;
 }
 
+
 const SectionWrapper: React.FC<SectionWrapperProps> = ({ label, children, bgColor = 'bg-gray-200' }) => {
     return (
         <div className={`${bgColor} rounded-md p-5 pr-10 mb-4 mt-4`}>

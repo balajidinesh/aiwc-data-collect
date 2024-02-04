@@ -122,9 +122,9 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
     const onSubmit = async (formData: any) => {
         try {
             console.log(formData)
-            await submitSpecies(formData,idofEdit);
+            // await submitSpecies(formData,idofEdit);
             //
-            router.replace('/');
+            // router.replace('/');
             // await router.reload()
         } catch (error) {
             console.error('Error connecting to MongoDB:', error);
