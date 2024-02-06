@@ -46,12 +46,16 @@ const HarvestContainer: React.FC<ArticleContainerProps> = ({defValues,inState ,o
     };
 
     const handleRemoveArticleDetails = (index: number) => {
-        if (editingIndex == index){
-            setEditingIndex(null)
+        const isConfirmed = window.confirm("Are you sure you want to remove this article?");
+
+        if (isConfirmed) {
+            if (editingIndex == index) {
+                setEditingIndex(null)
+            }
+            const newList = [...articleDetailsList];
+            newList.splice(index, 1);
+            setArticleDetailsList(newList);
         }
-        const newList = [...articleDetailsList];
-        newList.splice(index, 1);
-        setArticleDetailsList(newList);
     };
 
     return (
@@ -59,7 +63,7 @@ const HarvestContainer: React.FC<ArticleContainerProps> = ({defValues,inState ,o
             <div className="flex flex-wrap gap-2">
                 {articleDetailsList.map((typeDetails, index) => (
                     <div key={index} className="bg-blue-400 rounded-md p-2 flex items-center">
-                        <span className="text-white">{`${articleDetailsList[index].articleName}`}</span>
+                        <span className="text-white">{`${articleDetailsList[index].articleName}${(articleDetailsList[index].isVaries && articleDetailsList[index].variedBy)?(" "+articleDetailsList[index].variedBy):''}`}</span>
                         <button
                             type="button"
                             onClick={() => handleEditArticleDetails(index)}

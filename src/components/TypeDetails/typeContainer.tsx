@@ -49,13 +49,17 @@ const TypeContainer: React.FC<TypeContainerProps> = ({ onEdit,defValues, onListC
     };
 
     const handleRemoveTypeDetails = (index: number) => {
-        if (editingIndex == index){
-            setEditingIndex(null)
+        const isConfirmed = window.confirm("Are you sure you want to remove this property?");
+
+        if (isConfirmed) {
+            if (editingIndex == index) {
+                setEditingIndex(null)
+            }
+            const newList = [...typeDetailsList];
+            newList.splice(index, 1);
+            setTypeDetailsList(newList);
+            onListChange(newList);
         }
-        const newList = [...typeDetailsList];
-        newList.splice(index, 1);
-        setTypeDetailsList(newList);
-        onListChange(newList);
     };
 
     return (
@@ -63,7 +67,7 @@ const TypeContainer: React.FC<TypeContainerProps> = ({ onEdit,defValues, onListC
             <div className="flex flex-wrap gap-2">
                 {typeDetailsList && typeDetailsList.map((typeDetails, index) => (
                     <div key={index} className="bg-blue-400 rounded-md p-2 flex items-center">
-                        <span className="text-white">{`${typeDetailsList[index].characterName}`}</span>
+                        <span className="text-white">{`${typeDetailsList[index].characterName}${typeDetailsList[index].scale?' '+typeDetailsList[index].scale:''}`}</span>
                         <button
                             type="button"
                             onClick={() => handleEditTypeDetails(index)}

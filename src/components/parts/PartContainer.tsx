@@ -46,12 +46,16 @@ const PartContainer: React.FC<PartContainerProps> = ({defValues,inState ,onListC
     };
 
     const handleRemovePartDetails = (index: number) => {
-        if (editingIndex == index){
-            setEditingIndex(null)
+        const isConfirmed = window.confirm("Are you sure you want to remove this Part/Body?");
+
+        if (isConfirmed) {
+            if (editingIndex == index){
+                setEditingIndex(null)
+            }
+            const newList = [...partDetailsList];
+            newList.splice(index, 1);
+            setPartDetailsList(newList);
         }
-        const newList = [...partDetailsList];
-        newList.splice(index, 1);
-        setPartDetailsList(newList);
     };
 
     return (
@@ -59,7 +63,7 @@ const PartContainer: React.FC<PartContainerProps> = ({defValues,inState ,onListC
             <div className="flex flex-wrap gap-2">
                 {partDetailsList.map((typeDetails, index) => (
                     <div key={index} className="bg-blue-400 rounded-md p-2 flex items-center">
-                        <span className="text-white">{`${partDetailsList[index].typeName}`}</span>
+                        <span className="text-white">{`${partDetailsList[index].typeName}${partDetailsList[index].variedBy ? " " + partDetailsList[index].variedBy :''}`}</span>
                         <button
                             type="button"
                             onClick={() => handleEditPartDetails(index)}

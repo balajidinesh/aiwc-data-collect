@@ -1,4 +1,4 @@
-import {PartDetailsProps} from "./interfaces";
+import {PartDetailsProps, TaxonomyProps} from "./interfaces";
 import {ArticleDetailsProps} from "./interfaces";
 
 
@@ -67,22 +67,36 @@ export const optionsScientificParts = [
 ]
 
 export const fieldsScientificName = [
-    { label: 'Domain', name: 'body.domain', type: 'text', required: true },
-    { label: 'Kingdom', name: 'body.kingdom', type: 'text', required: true },
-    { label: 'Phylum', name: 'body.phylum', type: 'text', required: true },
-    { label: 'Class', name: 'body.class', type: 'text', required: true },
-    { label: 'Order', name: 'body.order', type: 'text', required: true },
-    { label: 'Family', name: 'body.family', type: 'text', required: true },
-    { label: 'Subfamily', name: 'body.subfamily', type: 'text', required: true },
-    { label: 'Genus', name: 'body.genus', type: 'text', required: true },
-    { label: 'Species', name: 'body.species', type: 'text', required: true },
-    { label: 'Scientific Name', name: 'body.scientificName', type: 'text', required: true },
+    { label: 'Domain', name: 'body.taxonomy.domain', type: 'text', required: true },
+    { label: 'Kingdom', name: 'body.taxonomy.kingdom', type: 'text', required: true },
+    { label: 'Phylum', name: 'body.taxonomy.phylum', type: 'text', required: true },
+    { label: 'Class', name: 'body.taxonomy.class', type: 'text', required: true },
+    { label: 'Order', name: 'body.taxonomy.order', type: 'text', required: true },
+    { label: 'Family', name: 'body.taxonomy.family', type: 'text', required: true },
+    { label: 'Subfamily', name: 'body.taxonomy.subfamily', type: 'text', required: true },
+    { label: 'Genus', name: 'body.taxonomy.genus', type: 'text', required: true },
+    { label: 'Species', name: 'body.taxonomy.species', type: 'text', required: true },
+    { label: 'Scientific Name', name: 'body.taxonomy.scientificName', type: 'text', required: true },
 ]
+
+
 
 export const fieldsTechnical = [
     {label: 'Similar Species',name: 'technicals.similaritiesWith',type: 'TAG',required: false,},
 ];
 
+export const DefaultEmptyScientificName: TaxonomyProps = {
+    domain: "",
+    kingdom: "",
+    phylum: "",
+    class: "",
+    order: "",
+    family: "",
+    subfamily: "",
+    genus: "",
+    species: "",
+    scientificName: "",
+};
 
 export const DefaultEmptyPartValues: PartDetailsProps = {
     typeName: "" , // Name of the part or mark

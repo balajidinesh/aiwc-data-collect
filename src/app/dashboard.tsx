@@ -31,7 +31,7 @@ const Dashboard: NextPage<DashboardProps> = ({ speciesData }) => {
                             <td className="border px-4 py-2">{species.body.title}</td>
                             <td className="border px-4 py-2">{species.body.tamilName}</td>
                             <td className="border px-4 py-2">
-                                {species.body.scientificName}
+                                {species.body.taxonomy.scientificName}
                             </td>
                             <td className="border px-4 py-2">
                                 <Link href={`/view?id=${species._id}`} passHref>

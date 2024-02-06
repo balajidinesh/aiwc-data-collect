@@ -3,10 +3,10 @@
 
 import {useForm} from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {LabelAndInput} from "@/components/form ui/LableAndInput";
 import {LabelAndDropdown} from "@/components/form ui/LabelAndDropdown";
-import {PartDetailsProps,ArticleDetailsProps} from "../../../models/IntefacesAndOptions/interfaces";
+import {PartDetailsProps, ArticleDetailsProps, TaxonomyProps} from "../../../models/IntefacesAndOptions/interfaces";
 import TagOptions from "@/components/tagOptions";
 import TagInput from "@/components/TagInput";
 import { submitSpecies } from './submitSpecies';
@@ -17,6 +17,7 @@ import HarvestContainer from "@/components/harvestedArticles/harvestContainer";
 import {habitatOptions} from "../../../models/IntefacesAndOptions/option";
 
 import {
+    DefaultEmptyScientificName,
     fieldsBody,
     fieldsScientific,
     fieldsScientificName,
@@ -25,6 +26,8 @@ import {
 import {DefaultEmptyPartValues} from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyArticleValues} from "../../../models/IntefacesAndOptions/DefaultValues";
 import ImageInput from "@/components/imageComponents/ImageInput";
+import {LabelAndDropdownState} from "@/components/non form ui/LabelAndDropdownText";
+import ScientificNameForm from "@/components/form ui/scientificName";
 // import {slice} from "lodash";
 
 export const revalidate = 0;
@@ -32,12 +35,12 @@ export const revalidate = 0;
 interface CreateSpeciesFormProps {
     isInEdit : boolean;
     defValues ?:any;
-    idofEdit : string;
+    idofEdit ?: string;
 }
 
-type NestedObject = { [key: string]: NestedObject | any };
+export type NestedObject = { [key: string]: NestedObject | any };
 
-function getNestedValue(obj: NestedObject, path: string): any {
+export function getNestedValue(obj: NestedObject, path: string): any {
     const keys = path.split('.');
     return keys.reduce((acc, key) => (acc && acc[key] !== 'undefined' ? acc[key] : undefined), obj);
 }
@@ -46,24 +49,39 @@ function getNestedValue(obj: NestedObject, path: string): any {
 const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,defValues,idofEdit}) => {
     const { register, handleSubmit ,setValue,getValues} = useForm();
     const router = useRouter();
-    const [scheduleNames, setScheduleNames] = useState<string>('');
-    const [speciesName , setSpecies] = useState<string>('')
-    const [genusName , setGenus ] = useState<string>('')
+    const [scheduleNames, setScheduleNames] = useState<string>(isInEdit ? getNestedValue(defValues, fieldsScientific[0].name) : '');
+    const [selectPartSchedule , setPartSchedule] = useState<string>(isInEdit ? getNestedValue(defValues, optionsScientificParts[0].name) : '')
+    const [taxonomy, setTaxonomy] = useState(isInEdit ? getNestedValue(defValues,"body.taxonomy") : {})
     // const [snUpdate, setsNUpdate] = useState<number>(0)
 
+    useEffect(() => {
+        setScheduleNames(isInEdit ? getNestedValue(defValues, fieldsScientific[0].name) : '')
+        setPartSchedule( isInEdit ? getNestedValue(defValues, optionsScientificParts[0].name) : '')
+        setTaxonomy( isInEdit ? getNestedValue(defValues, "body.taxonomy") : DefaultEmptyScientificName)
 
-    function onGenusChange(value: string) {
-        setGenus(value)
-        // console.log(genusName??"")
-    }
+        setValue('body.SchedulePart' ,isInEdit?defValues.body.SchedulePart:'')
+        setValue('body.Schedule',isInEdit?defValues.body.Schedule : '')
+        setValue('body.taxonomy',isInEdit?defValues.body.taxonomy : DefaultEmptyScientificName)
+        setValue('body.mainImageUrls', isInEdit?defValues.body.mainImageUrls :'');
+        setValue('body.tags', isInEdit?defValues.body.tags:[]);
+        setValue('technicals.similaritiesWith', isInEdit?defValues.technicals.similaritiesWith:[]);
+        setValue("technicals.parts", isInEdit?defValues.technicals.parts:[]);
+        setValue("technicals.harvestedArticles" , isInEdit?defValues.technicals.harvestedArticles:[]);
+        setValue("geoInformation.places", isInEdit?defValues.geoInformation.places:[]);
+        setValue("geoInformation.habitats", isInEdit?defValues.geoInformation.habitats:[]);
+        setValue("descriptionOrExplanation", isInEdit?defValues.descriptionOrExplanation:'');
+    }, [defValues, isInEdit, setValue]);
 
-    function onSpeciesChange(value: string) {
-        setSpecies(value)
-        // console.log(speciesName??"")
-    }
+
 
     const handleScheduleDropdownChange = (value: string) => {
         setScheduleNames(value);
+        setValue('body.Schedule',value)
+    };
+
+    const handleSchedulePartDropdownChange = (value:string) => {
+        setPartSchedule(value);
+        setValue('body.SchedulePart',value)
     };
 
     const get_option_Schedules = () => {
@@ -81,8 +99,14 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
         return [];
     };
 
+
+
     const handleImagesChange = (value : string) => {
         setValue('body.mainImageUrls', value);
+    }
+
+    const handlePlainChange = (name : string , value:string ) => {
+        setValue(name , value) ;
     }
     const handleTagsChange = (value: string[]) => {
         // console.log("u")
@@ -91,6 +115,11 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
 
     const handleSimilarChange = (value: string[]) => {
         setValue('technicals.similaritiesWith', value);
+    };
+
+    const handleTaxonomyChange = (value : TaxonomyProps) =>{
+        setTaxonomy(value)
+        setValue("body.taxonomy",value);
     };
 
 
@@ -126,10 +155,10 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
         try {
             console.log(formData)
             await submitSpecies(formData,idofEdit);
-            //
+
             router.replace('/');
             router.refresh();
-            // await router.reload()
+            //// await router.reload()
         } catch (error) {
             console.error('Error connecting to MongoDB:', error);
         }
@@ -160,49 +189,35 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
 
             <SectionWrapper label={"Scientific Description"} bgColor={"bg-gray-200"}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-[5vw] mx-auto">
-                    <LabelAndDropdown label={fieldsScientific[0].label} name={fieldsScientific[0].name} defaultValue={isInEdit ? getNestedValue(defValues, fieldsScientific[0].name) : ''} register={register} options={fieldsScientific[0].options} onChange={handleScheduleDropdownChange}/>
+                    <LabelAndDropdownState label={fieldsScientific[0].label} options={fieldsScientific[0].options} onSelectChange={handleScheduleDropdownChange} selectedValue={scheduleNames}/>
 
-                    {<LabelAndDropdown label={optionsScientificParts[0].label} name={optionsScientificParts[0].name} defaultValue={isInEdit ? getNestedValue(defValues, optionsScientificParts[0].name) : ''} options={get_option_Schedules()} register={register}
-                                       onChange={()=>{}}/>}
+                    {<LabelAndDropdownState label={optionsScientificParts[0].label} options={get_option_Schedules()} onSelectChange={handleSchedulePartDropdownChange} selectedValue={selectPartSchedule}/>}
 
-                    {fieldsScientificName.slice(0,-1).map((field, index) => (
-                        <div key={index}>
-                            {field.type === 'text' ? (
-                                <LabelAndInput
-                                    label={field.label} name={field.name} type="text" register={register}
-                                    required={field.required}
-                                    defaultValue={isInEdit ? getNestedValue(defValues,field.name) : ''}
-                                    onChange={field.name === 'body.genus' ?
-                                        onGenusChange : field.name === 'body.species' ? onSpeciesChange : ()=>{}}
-                                />
-                            )
-                            //     : field.type === 'dropdown' ? (
-                            //     <LabelAndDropdown label={field.label} name={field.name} options={field}
-                            //                       register={register} required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : '' } onChange={()=>{}}/>
-                            // )
-                                : null}
-                        </div>
-                    ))}
-
-                    {fieldsScientificName.slice(-1).map((field) => (
-                        <div key={`${genusName}-${speciesName}`}>
-                            <LabelAndInput label={field.label}
-                                           name={field.name} type={"text"}
-                                           defaultValue={isInEdit ? getNestedValue(defValues, field.name) : (genusName + " " + speciesName)}
-                                           register={register} required={field.required}
-                                           onChange={() => {
-                                           }}>
-
-                            </LabelAndInput>
-                        </div>
-                    ))}
+                    {/*{fieldsScientificName.slice(0,-1).map((field, index) => (*/}
+                    {/*    <div key={index}>*/}
+                    {/*        {field.type === 'text' ? (*/}
+                    {/*            <LabelAndInput*/}
+                    {/*                label={field.label} name={field.name} type="text" register={register}*/}
+                    {/*                required={field.required}*/}
+                    {/*                defaultValue={isInEdit ? getNestedValue(defValues,field.name) : ''}*/}
+                    {/*                onChange={field.name === 'body.genus' ?*/}
+                    {/*                    onGenusChange : field.name === 'body.species' ? onSpeciesChange : ()=>{}}*/}
+                    {/*            />*/}
+                    {/*        )*/}
+                    {/*        //     : field.type === 'dropdown' ? (*/}
+                    {/*        //     <LabelAndDropdown label={field.label} name={field.name} options={field}*/}
+                    {/*        //                       register={register} required={field.required} defaultValue={isInEdit ? getNestedValue(defValues,field.name) : '' } onChange={()=>{}}/>*/}
+                    {/*        // )*/}
+                    {/*            : null}*/}
+                    {/*    </div>*/}
+                    {/*))}*/}
                 </div>
-
+                <ScientificNameForm isInEdit={isInEdit} defValues={isInEdit? (defValues?.body?.taxonomy ?? DefaultEmptyScientificName ): DefaultEmptyScientificName} onTaxonomyChange={handleTaxonomyChange} />
             </SectionWrapper>
 
             <SectionWrapper label={"Morphology"} bgColor={"bg-gray-200"}>
 
-                <SectionWrapper label={"Species Physical Properties"} bgColor={"bg-blue-200"}>
+                <SectionWrapper label={"Species Physical Properties (Visual Anatomy)"} bgColor={"bg-blue-200"}>
                     <PartContainer defValues={isInEdit
                         ? (defValues?.technicals?.parts?.map((part: any) => {
                             // Ensure typeName is a string and not null or undefined
@@ -234,8 +249,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
 
             <SectionWrapper  label={"Geo Information"} bgColor={"bg-gray-200"}>
                 <TagInput inState={isInEdit} defValues={isInEdit ?( defValues?.geoInformation?.places ?? ['']) : ['']} onTagsChange={handlePlacesChange} name={'geoInformation.places'} labelName={'Places Found'} />
-
-                <SectionWrapper label={"Part Properties"} bgColor={"bg-blue-200"}>
+                <SectionWrapper label={"habitats"} bgColor={"bg-blue-200"}>
                    <TagOptions inState={isInEdit} name={'habitats'} labelName={'Select Habitats'} options={habitatOptions}  onTagsChange={handleHabitatChange} defValues={isInEdit ?( defValues?.geoInformation?.habitats ?? ['']) : ['']}></TagOptions>
                 </SectionWrapper>
 

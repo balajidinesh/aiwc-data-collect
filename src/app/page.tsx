@@ -2,6 +2,7 @@
 
 import {getServerSide} from "@/app/server";
 import Dashboard from "@/app/dashboard";
+import {TaxonomyProps} from "../../models/IntefacesAndOptions/interfaces";
 export const revalidate = 0;
 
 export type paraSpecies = {
@@ -11,6 +12,7 @@ export type paraSpecies = {
         mainImageUrls: string[];
         scientificName: string;
         tamilName: string;
+        taxonomy:TaxonomyProps;
         conservationStatus: string;
         tags: string[];
     };

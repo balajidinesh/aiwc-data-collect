@@ -10,16 +10,18 @@ const speciesSchema
         mainImageUrls: [{ type: String }], // URLs for main images
         tamilName: { type: String, required: true }, // tamil name
         conservationStatus: { type: String }, // Conservation status
-        domain: { type: String, required: true }, // Domain
-        kingdom: { type: String, required: true }, // Kingdom
-        phylum: { type: String, required: true }, // Phylum
-        class: { type: String, required: true }, // Class
-        order: { type: String, required: true }, // Order
-        family: { type: String, required: true }, // Family
-        subfamily: { type: String, required: true }, // Subfamily
-        genus: { type: String, required: true }, // Genus
-        species: { type: String, required: true }, // species
-        scientificName: { type: String, required: true }, // Scientific name
+        taxonomy : {
+            domain: { type: String, required: true }, // Domain
+            kingdom: { type: String, required: true }, // Kingdom
+            phylum: { type: String, required: true }, // Phylum
+            class: { type: String, required: true }, // Class
+            order: { type: String, required: true }, // Order
+            family: { type: String, required: true }, // Family
+            subfamily: { type: String, required: true }, // Subfamily
+            genus: { type: String, required: true }, // Genus
+            species: { type: String, required: true }, // species
+            scientificName: { type: String, required: true }, // Scientific name
+        },
         Schedule: { type: String, required: true }, // category
         SchedulePart: { type: String, required: true },
         tags: [{ type: String }], // Tags like Traded, Endangered

@@ -7,6 +7,19 @@ export interface TypeDetailsProps {
 }
 
 
+export interface TaxonomyProps {
+    domain: string;
+    kingdom: string;
+    phylum: string;
+    class: string;
+    order: string;
+    family: string;
+    subfamily: string;
+    genus: string;
+    species: string;
+    scientificName: string;
+}
+
 export interface PartDetailsProps{
     typeName: string , // Name of the part or mark
     isVaries: boolean , // If the same part or mark varies significantly due to constraints like age, puberty, gender
