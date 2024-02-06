@@ -20,7 +20,6 @@ import {
     DefaultEmptyScientificName,
     fieldsBody,
     fieldsScientific,
-    fieldsScientificName,
     optionsScientificParts
 } from "../../../models/IntefacesAndOptions/DefaultValues";
 import {DefaultEmptyPartValues} from "../../../models/IntefacesAndOptions/DefaultValues";
