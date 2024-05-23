@@ -2,13 +2,14 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import {paraSpecies} from "@/app/page";
+import { Suspense } from "react";
 
 interface DashboardProps {
     speciesData: paraSpecies[] ; // Update type to allow for undefined
 }
 
 const Dashboard: NextPage<DashboardProps> = ({ speciesData }) => {
-    console.log(speciesData)
+    // console.log(speciesData)
     return (
         <main className="text-center pt-10 px-5">
             <h1 className="text-4xl font-semibold mb-7">Species Table</h1>
@@ -34,12 +35,20 @@ const Dashboard: NextPage<DashboardProps> = ({ speciesData }) => {
                                 {species.body.taxonomy.scientificName}
                             </td>
                             <td className="border px-4 py-2">
-                                <Link href={`/view?id=${species._id}`} passHref>
-                                    <span className="text-blue-500 cursor-pointer mr-2">view</span>
-                                </Link>
-                                <Link href={`/edit?id=${species._id}`} passHref>
-                                    <span className="text-blue-500 cursor-pointer">Edit</span>
-                                </Link>
+                                <Suspense fallback={<div>Loading...</div>}>
+                                    <Link href={`/view?id=${species._id}`} passHref>
+                                        <span className="text-blue-500 cursor-pointer mr-2">view</span>
+                                    </Link>
+                                    <Link href={`/edit?id=${species._id}`} passHref>
+                                        <span className="text-blue-500 cursor-pointer">Edit</span>
+                                    </Link>
+                                </Suspense>
+                                {/*<Link href={`/view?id=${species._id}`} passHref>*/}
+                                {/*    <span className="text-blue-500 cursor-pointer mr-2">view</span>*/}
+                                {/*</Link>*/}
+                                {/*<Link href={`/edit?id=${species._id}`} passHref>*/}
+                                {/*    <span className="text-blue-500 cursor-pointer">Edit</span>*/}
+                                {/*</Link>*/}
                             </td>
                         </tr>
                     ))}

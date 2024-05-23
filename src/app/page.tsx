@@ -3,6 +3,7 @@
 import {getServerSide} from "@/app/server";
 import Dashboard from "@/app/dashboard";
 import {TaxonomyProps} from "../../models/IntefacesAndOptions/interfaces";
+import {Suspense} from "react";
 // export const revalidate = 0;
 
 export type paraSpecies = {
@@ -23,6 +24,8 @@ export default async function Home() {
     const {speciesData} = await getServerSide() ;
     console.log(speciesData.length)
     return (
-        <Dashboard speciesData={speciesData}/>
+        <Suspense fallback={<div>Loading...</div>}>
+            <Dashboard speciesData={speciesData}/>
+        </Suspense>
     );
 }
