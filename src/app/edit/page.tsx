@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation'; // Assuming you are using rea
 import React, { useEffect, useState } from 'react';
 import CreateSpeciesForm from "@/app/createSpecies/CreateSpeciesForm";
 
-export const revalidate = 0;
+// export const revalidate = 0;
 
 
 const EditSpecies: React.FC = () => {
@@ -22,7 +22,7 @@ const EditSpecies: React.FC = () => {
         const fetchData = async () => {
             try {
                 const response = await fetch(`/api/species/${id}`,{
-                    next: { revalidate: 0 },
+                    // next: { revalidate: 0 },
                   });
                 console.log(response)
                 const data = await response.json();

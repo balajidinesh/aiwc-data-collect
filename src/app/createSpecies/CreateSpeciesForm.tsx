@@ -29,7 +29,7 @@ import {LabelAndDropdownState} from "@/components/non form ui/LabelAndDropdownTe
 import ScientificNameForm from "@/components/form ui/scientificName";
 // import {slice} from "lodash";
 
-export const revalidate = 0;
+// export const revalidate = 0;
 
 interface CreateSpeciesFormProps {
     isInEdit : boolean;

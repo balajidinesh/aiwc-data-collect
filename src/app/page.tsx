@@ -3,7 +3,7 @@
 import {getServerSide} from "@/app/server";
 import Dashboard from "@/app/dashboard";
 import {TaxonomyProps} from "../../models/IntefacesAndOptions/interfaces";
-export const revalidate = 0;
+// export const revalidate = 0;
 
 export type paraSpecies = {
     _id: string;
