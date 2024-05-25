@@ -51,6 +51,11 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
     const [scheduleNames, setScheduleNames] = useState<string>(isInEdit ? getNestedValue(defValues, fieldsScientific[0].name) : '');
     const [selectPartSchedule , setPartSchedule] = useState<string>(isInEdit ? getNestedValue(defValues, optionsScientificParts[0].name) : '')
     const [taxonomy, setTaxonomy] = useState(isInEdit ? getNestedValue(defValues,"body.taxonomy") : {})
+
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+
+
     // const [snUpdate, setsNUpdate] = useState<number>(0)
 
     useEffect(() => {
@@ -151,6 +156,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
 
 
     const onSubmit = async (formData: any) => {
+        setIsButtonDisabled(true);
         try {
             console.log(formData)
             await submitSpecies(formData,idofEdit);
@@ -160,6 +166,7 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
             //// await router.reload()
         } catch (error) {
             console.error('Error connecting to MongoDB:', error);
+            setIsButtonDisabled(false);
         }
     };
 
@@ -261,10 +268,16 @@ const CreateSpeciesForm: React.FC<CreateSpeciesFormProps> = ({isInEdit=false,def
             </SectionWrapper>
 
             <div className="mt-5">
-                <button type="submit" className="bg-zinc-900 text-white py-2 px-4">
+                <button
+                    type="submit"
+                    className={`bg-zinc-900 text-white py-2 px-4 ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                    disabled={isButtonDisabled}
+                >
                     Create Species
                 </button>
             </div>
+
+            <div className="m-20"></div>
         </form>
     );
 };
